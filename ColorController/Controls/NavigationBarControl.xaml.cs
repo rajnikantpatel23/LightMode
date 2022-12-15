@@ -2,6 +2,7 @@
 using ColorController.Enums;
 using ColorController.Helpers;
 using ColorController.PopupPages;
+using ColorController.Services;
 using ColorController.StringResources;
 using Plugin.BLE;
 using Plugin.BLE.Abstractions.Contracts;
@@ -20,6 +21,8 @@ namespace ColorController.Controls
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class NavigationBarControl : Grid
     {
+        public IBlueToothService BlueToothService => DependencyService.Get<IBlueToothService>(); 
+
         public event EventHandler BackButtonEvent;
 
         public static readonly BindableProperty ImageBtnConnectSourceProperty = BindableProperty.Create(nameof(ImageBtnConnectSource), typeof(ImageSource), typeof(NavigationBarControl), null);
@@ -390,7 +393,7 @@ namespace ColorController.Controls
                     }
                     else if (selectedImage.File == "navBtnConnect.png")
                     {
-                        await CommonUtils.ScanAndConnectDevice();
+                        await BlueToothService.ScanAndConnectDevice();
                     }
                     else if (selectedImage.File == "navSearchingGIF2.gif")
                     {

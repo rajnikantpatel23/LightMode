@@ -28,6 +28,7 @@
                              HorizontalOptions="Center"
                              VerticalOptions="Center"
                              Source="pairNewDevice.png" Margin="0,30,0,10"
+                             Command="{Binding PairNewDeviceCommand}"
                              WidthRequest="{OnIdiom Phone=250, Tablet=450}"/>
 
                     <Label Text="You only need to do this once per device."      
@@ -122,16 +123,6 @@ Search in Background also can connect to multiple saved devices. Put all your de
                             <TapGestureRecognizer Command="{Binding UpdatesTappedCommand}"/>
                         </controls:TitleArrowControl.GestureRecognizers>
                     </controls:TitleArrowControl>
-                    <!--<controls:TitleArrowControl Title="Testing Page">
-                    <controls:TitleArrowControl.GestureRecognizers>
-                        <TapGestureRecognizer Tapped="OpenTestPage"/>
-                    </controls:TitleArrowControl.GestureRecognizers>
-                </controls:TitleArrowControl>-->
-                    <!--<controls:TitleArrowControl Title="Masking Page">
-                    <controls:TitleArrowControl.GestureRecognizers>
-                        <TapGestureRecognizer Tapped="OpenMaskingPage"/>
-                    </controls:TitleArrowControl.GestureRecognizers>
-                </controls:TitleArrowControl>-->
                 </StackLayout>
             </ScrollView>
         </Grid>

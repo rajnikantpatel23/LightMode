@@ -1,6 +1,7 @@
 ﻿using ColorController.Controls;
 using ColorController.Helpers;
 using ColorController.Models;
+using ColorController.Services;
 using SkiaSharp;
 using SkiaSharp.Views.Forms;
 using System;
@@ -16,7 +17,8 @@ namespace ColorController.Cell
     { 
         SKBitmap _srcBitmap;
         SKBitmap _dstBitmap;
-       
+        public IBlueToothService BlueToothService => DependencyService.Get<IBlueToothService>();
+
         public ImageHueSaturationView(string imageName)
         {
             InitializeComponent();
@@ -202,7 +204,7 @@ namespace ColorController.Cell
                     //float saturationAdjust = (float)color.Saturation;
 
                     //Get saturation using luminosity
-                    var saturationAdjust = CommandHelper.GetSaturationValue(color.Luminosity);
+                    var saturationAdjust = BlueToothService.GetSaturationValue(color.Luminosity);
 
                     TransferPixels(hueAdjust, (float)saturationAdjust, 1);
                     canvasView.InvalidateSurface();

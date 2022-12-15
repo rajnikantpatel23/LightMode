@@ -1,6 +1,4 @@
-﻿using Acr.UserDialogs;
-using BLESample1.Views;
-using ColorController.Abstractions;
+﻿using ColorController.Abstractions;
 using ColorController.Helpers;
 using ColorController.ViewModels;
 using System.Threading.Tasks;
@@ -29,7 +27,7 @@ namespace ColorController.Views
         /// </summary>
         private void SetSwitchControlStatus()
         {
-            var autoConnect = Preferences.Get("auto_connect", false);
+            var autoConnect = Preferences.Get("search_in_background", false);
             switchControl.SetSwitchStatus(autoConnect);
             _viewModel.SwitchStatus = autoConnect;
         }
@@ -43,7 +41,7 @@ namespace ColorController.Views
         {
             switchControl.SetSwitchStatus(!switchControl.SwitchStatus);
             _viewModel.SwitchStatus = switchControl.SwitchStatus;
-            Preferences.Set("auto_connect", _viewModel.SwitchStatus);
+            Preferences.Set("search_in_background", _viewModel.SwitchStatus);
             await StopAutoScanSearching();
         }
 
@@ -61,24 +59,6 @@ namespace ColorController.Views
                 await bleHelper.StopScanning();
                 bleHelper.SendMessageToDisplayConnectButton();
             }
-        }
-
-        private void OpenTestPage(object sender, System.EventArgs e)
-        {
-            if (App.Characteristic == null)
-            {
-                UserDialogs.Instance.Alert("Please Connect Controller!");
-            }
-            else
-            {
-                Navigation.PushAsync(new ControllerUpdatePage());
-            }
-        }
-
-        private void OpenMaskingPage(object sender, System.EventArgs e)
-        {
-            Navigation.PushAsync(new ThomasPOC.Views.MaskingPage());
-
         }
     }
 }

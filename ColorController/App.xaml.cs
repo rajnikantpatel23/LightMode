@@ -2,7 +2,6 @@
 using ColorController.Models;
 using ColorController.Services;
 using ColorController.Views;
-using Plugin.BLE.Abstractions.Contracts;
 using System;
 using System.IO;
 using System.Threading.Tasks;
@@ -13,7 +12,6 @@ using Microsoft.AppCenter.Analytics;
 using Microsoft.AppCenter.Crashes;
 using ColorController.Abstractions;
 using FFImageLoading;
-using BLESample1.Views;
 
 namespace ColorController
 {
@@ -40,7 +38,6 @@ namespace ColorController
         public static BaseContentPage ColorsPage { get; internal set; }
         public static Dashboard DashboardInstance { get; internal set; }
         public static int CurrentIndex { get; internal set; }
-        public static ICharacteristic Characteristic { get; internal set; }
         public static bool ContinueFetchingBatteryDetail { get; internal set; }
         public static string BatterPercentages { get; internal set; }
         public static ConnectionButtonState ConnectionState { get; internal set; }
@@ -72,6 +69,7 @@ namespace ColorController
             Sharpnado.Shades.Initializer.Initialize(loggerEnable: false);
             Sharpnado.HorizontalListView.Initializer.Initialize(true, false);
             DependencyService.Register<MockDataStore>();
+            DependencyService.Register<BlueToothService>();
             MainPage = new Dashboard();
             GetLastSelectedColor();
         }

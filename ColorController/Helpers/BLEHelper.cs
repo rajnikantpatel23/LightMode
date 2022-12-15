@@ -3,6 +3,7 @@ using ColorController.Controls;
 using ColorController.Enums;
 using ColorController.Models;
 using ColorController.PopupPages;
+using ColorController.Services;
 using ColorController.StringResources;
 using ColorController.ViewModels;
 using ColorController.Views;
@@ -21,7 +22,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using Xamarin.Essentials;
 using Xamarin.Forms;
-using Xamarin.Forms.Internals;
 
 namespace ColorController.Helpers
 {
@@ -43,8 +43,7 @@ namespace ColorController.Helpers
         //    }
         //}
 
-        private Guid _serviceId = new Guid("4fafc201-1fb5-459e-8fcc-c5c9c331914b");
-        private Guid _characteristicsId = new Guid("beb5483e-36e1-4688-b7f5-ea07361b26a8");
+        public IBlueToothService BlueToothService => DependencyService.Get<IBlueToothService>(); 
 
         List<IDevice> devices;
 
@@ -99,26 +98,14 @@ namespace ColorController.Helpers
                         {
                             // Do something
                             timer++;
-                            if (App.Characteristic != null)
-                            {
-                                loop = false;
-                                timer = 0;
-                                CloseButtonPressPopupPage();
-                            }
 
-                            if (App.ConnectionState == ConnectionButtonState.ShowDisconnect)
-                            {
-                                loop = false;
-                                timer = 0;
-                                CloseButtonPressPopupPage();
-                            }
-
-                            if (App.ConnectionState == ConnectionButtonState.ShowConnect)
-                            {
-                                loop = false;
-                                timer = 0;
-                                CloseButtonPressPopupPage();
-                            }
+                            //To-Do: Need to work here...
+                            //if (App.Characteristic != null || App.ConnectionState == ConnectionButtonState.ShowDisconnect || App.ConnectionState == ConnectionButtonState.ShowConnect)
+                            //{
+                            //    loop = false;
+                            //    timer = 0;
+                            //    CloseButtonPressPopupPage();
+                            //}
 
                             if (timer == endTime)
                             {
@@ -286,12 +273,10 @@ namespace ColorController.Helpers
                     CloseButtonPressPopupPage();
                      
                     //Get service
-                    var service = await device.GetServiceAsync(_serviceId);
+                    var service = await device.GetServiceAsync(BlueToothService.ServiceId);
 
                     //Get characteristic
-                    var characteristic = await service.GetCharacteristicAsync(_characteristicsId);
-
-                    App.Characteristic = characteristic;
+                    var characteristic = await service.GetCharacteristicAsync(BlueToothService.CharacteristicsId);
 
                     characteristic.ValueUpdated += Characteristic_ValueUpdated;
 
@@ -357,7 +342,7 @@ namespace ColorController.Helpers
 
                     MainThread.InvokeOnMainThreadAsync(async () =>
                     {
-                        await CommandHelper.SendCommandToController(StringResource.POWR);
+                        await BlueToothService.SendCommandToController(StringResource.POWR);
                     });
                 }
                 catch (Exception)
@@ -412,9 +397,8 @@ namespace ColorController.Helpers
                 if (executeCommand)
                 {
                     Debug.WriteLine("QUIT Executing...");
-                    await App.Characteristic?.StartUpdatesAsync();
                     var commandArray = Encoding.ASCII.GetBytes(StringResource.QUIT);
-                    await App.Characteristic?.WriteAsync(commandArray);
+                    await BlueToothService.SendCommandToController(StringResource.QUIT);
                 }
             }
             catch (Exception ex)
@@ -425,7 +409,6 @@ namespace ColorController.Helpers
             {
                 App.ConnectionState = ConnectionButtonState.ShowConnect;
                 MessagingCenter.Send<object, string>(this, StringResource.Connection, "QUIT");
-                App.Characteristic = null;
                 App.BatterPercentages = null;
                 UserDialogs.Instance.HideLoading();
                 App.ConnectedControllerVersion = null;
@@ -482,11 +465,10 @@ namespace ColorController.Helpers
                 SendMessageToDisplayDisconnectButton();
 
                 //Get service
-                var service = await device.GetServiceAsync(_serviceId);
+                var service = await device.GetServiceAsync(BlueToothService.ServiceId);
                
                 //Get characteristic
-                var characteristic = await service.GetCharacteristicAsync(_characteristicsId);
-                App.Characteristic = characteristic;
+                var characteristic = await service.GetCharacteristicAsync(BlueToothService.CharacteristicsId);
 
                 characteristic.ValueUpdated += Characteristic_ValueUpdated;
 
@@ -644,7 +626,7 @@ namespace ColorController.Helpers
             {
                 await Task.Delay(500);
                 WriteLog("Sending Command: VERS");
-                await CommandHelper.SendCommandToController("VERS");
+                await BlueToothService.SendCommandToController("VERS");
             }
             catch (Exception)
             {
@@ -658,12 +640,12 @@ namespace ColorController.Helpers
                 var britCommand = Preferences.Get("LastPlayedBritCommand", null);
                 if (!string.IsNullOrWhiteSpace(britCommand))
                 {
-                    await CommandHelper.SendCommandToController(britCommand);
+                    await BlueToothService.SendCommandToController(britCommand);
                 }
                 else
                 {
                     //If first time login then send command to play 'Standard' brightness
-                    await CommandHelper.SendCommandToController("BRIT 040");
+                    await BlueToothService.SendCommandToController("BRIT 040");
                 }
                 await Task.Delay(500);
             }
@@ -680,7 +662,7 @@ namespace ColorController.Helpers
                 {
                     await Task.Delay(500);
                     WriteLog("Sending Command: DFUQ");
-                    await CommandHelper.SendCommandToController("DFUQ");
+                    await BlueToothService.SendCommandToController("DFUQ");
 
                     //Set SendDFUQCommand value to false so this Popup will not appear again.
                     //Preferences.Set(StringResource.SendDFUQCommand, false);
@@ -779,12 +761,12 @@ namespace ColorController.Helpers
             {
                 await Task.Delay(500);
                 WriteLog("Sending Command: BOTS 0");
-                await CommandHelper.SendCommandToController("BOTS 0");
+                await BlueToothService.SendCommandToController("BOTS 0");
 
 
                 await Task.Delay(500);
                 WriteLog("Sending Command: ON--");
-                await CommandHelper.SendCommandToController("ON--");
+                await BlueToothService.SendCommandToController("ON--");
             }
             catch (Exception)
             {
@@ -798,15 +780,16 @@ namespace ColorController.Helpers
             Debug.WriteLine($"---------------------------------------------------------------------------------------");
         }
 
-        private void Characteristic_ValueUpdated(object o, CharacteristicUpdatedEventArgs args)
+        private async void Characteristic_ValueUpdated(object o, CharacteristicUpdatedEventArgs args)
         {
             try
             {
+                //To-Do: Need to work here...
                 //Call below method just after receiving response from controller
-                if (App.Characteristic != null)
-                {
-                    App.Characteristic.StopUpdatesAsync();
-                }
+                //if (App.Characteristic != null)
+                //{
+                //    App.Characteristic.StopUpdatesAsync();
+                //}
 
                 var bytes = args.Characteristic.Value;
                 MainThread.BeginInvokeOnMainThread(() =>

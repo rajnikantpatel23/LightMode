@@ -44,7 +44,7 @@ namespace ColorController.Views
             //}
 
             //_viewModel = BindingContext as FavoritesViewModel;
-        } 
+        }
 
         /// <summary>
         /// Will be called when animation tabbed
@@ -68,7 +68,7 @@ namespace ColorController.Views
                     if (!string.IsNullOrWhiteSpace(App.ConnectedControllerVersion))
                     {
                         selectedAnimationVersion = Constants.GetAnimations().FirstOrDefault(x => x.AnimationType == selectedAnimation.AnimationType).ControllerVersion;
-                        
+
                         var isAnimationVersionParsed = Version.TryParse(selectedAnimationVersion, out Version animationControllerVersion);
                         var isControllerVersionParsed = Version.TryParse(App.ConnectedControllerVersion, out Version connectedControllerVersion);
 
@@ -90,11 +90,11 @@ namespace ColorController.Views
                         }
                         else
                         {
-                            Microsoft.AppCenter.Crashes.Crashes.TrackError(null, new Dictionary<string, string> 
-                            { 
-                                { "FavoritePage: AnimationTapped() Not able to parse version", null }, 
-                                { "Selected Animation Version", $"{selectedAnimationVersion}" }, 
-                                { "Connected Controller Version", $"{App.ConnectedControllerVersion}" }, 
+                            Microsoft.AppCenter.Crashes.Crashes.TrackError(null, new Dictionary<string, string>
+                            {
+                                { "FavoritePage: AnimationTapped() Not able to parse version", null },
+                                { "Selected Animation Version", $"{selectedAnimationVersion}" },
+                                { "Connected Controller Version", $"{App.ConnectedControllerVersion}" },
                             });
                         }
                     }
@@ -134,80 +134,77 @@ namespace ColorController.Views
         {
             try
             {
-                if (App.Characteristic != null && App.ConnectionState == Enums.ConnectionButtonState.ShowDisconnect)
+                #region OFF- Command
+                ////UserDialogs.Instance.ShowLoading(StringResource.PleaseWait);
+                //Debug.WriteLine($"OFF Command executing.........{DateTime.Now.ToString("hh:mm:ss")}");
+                //await BlueToothService.SendCommandToController("OFF-");
+                //Debug.WriteLine($"OFF Command executed.........{DateTime.Now.ToString("hh:mm:ss")}");
+                //await Task.Delay(_delay); 
+                #endregion
+
+                #region OPTS Command
+                if (selectedAnimation.AnimationType != Enums.AnimationType.Technetium)
                 {
-                    #region OFF- Command
-                    ////UserDialogs.Instance.ShowLoading(StringResource.PleaseWait);
-                    //Debug.WriteLine($"OFF Command executing.........{DateTime.Now.ToString("hh:mm:ss")}");
-                    //await CommandHelper.SendCommandToController("OFF-");
-                    //Debug.WriteLine($"OFF Command executed.........{DateTime.Now.ToString("hh:mm:ss")}");
-                    //await Task.Delay(_delay); 
-                    #endregion
-
-                    #region OPTS Command
-                    if (selectedAnimation.AnimationType != Enums.AnimationType.Technetium)
-                    {
-                        try
-                        {
-                            Debug.WriteLine($"Hue Command executing for {selectedAnimation.Title}.........{DateTime.Now.ToString("hh:mm:ss")}");
-                            await CommandHelper.SendHueSaturationToController(selectedAnimation.SelectedColor1);
-                            Debug.WriteLine($"Hue Command executed for {selectedAnimation.Title}.......{DateTime.Now.ToString("hh:mm:ss")}");
-                        }
-                        catch (Exception)
-                        {
-                            try
-                            {
-                                await Task.Delay(_delay);
-                                Debug.WriteLine($"Exception Hue Command executing for {selectedAnimation.Title}.........{DateTime.Now.ToString("hh:mm:ss")}");
-                                await CommandHelper.SendHueSaturationToController(selectedAnimation.SelectedColor1);
-                                Debug.WriteLine($"Exception Hue Command executed for {selectedAnimation.Title}.......{DateTime.Now.ToString("hh:mm:ss")}");
-                            }
-                            catch (Exception)
-                            {
-                                await Task.Delay(_delay);
-                                Debug.WriteLine($"Exception2 Hue Command executing for {selectedAnimation.Title}.........{DateTime.Now.ToString("hh:mm:ss")}");
-                                await CommandHelper.SendHueSaturationToController(selectedAnimation.SelectedColor1);
-                                Debug.WriteLine($"Exception2 Hue Command executed for {selectedAnimation.Title}.......{DateTime.Now.ToString("hh:mm:ss")}");
-                            }
-                        }
-                    }
-                    #endregion
-
-                    #region PATT Command
                     try
                     {
-                        await Task.Delay(_delay);
-                        Debug.WriteLine($"PATT Command executing for {selectedAnimation.Title}.........{DateTime.Now.ToString("hh:mm:ss")}");
-                        await CommandHelper.SendCommandToController(selectedAnimation.Command, false);
-                        Debug.WriteLine($"PATT Command executed for {selectedAnimation.Title}.........{DateTime.Now.ToString("hh:mm:ss")}");
+                        Debug.WriteLine($"Hue Command executing for {selectedAnimation.Title}.........{DateTime.Now.ToString("hh:mm:ss")}");
+                        await BlueToothService.SendHueSaturationToController(selectedAnimation.SelectedColor1);
+                        Debug.WriteLine($"Hue Command executed for {selectedAnimation.Title}.......{DateTime.Now.ToString("hh:mm:ss")}");
                     }
                     catch (Exception)
                     {
                         try
                         {
                             await Task.Delay(_delay);
-                            Debug.WriteLine($"Exception PATT Command executing for {selectedAnimation.Title}.........{DateTime.Now.ToString("hh:mm:ss")}");
-                            await CommandHelper.SendCommandToController(selectedAnimation.Command, false);
-                            Debug.WriteLine($"Exception PATT Command executed for {selectedAnimation.Title}.........{DateTime.Now.ToString("hh:mm:ss")}");
+                            Debug.WriteLine($"Exception Hue Command executing for {selectedAnimation.Title}.........{DateTime.Now.ToString("hh:mm:ss")}");
+                            await BlueToothService.SendHueSaturationToController(selectedAnimation.SelectedColor1);
+                            Debug.WriteLine($"Exception Hue Command executed for {selectedAnimation.Title}.......{DateTime.Now.ToString("hh:mm:ss")}");
                         }
                         catch (Exception)
                         {
-                            try
-                            {
-                                await Task.Delay(_delay);
-                                Debug.WriteLine($"Exception2 PATT Command executing for {selectedAnimation.Title}.........{DateTime.Now.ToString("hh:mm:ss")}");
-                                await CommandHelper.SendCommandToController(selectedAnimation.Command, false);
-                                Debug.WriteLine($"Exception2 PATT Command executed for {selectedAnimation.Title}.........{DateTime.Now.ToString("hh:mm:ss")}");
-                            }
-                            catch (Exception)
-                            {
-                                selectedAnimation.IsSelected = false;
-                                _lastSelectedItem = null;
-                            }
+                            await Task.Delay(_delay);
+                            Debug.WriteLine($"Exception2 Hue Command executing for {selectedAnimation.Title}.........{DateTime.Now.ToString("hh:mm:ss")}");
+                            await BlueToothService.SendHueSaturationToController(selectedAnimation.SelectedColor1);
+                            Debug.WriteLine($"Exception2 Hue Command executed for {selectedAnimation.Title}.......{DateTime.Now.ToString("hh:mm:ss")}");
                         }
                     }
-                    #endregion
                 }
+                #endregion
+
+                #region PATT Command
+                try
+                {
+                    await Task.Delay(_delay);
+                    Debug.WriteLine($"PATT Command executing for {selectedAnimation.Title}.........{DateTime.Now.ToString("hh:mm:ss")}");
+                    await BlueToothService.SendCommandToController(selectedAnimation.Command, false);
+                    Debug.WriteLine($"PATT Command executed for {selectedAnimation.Title}.........{DateTime.Now.ToString("hh:mm:ss")}");
+                }
+                catch (Exception)
+                {
+                    try
+                    {
+                        await Task.Delay(_delay);
+                        Debug.WriteLine($"Exception PATT Command executing for {selectedAnimation.Title}.........{DateTime.Now.ToString("hh:mm:ss")}");
+                        await BlueToothService.SendCommandToController(selectedAnimation.Command, false);
+                        Debug.WriteLine($"Exception PATT Command executed for {selectedAnimation.Title}.........{DateTime.Now.ToString("hh:mm:ss")}");
+                    }
+                    catch (Exception)
+                    {
+                        try
+                        {
+                            await Task.Delay(_delay);
+                            Debug.WriteLine($"Exception2 PATT Command executing for {selectedAnimation.Title}.........{DateTime.Now.ToString("hh:mm:ss")}");
+                            await BlueToothService.SendCommandToController(selectedAnimation.Command, false);
+                            Debug.WriteLine($"Exception2 PATT Command executed for {selectedAnimation.Title}.........{DateTime.Now.ToString("hh:mm:ss")}");
+                        }
+                        catch (Exception)
+                        {
+                            selectedAnimation.IsSelected = false;
+                            _lastSelectedItem = null;
+                        }
+                    }
+                }
+                #endregion
             }
             catch (Exception)
             {
@@ -291,8 +288,8 @@ namespace ColorController.Views
                     //colectionViewLayout.Span = 1;
                     HorizontalListView.ColumnCount = 2;
                     GridContainer.Style = (Style)App.Current.Resources["GridMarginStylePortrait"];
-                } 
+                }
             }
-        } 
+        }
     }
 }

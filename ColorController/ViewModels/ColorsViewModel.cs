@@ -123,7 +123,7 @@ namespace ColorController.ViewModels
                     UserDialogs.Instance.ShowLoading(StringResource.PleaseWait);
                     _selectedTileColor = obj as MyColor;
 
-                    await CommandHelper.SendHueSaturationToController(_selectedTileColor.Color);
+                    await BlueToothService.SendHueSaturationToController(_selectedTileColor.Color);
 
                     foreach (var item in MyColors.Where(x => x != _selectedTileColor))
                     {
@@ -221,7 +221,7 @@ namespace ColorController.ViewModels
                 try
                 {
                     UserDialogs.Instance.ShowLoading(StringResource.PleaseWait);
-                    await CommandHelper.SendHueSaturationToController(color);
+                    await BlueToothService.SendHueSaturationToController(color);
                     App.CurrentSelectedColor = color;
                     ReloadAnimationPageList();
                 }

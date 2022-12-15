@@ -17,12 +17,15 @@ using ColorController.Views;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using Plugin.BLE.Abstractions.Contracts;
 
 namespace ColorController.PopupPages
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class UpdatingPopupPage : BasePopupPage
     {
+        public IBlueToothService BlueToothService => DependencyService.Get<IBlueToothService>();
+
         CancellationTokenSource _cancellationTokenSource;
 
         private double _ProgressValue;
@@ -72,7 +75,7 @@ namespace ColorController.PopupPages
         public async void UpdateFirmware(string ssid, string password)
         {
             try
-            {
+            {               
                 var delay = 2000;
                 var url = Constants.BinaryUrl;
 
@@ -141,6 +144,9 @@ namespace ColorController.PopupPages
         {
             try
             {
+                var characteristics = await BlueToothService.GetCharacteristics();
+                var characteristic = characteristics.FirstOrDefault();
+
                 int totalProgress = 100;
                 int newAnimationsToUpload = 0;
                 var completedPercentages = 0;
@@ -189,11 +195,11 @@ namespace ColorController.PopupPages
                             //WriteLog($"Sending Command: STOR {animation.Code} {fileSize}");
 
                             _cancellationTokenSource.Token.ThrowIfCancellationRequested();
-                            await App.Characteristic.StartUpdatesAsync();
+                            await characteristic.StartUpdatesAsync();
 
                             var commandArray = Encoding.ASCII.GetBytes($"STOR {animation.Code} {fileSize}");
                             _cancellationTokenSource.Token.ThrowIfCancellationRequested();
-                            var response = await App.Characteristic.WriteAsync(commandArray);
+                            var response = await characteristic.WriteAsync(commandArray);
 
                             if (Device.RuntimePlatform == Device.Android)
                             {
@@ -205,7 +211,7 @@ namespace ColorController.PopupPages
                             //var startingTime = DateTime.Now;
                             //WriteLog($"Sending Chunks : {startingTime}");
 
-                            //await App.Characteristic.StartUpdatesAsync();
+                            //await characteristic.StartUpdatesAsync();
                             int start = 0;
                             var byteArray = GetFileByteArray(stream);
                             while (start < byteArray.Length)
@@ -219,7 +225,7 @@ namespace ColorController.PopupPages
                                     await Task.Delay(50);
                                 }
                                 _cancellationTokenSource.Token.ThrowIfCancellationRequested();
-                                await App.Characteristic.WriteAsync(chunk);
+                                await characteristic.WriteAsync(chunk);
                                 start += App.SIZE;
                             }
 
@@ -291,12 +297,12 @@ namespace ColorController.PopupPages
             try
             {
                 _cancellationTokenSource.Token.ThrowIfCancellationRequested();
-                await App.Characteristic.StartUpdatesAsync();
+                //await App.Characteristic.StartUpdatesAsync();
                 var commandArray = Encoding.ASCII.GetBytes($"DONE\r\n");
                 _cancellationTokenSource.Token.ThrowIfCancellationRequested();
                 await Task.Delay(500);
                 _cancellationTokenSource.Token.ThrowIfCancellationRequested();
-                var response = await App.Characteristic.WriteAsync(commandArray);
+                //var response = await App.Characteristic.WriteAsync(commandArray);
                 await Task.Delay(500);
             }
             catch (OperationCanceledException)
@@ -314,8 +320,6 @@ namespace ColorController.PopupPages
         {
             Task.Run(async () =>
             {
-                var autoConnect = Preferences.Get("auto_connect", false);
-
                 //Get bluetooth status on App Starts
                 if (Device.RuntimePlatform == Device.iOS && !CrossBluetoothLE.Current.IsOn)
                 {
@@ -324,7 +328,7 @@ namespace ColorController.PopupPages
                     await Task.Delay(500);
                 }
 
-                if ((CrossBluetoothLE.Current.IsOn || App.IsiOSBluetoothOn) && !App.IsScanningAlreadyGoingOn && App.Characteristic == null)
+                if ((CrossBluetoothLE.Current.IsOn || App.IsiOSBluetoothOn) && !App.IsScanningAlreadyGoingOn/* && App.Characteristic == null*/)
                 {
                     Preferences.Set("defaultControllerName", App.ConnectedController.Name);
 
@@ -348,7 +352,7 @@ namespace ColorController.PopupPages
         {
             try
             {
-                await CommandHelper.SendCommandToUpdateFirmware(command, cancellationToken: _cancellationTokenSource.Token);
+                await BlueToothService.SendCommandToUpdateFirmware(command, cancellationToken: _cancellationTokenSource.Token);
             }
             catch (OperationCanceledException)
             {

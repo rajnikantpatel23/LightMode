@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿using ColorController.Services;
+using System;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -12,13 +8,12 @@ namespace ColorController.Abstractions
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class BaseContentPage : ContentPage
     {
+        public IBlueToothService BlueToothService => DependencyService.Get<IBlueToothService>();
+
         public BaseContentPage()
         {
             try
             {
-                //BackgroundColor = (Color)App.Current.Resources["PageBackgroundColor"];
-                //SetBinding(IconImageSourceProperty, new Binding("Icon"));
-                //SetBinding(TitleProperty, new Binding("Title"));
                 NavigationPage.SetHasNavigationBar(this, false);
             }
             catch (Exception)

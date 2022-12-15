@@ -19,6 +19,7 @@ namespace ColorController.Abstractions
     {
         public IDataStore<Item> DataStore => DependencyService.Get<IDataStore<Item>>();
 
+        public IBlueToothService BlueToothService => DependencyService.Get<IBlueToothService>();
 
         bool isBusy = false;
         public bool IsBusy

@@ -1,6 +1,7 @@
 ﻿using ColorController.Helpers;
 using ColorController.StringResources;
 using ColorController.Views;
+using System;
 using System.Windows.Input;
 using Xamarin.Forms;
 
@@ -26,6 +27,7 @@ namespace ColorController.ViewModels
         public ICommand BootSequenceTappedCommand { get; set; }
         public ICommand DevicesTappedCommand { get; set; }
         public ICommand UpdatesTappedCommand { get; set; }
+        public ICommand PairNewDeviceCommand { get; set; }
 
         private INavigation _navigation;
 
@@ -40,7 +42,13 @@ namespace ColorController.ViewModels
             DevicesTappedCommand = new Command(DevicesTapped);
             UpdatesTappedCommand = new Command(UpdatesTapped);
             DetailsTappedCommand = new Command(DetailsTapped);
+            PairNewDeviceCommand = new Command(PairNewDevice);
             _navigation = navigation;
+        }
+
+        private async void PairNewDevice(object obj)
+        {
+            await BlueToothService.ScanAndConnectDevice();
         }
 
         private void DetailsTapped(object obj)

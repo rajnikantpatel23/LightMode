@@ -1,6 +1,7 @@
 ﻿using Acr.UserDialogs;
 using ColorController.Enums;
 using ColorController.Helpers;
+using ColorController.Services;
 using ColorController.StringResources;
 using System;
 using System.Threading.Tasks;
@@ -13,6 +14,8 @@ namespace ColorController.Controls
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class IntensitySliderControl : Grid
     {
+        public IBlueToothService BlueToothService => DependencyService.Get<IBlueToothService>();
+
         private bool _isClicked;
 
         private double _sliderValuer;
@@ -189,11 +192,8 @@ namespace ColorController.Controls
                     return;
                 _isClicked = true;
 
-                if (App.Characteristic != null && App.ConnectionState == ConnectionButtonState.ShowDisconnect)
-                {
-                    UserDialogs.Instance.ShowLoading(StringResource.PleaseWait);
-                    await CommandHelper.SendCommandToController(command);
-                }
+                UserDialogs.Instance.ShowLoading(StringResource.PleaseWait);
+                await BlueToothService.SendCommandToController(command);
             }
             catch (Exception)
             {
