@@ -1,0 +1,59 @@
+﻿
+Helper links:
+==============
+https://www.sharpnado.com/sharpnado-shadows-add-many-shadows-to-any-xamarin-forms-view/
+
+UdaraAlwis :
+----------------
+https://theconfuzedsourcecode.wordpress.com/2020/02/26/i-built-an-interactive-color-picker-control-for-xamarin-forms/
+https://theconfuzedsourcecode.wordpress.com/2020/03/17/publishing-the-nuget-of-my-color-picker-control-for-xamarin-forms/
+https://github.com/UdaraAlwis/XFColorPickerControl
+
+ColorPicker
+https://github.com/daltonks/Spillman.Xamarin.Forms.ColorPicker
+
+https://xamarinmonkeys.blogspot.com/2017/12/xamariinforms-border-shadow-effects_18.html
+
+https://devblogs.microsoft.com/xamarin/embedded-fonts-xamarin-forms/
+https://www.flokri.com/development/xamarin-development/howto-gradient-button-in-xamarin-forms/
+
+https://medium.com/@tsjdevapps/custom-fonts-in-xamarin-forms-app-d2a1f29b8191
+
+https://forums.xamarin.com/discussion/138361/change-cursor-color-in-entry
+
+Tint Image
+https://byteloom.marek-mierzwa.com/mobile/2018/02/07/setting-tint-color-in-xamarin-form-image.html
+https://github.com/MSicc/XfEffects
+
+https://stackoverflow.com/questions/48304319/image-tint-button-android-xamarin-forms
+https://forums.xamarin.com/discussion/138361/change-cursor-color-in-entry
+
+https://www.syncfusion.com/forums/144683/how-can-i-prevent-scrolling-when-focus-is-on-sfimageeditor
+https://www.syncfusion.com/downloads/support/directtrac/general/ze/ImageEditor_ScrollView-18256552651985707542
+
+https://montemagno.com/xamarin-forms-fully-customize-bottom-tabs-on-android-turn-off-shifting/
+
+Latest version check
+https://github.com/edsnider/latestversionplugin
+
+
+iOS WIFI:
+https://stackoverflow.com/questions/52539526/getting-the-ssid-of-the-connected-wifi-on-ios-12-xamarin-updated-for-ios-13
+
+
+inks for GIF fix
+====================
+https://stackoverflow.com/questions/52722975/how-to-rapid-load-image-gif-use-ffimageloading-in-xamarin-forms?noredirect=1&lq=1
+https://stackoverflow.com/questions/47748780/creating-an-extension-of-webview-in-xamarin-froms-to-display-gifs-i-cannot-load
+
+https://forums.xamarin.com/discussion/34957/creating-a-webview-with-a-transparent-background
+
+https://github.com/Emixam23/XamarinByEmixam23/tree/master/Detailed%20Part/Controls/GifProject/GifProject/GifProject
+
+https://stackoverflow.com/questions/40804796/unable-to-open-a-gif-in-xamarin-forms-via-webview
+
+FFImage:
+==========
+https://github.com/luberda-molinet/FFImageLoading/issues/1253
+https://github.com/luberda-molinet/FFImageLoading/wiki/Xamarin.Forms-API
+https://github.com/ManhDucIT/FFImageLoadingPreload

@@ -1,0 +1,83 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<popuppages:BasePopupPage 
+    xmlns:popuppages="clr-namespace:ColorController.PopupPages"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    CloseWhenBackgroundIsClicked="True"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"  
+    BackgroundColor="Transparent"
+    xmlns:yummy="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
+    xmlns:sh="http://sharpnado.com"
+    x:Class="ColorController.PopupPages.ConnectedPopupPage">
+    <sh:Shadows CornerRadius="10">
+        <sh:Shadows.Shades>
+            <sh:ImmutableShades>
+                <sh:Shade BlurRadius="5"
+                          Opacity="0.8"
+                          Offset="8,8"
+                          Color="Black" />
+            </sh:ImmutableShades>
+        </sh:Shadows.Shades>
+        <yummy:PancakeView HorizontalOptions="Fill"                   
+                           VerticalOptions="Center"                                  
+                           BackgroundColor="#994DDDFF"                            
+                           Padding="3" >
+
+            <yummy:PancakeView.Border>
+                <yummy:Border Thickness="2" Color="#804DDDFF"/>
+            </yummy:PancakeView.Border>
+            <yummy:PancakeView.Margin>
+                <OnIdiom x:TypeArguments="Thickness">
+                    <OnIdiom.Phone>
+                        <OnPlatform x:TypeArguments="Thickness"
+                                            iOS="30,0" 
+                                            Android="30,0" />
+                    </OnIdiom.Phone>
+                    <OnIdiom.Tablet>
+                        <OnPlatform x:TypeArguments="Thickness" 
+                                            iOS="100,0"
+                                            Android="100,0" />
+                    </OnIdiom.Tablet>
+                </OnIdiom>
+            </yummy:PancakeView.Margin>
+            <yummy:PancakeView HorizontalOptions="FillAndExpand"   
+                               VerticalOptions="Center" 
+                               BackgroundColor="#FF1E1D22" >
+                <yummy:PancakeView.Border>
+                    <yummy:Border Thickness="1" Color="#80000000"/>
+                </yummy:PancakeView.Border>
+                <yummy:PancakeView.BackgroundGradientStops>
+                    <yummy:GradientStopCollection>
+                        <yummy:GradientStop Color="#FF1E1D22" Offset="0" />
+                        <yummy:GradientStop Color="#FF27262B" Offset="0.5" />
+                        <yummy:GradientStop Color="#FF1E1D22" Offset="1" />
+                    </yummy:GradientStopCollection>
+                </yummy:PancakeView.BackgroundGradientStops>
+                <yummy:PancakeView.Shadow>
+                    <yummy:DropShadow Color="#FF1E1D22" Offset="5,5"/>
+                </yummy:PancakeView.Shadow>
+                <Grid RowSpacing="20">
+                    <Grid.Margin>
+                        <OnIdiom x:TypeArguments="Thickness">
+                            <OnIdiom.Phone>
+                                <OnPlatform x:TypeArguments="Thickness"
+                                        iOS="50,30" 
+                                        Android="50,30" />
+                            </OnIdiom.Phone>
+                            <OnIdiom.Tablet>
+                                <OnPlatform x:TypeArguments="Thickness" 
+                                        iOS="150,30"
+                                        Android="150,30" />
+                            </OnIdiom.Tablet>
+                        </OnIdiom>
+                    </Grid.Margin>
+
+                    <Label Text="{Binding TextMessage, StringFormat='Connected to {0}!'}" 
+                       HorizontalTextAlignment="Center" 
+                       VerticalTextAlignment="Center"
+                       Style="{DynamicResource Label14Style}" />
+                </Grid>
+            </yummy:PancakeView>
+
+        </yummy:PancakeView>
+    </sh:Shadows>
+</popuppages:BasePopupPage>

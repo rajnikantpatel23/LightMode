@@ -1,0 +1,76 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<abstractions:BaseContentPage xmlns:abstractions="clr-namespace:ColorController.Abstractions"
+                              xmlns="http://xamarin.com/schemas/2014/forms"
+                              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+                              xmlns:controls="clr-namespace:ColorController.Controls"                               
+                              xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core" 
+                              ios:Page.UseSafeArea="True"
+                              xmlns:yummy="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
+                              BackgroundColor="#FF2B2B2D"
+                              x:Class="ColorController.Views.ControllerUpdateDetailPage">
+    <Grid> 
+        <Grid RowSpacing="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <controls:NavigationBarControl ShowBackButton="True" 
+                                           BackButtonEvent="BackButtonTapped"
+                                           Title="{Binding Item.Text}"/>
+
+            <controls:GradientBackgroundControl Grid.Row="1"/>
+
+            <Grid Grid.Row="1" 
+                  VerticalOptions="FillAndExpand" 
+                  Margin="30,30">
+                <StackLayout Spacing="0">
+                    <Label Text="{Binding DisplayText, Mode=TwoWay}" 
+                           HorizontalTextAlignment="Center" 
+                           HorizontalOptions="Center"
+                           Style="{DynamicResource Label14Style}"/>
+                </StackLayout>
+
+                <ImageButton Source="updatebtnHigh.png" 
+                             IsVisible="{Binding UpdateFirmwareButtonVisibility, Mode=TwoWay}"
+                             Clicked="UpdateFirmwareButtonClicked"
+                             VerticalOptions="End">
+                    <ImageButton.HeightRequest>
+                        <OnIdiom x:TypeArguments="x:Double">
+                            <OnIdiom.Phone>
+                                <OnPlatform x:TypeArguments="x:Double"
+                                                iOS="35" 
+                                                Android="35" />
+                            </OnIdiom.Phone>
+                            <OnIdiom.Tablet>
+                                <OnPlatform x:TypeArguments="x:Double"
+                                                iOS="60"
+                                                Android="60" />
+                            </OnIdiom.Tablet>
+                        </OnIdiom>
+                    </ImageButton.HeightRequest>             
+                </ImageButton>
+
+                <ImageButton Source="updatebtnHigh.png" 
+                             IsVisible="{Binding UpdateAppButtonVisibility, Mode=TwoWay}"
+                             Clicked="UpdateAppButtonClicked"
+                             VerticalOptions="End">
+                    <ImageButton.HeightRequest>
+                        <OnIdiom x:TypeArguments="x:Double">
+                            <OnIdiom.Phone>
+                                <OnPlatform x:TypeArguments="x:Double"
+                                                iOS="35" 
+                                                Android="35" />
+                            </OnIdiom.Phone>
+                            <OnIdiom.Tablet>
+                                <OnPlatform x:TypeArguments="x:Double"
+                                                iOS="60"
+                                                Android="60" />
+                            </OnIdiom.Tablet>
+                        </OnIdiom>
+                    </ImageButton.HeightRequest>
+                </ImageButton>
+            </Grid>
+        </Grid>
+    </Grid>
+</abstractions:BaseContentPage>

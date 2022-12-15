@@ -1,0 +1,59 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<DataTemplate xmlns="http://xamarin.com/schemas/2014/forms"
+              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+              xmlns:controls="clr-namespace:ColorController.Controls"
+              xmlns:pancakeview="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
+              xmlns:sho="http://sharpnado.com"
+              x:Class="ColorController.DataTemplates.SuperWaveTemplate"
+              xmlns:cell="clr-namespace:ColorController.Cell">
+    <sho:DraggableViewCell>
+        <Grid Padding="8">
+            <controls:AnimationTileShadowControl IsVisible="{Binding IsSelected, Mode=TwoWay}"/>
+
+            <pancakeview:PancakeView>
+                <pancakeview:PancakeView.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="AnimationTapped"
+                                  CommandParameter="{Binding }"/>
+                </pancakeview:PancakeView.GestureRecognizers>
+                <pancakeview:PancakeView.Border>
+                    <pancakeview:Border Color="{Binding IsSelected, Converter={StaticResource SelectedAnimationBorderColorConverter}}" Thickness="2"/>
+                </pancakeview:PancakeView.Border>
+                <pancakeview:PancakeView.CornerRadius>
+                    <OnIdiom x:TypeArguments="CornerRadius">
+                        <OnIdiom.Phone>
+                            <OnPlatform x:TypeArguments="CornerRadius" iOS="5" Android="5" />
+                        </OnIdiom.Phone>
+                        <OnIdiom.Tablet>
+                            <OnPlatform x:TypeArguments="CornerRadius" iOS="10" Android="10" />
+                        </OnIdiom.Tablet>
+                    </OnIdiom>
+                </pancakeview:PancakeView.CornerRadius>
+                <pancakeview:PancakeView.HeightRequest>
+                    <OnIdiom x:TypeArguments="x:Double">
+                        <OnIdiom.Phone>
+                            <OnPlatform x:TypeArguments="x:Double" iOS="170" Android="170" />
+                        </OnIdiom.Phone>
+                        <OnIdiom.Tablet>
+                            <OnPlatform x:TypeArguments="x:Double" iOS="240" Android="240" />
+                        </OnIdiom.Tablet>
+                    </OnIdiom>
+                </pancakeview:PancakeView.HeightRequest>
+
+                <Grid RowDefinitions="Auto, *" RowSpacing="0" BackgroundColor="Black">
+                    <controls:AnimationMenuBarControl InfoIconTappedEvent="InfoIconTapped"
+                                                      StarIconTappedEvent="StarIconTapped"/>
+
+                    <cell:ImageHueSaturationView Grid.Row="1" 
+                                                 IsClippedToBounds="True"
+                                                 Margin="20">
+                        <x:Arguments>
+                            <x:String>PortalCombined.png</x:String>
+                        </x:Arguments>
+                    </cell:ImageHueSaturationView>
+
+                    <controls:UpdateShieldControl Grid.RowSpan="2" IsVisible="{Binding IsShieldVisible, Mode=TwoWay}"/>
+                </Grid>
+            </pancakeview:PancakeView>
+        </Grid>
+    </sho:DraggableViewCell>
+</DataTemplate>

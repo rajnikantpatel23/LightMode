@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Grid xmlns="http://xamarin.com/schemas/2014/forms" 
+      xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+      xmlns:behaviour="clr-namespace:ProdKart.Behaviour" xmlns:yummy="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
+      x:Class="ColorController.Controls.CustomButtonControl" BackgroundColor="Transparent"
+      x:Name="this" WidthRequest="{Binding ButtonWidth,Source={x:Reference this}}"
+      VerticalOptions="Center">
+    <Grid.Behaviors>
+        <behaviour:ViewTappedButtonBehavior AnimationType="Fade"/>
+    </Grid.Behaviors>
+    <Image ScaleX="{Binding ScaleX,Source={x:Reference this}}"   
+           ScaleY="{Binding ScaleY,Source={x:Reference this}}" 
+           Aspect="AspectFit"    BackgroundColor="Transparent"
+           Source="buttonbg.png"  
+           VerticalOptions="FillAndExpand"/>
+    <yummy:PancakeView  HeightRequest="9"  BackgroundColor="Transparent"  
+                        WidthRequest="40"     
+                        IsVisible="{Binding TextColor, Source={x:Reference title},Converter={StaticResource ButtonGlowEffectConverter}}" 
+                        VerticalOptions="Center" 
+                        HorizontalOptions="Center"     >
+        <yummy:PancakeView.Border>
+            <yummy:Border Thickness="1" Color="Transparent"/>
+        </yummy:PancakeView.Border>
+        <yummy:PancakeView.IsVisible>
+            <OnPlatform x:TypeArguments="x:Boolean">
+                <OnPlatform.Platforms>
+                    <On Platform="iOS" Value="True" />
+                    <On Platform="Android" Value="False" /> 
+                </OnPlatform.Platforms>
+            </OnPlatform>
+        </yummy:PancakeView.IsVisible>
+        <yummy:PancakeView.Shadow>
+            <yummy:DropShadow Color="#9900FFFF" Offset="0,0"/>
+        </yummy:PancakeView.Shadow>
+    </yummy:PancakeView>
+    <Label Text="{Binding Title, Source={x:Reference this}}"  
+           FontFamily="{Binding FontFamilyValue, Source={x:Reference this}}"  
+           TextColor="{Binding ButtonTextColor, Source={x:Reference this}}"
+           VerticalTextAlignment="Center"
+           HorizontalOptions="Center"  BackgroundColor="Transparent"
+           x:Name="title"
+           HorizontalTextAlignment="Center" 
+           FontSize="{Binding FontSize, Source={x:Reference this}}"/>
+    
+</Grid>

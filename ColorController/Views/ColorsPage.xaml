@@ -1,0 +1,268 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<abstractions:BaseContentPage  xmlns:abstractions="clr-namespace:ColorController.Abstractions"
+                               xmlns="http://xamarin.com/schemas/2014/forms"
+                               xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+                               xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core" 
+                               ios:Page.UseSafeArea="True"  
+                               BackgroundColor="#FF2B2B2D"  
+                               xmlns:yummy="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
+                               xmlns:controls="clr-namespace:ColorController.Controls" 
+                               xmlns:resources="clr-namespace:ProdKart.Resources"
+                               xmlns:sho="http://sharpnado.com" 
+                               xmlns:colorpicker="clr-namespace:Spillman.Xamarin.Forms.ColorPicker"
+                               xmlns:behaviour="clr-namespace:ProdKart.Behaviour"
+                               x:Class="ColorController.Views.ColorsPage">
+    <Grid>
+        <Image Source="background.png" Aspect="AspectFill"/>
+        <!--<Grid BackgroundColor="#8C000000"/>-->
+
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <controls:NavigationBarControl Title="COLOR" />
+
+            <Grid Grid.Row="1" 
+                  Padding="15,10">
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="1.8*"/>
+                </Grid.RowDefinitions>
+
+                <Frame IsVisible="True"
+                        BorderColor="Black" 
+                        CornerRadius="3"   
+                        Padding="5" 
+                        BackgroundColor="#FF2B2B2D"
+                        HorizontalOptions="FillAndExpand" 
+                        VerticalOptions="FillAndExpand">
+                    <colorpicker:ColorPickerView/>
+                </Frame>
+
+                <StackLayout Grid.Row="1" >
+                    <controls:IntensitySliderControl x:Name="intensitySliderControlPhone" Margin="0,-10" IntensityValue="{Binding SelectedIntensityValue, Mode=TwoWay}"/>
+
+                    <yummy:PancakeView VerticalOptions="FillAndExpand"
+                                       CornerRadius="8" 
+                                       Padding="2" 
+                                       BackgroundColor="#80000000">
+
+                        <yummy:PancakeView.Border>
+                            <yummy:Border Color="#FF262629" Thickness="1"/>
+                        </yummy:PancakeView.Border>
+                        <yummy:PancakeView Padding="10"   
+                                           CornerRadius="8"
+                                           BackgroundColor="#FF18171C">
+                            <StackLayout Spacing="0" IsClippedToBounds="False">
+
+                                <!--Save & Remove Button-->
+                                <Grid  IsClippedToBounds="False" VerticalOptions="Start">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto"/>
+                                    </Grid.RowDefinitions>
+
+                                    <Grid VerticalOptions="Center">
+                                        <Grid.Behaviors>
+                                            <behaviour:ViewTappedButtonBehavior AnimationType="Fade"/>
+                                        </Grid.Behaviors>
+                                        <Grid.GestureRecognizers>
+                                            <TapGestureRecognizer Command="{Binding SaveTappedCommand}" 
+                                                                  CommandParameter="{Binding }"/>
+                                        </Grid.GestureRecognizers>
+                                        <Grid.HeightRequest>
+                                            <OnIdiom x:TypeArguments="x:Double">
+                                                <OnIdiom.Phone>
+                                                    <OnPlatform x:TypeArguments="x:Double"
+                                                                    iOS="50" 
+                                                                    Android="50" />
+                                                </OnIdiom.Phone>
+                                                <OnIdiom.Tablet>
+                                                    <OnPlatform x:TypeArguments="x:Double" 
+                                                                    iOS="55"
+                                                                    Android="55" />
+                                                </OnIdiom.Tablet>
+                                            </OnIdiom>
+                                        </Grid.HeightRequest>
+                                        <ImageButton Source="buttonAdd.png"
+                                                     VerticalOptions="Center"
+                                                     Command="{Binding SaveTappedCommand}" 
+                                                     CommandParameter="{Binding }" >
+                                            <ImageButton.HeightRequest>
+                                                <OnIdiom x:TypeArguments="x:Double">
+                                                    <OnIdiom.Phone>
+                                                        <OnPlatform x:TypeArguments="x:Double"
+                                                                iOS="28" 
+                                                                Android="28" />
+                                                    </OnIdiom.Phone>
+                                                    <OnIdiom.Tablet>
+                                                        <OnPlatform x:TypeArguments="x:Double" 
+                                                                iOS="45"
+                                                                Android="45" />
+                                                    </OnIdiom.Tablet>
+                                                </OnIdiom>
+                                            </ImageButton.HeightRequest>
+                                        </ImageButton>
+                                    </Grid>
+
+                                    <Grid Grid.Column="2" VerticalOptions="Center">
+                                        <Grid.Behaviors>
+                                            <behaviour:ViewTappedButtonBehavior AnimationType="Fade"/>
+                                        </Grid.Behaviors>
+                                        <Grid.GestureRecognizers>
+                                            <TapGestureRecognizer Command="{Binding RemoveTappedCommand}" 
+                                                                  CommandParameter="{Binding }"/>
+                                        </Grid.GestureRecognizers>
+                                        <Grid.HeightRequest>
+                                            <OnIdiom x:TypeArguments="x:Double">
+                                                <OnIdiom.Phone>
+                                                    <OnPlatform x:TypeArguments="x:Double"
+                                                                iOS="50" 
+                                                                Android="50" />
+                                                </OnIdiom.Phone>
+                                                <OnIdiom.Tablet>
+                                                    <OnPlatform x:TypeArguments="x:Double" 
+                                                                iOS="55"
+                                                                Android="55" />
+                                                </OnIdiom.Tablet>
+                                            </OnIdiom>
+                                        </Grid.HeightRequest>
+                                        <ImageButton  VerticalOptions="Center"
+                                                 Source="removeBtn.png"
+                                                 Command="{Binding RemoveTappedCommand}"
+                                                 CommandParameter="{Binding }">
+                                            <ImageButton.HeightRequest>
+                                                <OnIdiom x:TypeArguments="x:Double">
+                                                    <OnIdiom.Phone>
+                                                        <OnPlatform x:TypeArguments="x:Double"
+                                                                iOS="28" 
+                                                                Android="28" />
+                                                    </OnIdiom.Phone>
+                                                    <OnIdiom.Tablet>
+                                                        <OnPlatform x:TypeArguments="x:Double" 
+                                                                iOS="45"
+                                                                Android="45" />
+                                                    </OnIdiom.Tablet>
+                                                </OnIdiom>
+                                            </ImageButton.HeightRequest>
+                                        </ImageButton>
+                                    </Grid>
+
+                                    <Label Grid.Column="1" 
+                                           Text=" SAVED COLORS "
+                                           FontFamily="LatoRegular" 
+                                           Style="{DynamicResource Label12Style}"
+                                           HorizontalOptions="Center" 
+                                           HorizontalTextAlignment="Center" />
+                                </Grid>
+
+                                <!--Selected Colors-->
+
+                                <controls:CustomHorizontalListView x:Name="HorizontalListView" 
+                                                        VerticalOptions="FillAndExpand"
+                                                        DisableScroll="False" 
+                                                        SnapStyle="Center"
+                                                        CurrentIndex="0"
+                                                        DragAndDropEndedCommand="{Binding DragAndDropEndedCommand}"
+                                                        EnableDragAndDrop="True" 
+                                                        ItemsSource="{Binding MyColors}"
+                                                        ListLayout="Grid"  
+                                                        ColumnCount="4" 
+                                                        ItemHeight="80" 
+                                                        ItemSpacing="0"
+                                                        TapCommand="{Binding TapCommand}">
+                                    <controls:CustomHorizontalListView.ItemTemplate>
+                                        <DataTemplate>
+                                            <sho:DraggableViewCell x:Name="DraggableViewCell">
+                                                <Grid>
+                                                    <Grid VerticalOptions="Center" 
+                                                              HorizontalOptions="Center"  
+                                                              WidthRequest="76" Margin="10,0,10,0"
+                                                              HeightRequest="86" 
+                                                              IsClippedToBounds="False">
+                                                        <Grid.GestureRecognizers>
+                                                            <TapGestureRecognizer Tapped="SelectedColorTapped"
+                                                                                  CommandParameter="{Binding }"/>
+                                                        </Grid.GestureRecognizers>
+
+                                                        <Image Source="ColorTileBG"    
+                                                                   IsVisible="{Binding IsSelected,Mode=TwoWay}"
+                                                                   HorizontalOptions="Center" 
+                                                                   VerticalOptions="Center" 
+                                                                   Aspect="AspectFit">
+                                                            <Image.Scale>
+                                                                <OnPlatform x:TypeArguments="x:Double">
+                                                                    <OnPlatform.Platforms>
+                                                                        <On Platform="iOS" Value="1.6" />
+                                                                        <On Platform="Android" Value="1.6" />
+                                                                    </OnPlatform.Platforms>
+                                                                </OnPlatform>
+                                                            </Image.Scale>
+                                                        </Image>
+
+                                                        <Image Aspect="AspectFit" 
+                                                                   HorizontalOptions="Center" 
+                                                                   VerticalOptions="Center" >
+                                                            <Image.Scale>
+                                                                <OnPlatform x:TypeArguments="x:Double">
+                                                                    <OnPlatform.Platforms>
+                                                                        <On Platform="iOS" Value="1.1" />
+                                                                        <On Platform="Android" Value="1.1" />
+                                                                    </OnPlatform.Platforms>
+                                                                </OnPlatform>
+                                                            </Image.Scale>
+                                                            <Image.Source>
+                                                                <FontImageSource Glyph="{x:Static resources:IconFont.IconFontColorTile}" 
+                                                                                     Size="70"
+                                                                                     Color="{Binding IsSelected, Converter={StaticResource SelectedAnimationBorderColorConverter}}"
+                                                                                     FontFamily="icomoon"/>
+                                                            </Image.Source>
+                                                        </Image>
+
+                                                        <Image Aspect="AspectFit" 
+                                                                   HorizontalOptions="Center" 
+                                                                   VerticalOptions="Center"
+                                                                   Scale="1.07" >
+                                                            <Image.Source>
+                                                                <FontImageSource Glyph="{x:Static resources:IconFont.IconFontColorTile}" 
+                                                                                     Size="70"
+                                                                                     Color="#FF2C2B2C"
+                                                                                     FontFamily="icomoon"/>
+                                                            </Image.Source>
+                                                        </Image>
+
+                                                        <Image Aspect="AspectFit" 
+                                                                   HorizontalOptions="Center" 
+                                                                   VerticalOptions="Center" 
+                                                                   Scale="1">
+                                                            <Image.Source>
+                                                                <FontImageSource Glyph="{x:Static resources:IconFont.IconFontColorTile}" 
+                                                                                     Color="{Binding Color}" 
+                                                                                     Size="70"
+                                                                                     FontFamily="icomoon"/>
+                                                            </Image.Source>
+                                                        </Image>
+                                                    </Grid>
+                                                </Grid>
+                                            </sho:DraggableViewCell>
+                                        </DataTemplate>
+                                    </controls:CustomHorizontalListView.ItemTemplate>
+                                </controls:CustomHorizontalListView>
+                            </StackLayout>
+                        </yummy:PancakeView>
+                    </yummy:PancakeView>
+                </StackLayout>
+            </Grid>
+
+        </Grid>
+    </Grid>
+
+
+</abstractions:BaseContentPage>

@@ -1,0 +1,82 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Grid xmlns="http://xamarin.com/schemas/2014/forms" 
+      xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+      x:Class="ColorController.Controls.FavoriteMenuBarControl"
+      xmlns:resources="clr-namespace:ProdKart.Resources"
+      Padding="5"
+      BackgroundColor="#FF272530">
+    <Grid.RowDefinitions>
+        <RowDefinition Height="Auto"/>
+    </Grid.RowDefinitions>
+
+    <Label  
+        Text="{Binding Title}" 
+        LineBreakMode="TailTruncation"
+        TextTransform="Uppercase"
+        Style="{DynamicResource Label18Style}" 
+        HorizontalTextAlignment="Center"
+        FontFamily="BebasNeueProBoldItalic"/>
+
+    <Grid WidthRequest="40" 
+          HorizontalOptions="Start">
+        <Grid.GestureRecognizers>
+            <TapGestureRecognizer Tapped="InfoIconTapped"
+                                  CommandParameter="{Binding }"/>
+        </Grid.GestureRecognizers>
+        <Image VerticalOptions="Center" 
+           HorizontalOptions="Start">
+            <Image.Source>
+                <FontImageSource Glyph="{x:Static resources:IconFont.IconFontMenu}" 
+                                 Color="#FF979797"
+                                 FontFamily="icomoon">
+                    <FontImageSource.Size>
+                        <OnIdiom x:TypeArguments="x:Double">
+                            <OnIdiom.Phone>
+                                <OnPlatform x:TypeArguments="x:Double" 
+                                            iOS="15"
+                                            Android="15" />
+                            </OnIdiom.Phone>
+                            <OnIdiom.Tablet>
+                                <OnPlatform x:TypeArguments="x:Double"
+                                            iOS="30" 
+                                            Android="30" />
+                            </OnIdiom.Tablet>
+                        </OnIdiom>
+                    </FontImageSource.Size>
+                </FontImageSource>
+            </Image.Source>
+        </Image>
+    </Grid>
+
+    <Grid HorizontalOptions="End"
+          WidthRequest="40">
+        <Image 
+           VerticalOptions="Center" 
+           HorizontalOptions="End">
+            <Image.GestureRecognizers>
+                <TapGestureRecognizer Tapped="DeleteIconTapped"
+                                      CommandParameter="{Binding }"/>
+            </Image.GestureRecognizers>
+            <Image.Source>
+                <FontImageSource Glyph="{x:Static resources:IconFont.IconFontDelete}"                                              
+                                 Color="{DynamicResource TabUnselectedColor}"                                             
+                                 FontFamily="icomoon">
+                    <FontImageSource.Size>
+                        <OnIdiom x:TypeArguments="x:Double">
+                            <OnIdiom.Phone>
+                                <OnPlatform x:TypeArguments="x:Double" 
+                                        iOS="16" 
+                                        Android="16" />
+                            </OnIdiom.Phone>
+                            <OnIdiom.Tablet>
+                                <OnPlatform x:TypeArguments="x:Double" 
+                                        iOS="24"
+                                        Android="24" />
+                            </OnIdiom.Tablet>
+                        </OnIdiom>
+                    </FontImageSource.Size>
+                </FontImageSource>
+            </Image.Source>
+        </Image>
+    </Grid>
+</Grid> 

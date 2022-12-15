@@ -1,0 +1,239 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<abstractions:BaseContentPage  xmlns:abstractions="clr-namespace:ColorController.Abstractions"
+                               xmlns="http://xamarin.com/schemas/2014/forms"
+                               xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"  
+                               xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core" 
+                               xmlns:controls="clr-namespace:ColorController.Controls" 
+                               xmlns:pancakeview="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
+                               xmlns:resources="clr-namespace:ProdKart.Resources"
+                               ios:Page.UseSafeArea="True"
+                               xmlns:loader="clr-namespace:Sharpnado.Presentation.Forms.CustomViews;assembly=Sharpnado.TaskLoaderView"
+                               xmlns:sho="http://sharpnado.com" 
+                               xmlns:datatemplates="clr-namespace:ColorController.DataTemplates" 
+                               xmlns:favorites="clr-namespace:ColorController.DataTemplates.Favorites"
+                               BackgroundColor="#FF2B2B2D"
+                               x:Class="ColorController.Views.FavoritesPage">
+    <abstractions:BaseContentPage.Resources>
+        <ResourceDictionary>
+            <datatemplates:SolidFavoriteDataTemplate x:Key="solidDataTemplate" 
+                                                     DeleteIconTappedEvent="DeleteIconTapped" 
+                                                     AnimationTappedEvent="AnimationTapped" />
+            <datatemplates:RobocopFavoriteDataTemplate x:Key="robocopDataTemplate" 
+                                                       DeleteIconTappedEvent="DeleteIconTapped" 
+                                                       AnimationTappedEvent="AnimationTapped" />
+            <datatemplates:BeaconFavoriteDataTemplate x:Key="beaconTemplate"
+                                                      AnimationTappedEvent="AnimationTapped"
+                                                      DeleteIconTappedEvent="DeleteIconTapped" />
+            <datatemplates:BreatheFavoriteDataTemplate x:Key="breatheTemplate"
+                                                       AnimationTappedEvent="AnimationTapped"
+                                                       DeleteIconTappedEvent="DeleteIconTapped" />
+            <datatemplates:CyberneticFavoriteDataTemplate x:Key="cyberneticTemplate"
+                                                          AnimationTappedEvent="AnimationTapped"
+                                                          DeleteIconTappedEvent="DeleteIconTapped" />
+            <datatemplates:MeteorFavoriteDataTemplate x:Key="meteorTemplate"
+                                                      AnimationTappedEvent="AnimationTapped"
+                                                      DeleteIconTappedEvent="DeleteIconTapped" />
+            <datatemplates:NightRiderFavoriteDataTemplate x:Key="nightRiderTemplate"
+                                                          AnimationTappedEvent="AnimationTapped"
+                                                          DeleteIconTappedEvent="DeleteIconTapped" />
+            <datatemplates:SuperWaveFavoriteDataTemplate x:Key="superWaveTemplate"
+                                                         AnimationTappedEvent="AnimationTapped"
+                                                         DeleteIconTappedEvent="DeleteIconTapped" />
+            <datatemplates:TechnetiumFavoriteDataTemplate x:Key="technetiumTemplate"
+                                                          AnimationTappedEvent="AnimationTapped"
+                                                          DeleteIconTappedEvent="DeleteIconTapped" />
+            <datatemplates:WaveFavoriteDataTemplate x:Key="waveTemplate"
+                                                    AnimationTappedEvent="AnimationTapped"
+                                                    DeleteIconTappedEvent="DeleteIconTapped" />
+
+            <datatemplates:AudializeFavoriteDataTemplate x:Key="audializeDataTemplate"
+                                               AnimationTappedEvent="AnimationTapped"
+                                               DeleteIconTappedEvent="DeleteIconTapped" />
+
+            <datatemplates:BlackHoleFavoriteDataTemplate x:Key="blackHoleDataTemplate"
+                                               AnimationTappedEvent="AnimationTapped"
+                                               DeleteIconTappedEvent="DeleteIconTapped" />
+
+            <datatemplates:ChromaticFavoriteDataTemplate x:Key="chromaticDataTemplate"
+                                               AnimationTappedEvent="AnimationTapped"
+                                               DeleteIconTappedEvent="DeleteIconTapped" />
+
+            <datatemplates:FireballFavoritDataTemplate x:Key="fireballTemplate"
+                                               AnimationTappedEvent="AnimationTapped"
+                                               DeleteIconTappedEvent="DeleteIconTapped" />
+
+            <datatemplates:FirePowerFavoriteDataTemplate x:Key="firePowerTemplate"
+                                               AnimationTappedEvent="AnimationTapped"
+                                               DeleteIconTappedEvent="DeleteIconTapped" />
+            <datatemplates:LooperFavoriteDataTemplate x:Key="lopperTemplate"
+                                               AnimationTappedEvent="AnimationTapped"
+                                               DeleteIconTappedEvent="DeleteIconTapped" />
+            <datatemplates:SpectrumFavoriteDataTemplate x:Key="spectrumTemplate"
+                                               AnimationTappedEvent="AnimationTapped"
+                                               DeleteIconTappedEvent="DeleteIconTapped" />
+
+            <datatemplates:HazardsFavoriteDataTemplate x:Key="hazardsDataTemplate"
+                                               AnimationTappedEvent="AnimationTapped"
+                                               DeleteIconTappedEvent="DeleteIconTapped" />
+
+            <datatemplates:SunFadeFavoriteDataTemplate x:Key="sunFadeDataTemplate"
+                                               AnimationTappedEvent="AnimationTapped"
+                                               DeleteIconTappedEvent="DeleteIconTapped" />
+
+            <datatemplates:YingYangFavoriteDataTemplate x:Key="yingYangDataTemplate"
+                                               AnimationTappedEvent="AnimationTapped"
+                                               DeleteIconTappedEvent="DeleteIconTapped" />
+
+            <!--30-July-2022-->
+            <datatemplates:BlockchainFavoriteDataTemplate x:Key="blockchainDataTemplate"
+                                               AnimationTappedEvent="AnimationTapped"
+                                                DeleteIconTappedEvent="DeleteIconTapped" />
+            <datatemplates:Bombs_AwayFavoriteDataTemplate x:Key="bombsAwayDataTemplate"
+                                               AnimationTappedEvent="AnimationTapped"
+                                                DeleteIconTappedEvent="DeleteIconTapped" />
+            <datatemplates:DiffractionFavoriteDataTemplate x:Key="diffractionDataTemplate"
+                                               AnimationTappedEvent="AnimationTapped"
+                                                DeleteIconTappedEvent="DeleteIconTapped" />
+            <datatemplates:Dual_MeteorFavoriteDataTemplate x:Key="dual_MeteorDataTemplate"
+                                               AnimationTappedEvent="AnimationTapped"
+                                                DeleteIconTappedEvent="DeleteIconTapped" />
+            <datatemplates:Initialize_V3FavoriteDataTemplate x:Key="initializeV3DataTemplate"
+                                               AnimationTappedEvent="AnimationTapped"
+                                                DeleteIconTappedEvent="DeleteIconTapped" />
+            <datatemplates:OrbitFavoriteDataTemplate x:Key="orbitDataTemplate"
+                                               AnimationTappedEvent="AnimationTapped"
+                                                DeleteIconTappedEvent="DeleteIconTapped" />
+            <datatemplates:PulsarFavoriteDataTemplate x:Key="pulsarDataTemplate"
+                                               AnimationTappedEvent="AnimationTapped"
+                                                DeleteIconTappedEvent="DeleteIconTapped" />
+            <datatemplates:Star_PowerFavoriteDataTemplate x:Key="star_PowerDataTemplate"
+                                               AnimationTappedEvent="AnimationTapped"
+                                                DeleteIconTappedEvent="DeleteIconTapped" />
+
+            <favorites:FavoriteAnimationDataTemplateSelector x:Key="animationDataTemplateSelector"
+                                                             SolidDataTemplate="{StaticResource solidDataTemplate}"
+                                                             FireballDataTemplate="{StaticResource fireballTemplate}"
+                                                             FirePowerDataTemplate="{StaticResource firePowerTemplate}"
+                                                             LooperDataTemplate="{StaticResource lopperTemplate}"
+                                                             SpectrumDataTemplate="{StaticResource spectrumTemplate}"
+                                                             RobocopDataTemplate="{StaticResource robocopDataTemplate}" 
+                                                             BeaconDataTemplate="{StaticResource beaconTemplate}" 
+                                                             BreatheDataTemplate="{StaticResource breatheTemplate}" 
+                                                             CyberneticDataTemplate="{StaticResource cyberneticTemplate}" 
+                                                             MeteorDataTemplate="{StaticResource meteorTemplate}" 
+                                                             NightRiderDataTemplate="{StaticResource nightRiderTemplate}" 
+                                                             SuperWaveDataTemplate="{StaticResource superWaveTemplate}" 
+                                                             TechnetiumDataTemplate="{StaticResource technetiumTemplate}" 
+                                                             WaveDataTemplate="{StaticResource waveTemplate}" 
+                                                             AudializeDataTemplate="{StaticResource audializeDataTemplate}" 
+                                                             BlackHoleDataTemplate="{StaticResource blackHoleDataTemplate}" 
+                                                             ChromaticDataTemplate="{StaticResource chromaticDataTemplate}" 
+                                                             HazardsDataTemplate="{StaticResource hazardsDataTemplate}" 
+                                                             SunFadeDataTemplate="{StaticResource sunFadeDataTemplate}" 
+                                                             YingYangDataTemplate="{StaticResource yingYangDataTemplate}"
+                                                             
+                                                             BlockchainDataTemplate="{StaticResource blockchainDataTemplate}" 
+                                                             Bombs_AwayDataTemplate="{StaticResource bombsAwayDataTemplate}" 
+                                                             DiffractionDataTemplate="{StaticResource diffractionDataTemplate}" 
+                                                             Dual_MeteorDataTemplate="{StaticResource dual_MeteorDataTemplate}" 
+                                                             Initialize_V3DataTemplate="{StaticResource initializeV3DataTemplate}" 
+                                                             OrbitDataTemplate="{StaticResource orbitDataTemplate}" 
+                                                             PulsarDataTemplate="{StaticResource pulsarDataTemplate}" 
+                                                             Star_PowerDataTemplate="{StaticResource star_PowerDataTemplate}" 
+                                                             />
+        </ResourceDictionary>
+    </abstractions:BaseContentPage.Resources>
+    <Grid>
+        <Image Source="background.png" Aspect="AspectFill"/>
+
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <controls:NavigationBarControl Title="FAVORITES"/>
+            <loader:TaskLoaderView Grid.Row="1" 
+                                   TextColor="Transparent"
+                                   TaskLoaderNotifier="{Binding AnimationLoaderNotifier}">
+                <loader:TaskLoaderView.LoadingView>
+                    <Label Text="Loading"
+                           TextColor="White"
+                           HorizontalOptions="Center"
+                           VerticalOptions="End"
+                           Style="{DynamicResource Label14Style}"/>
+                </loader:TaskLoaderView.LoadingView>
+                <Grid x:Name="GridContainer"
+                      Style="{DynamicResource GridMarginStyle}">
+                    <sho:HorizontalListView x:Name="HorizontalListView" 
+                                            InfiniteListLoader="{Binding AnimationPaginator}"
+                                            DragAndDropEndedCommand="{Binding DragAndDropEndedCommand}"
+                                            EnableDragAndDrop="True" 
+                                            CurrentIndex="{Binding CurrentIndex}" 
+                                            ListLayout="Vertical"   
+                                            ColumnCount="2"  
+                                            ItemsSource="{Binding Animations}"
+                                            ItemTemplate="{StaticResource animationDataTemplateSelector}"
+                                            TapCommand="{Binding TapCommand}">
+                        <sho:HorizontalListView.ItemHeight>
+                            <OnIdiom x:TypeArguments="x:Double">
+                                <OnIdiom.Phone>
+                                    <OnPlatform x:TypeArguments="x:Double" iOS="200" Android="200" />
+                                </OnIdiom.Phone>
+                                <OnIdiom.Tablet>
+                                    <OnPlatform x:TypeArguments="x:Double" iOS="240" Android="240" />
+                                </OnIdiom.Tablet>
+                            </OnIdiom>
+                        </sho:HorizontalListView.ItemHeight>
+                    </sho:HorizontalListView>
+                </Grid>
+            </loader:TaskLoaderView>
+        </Grid>
+
+        <!--#region IsBottomMessageVisible -->
+        <StackLayout HorizontalOptions="Center" 
+                     VerticalOptions="End" 
+                     Margin="0,20"
+                     IsVisible="{Binding IsBottomMessageVisible, Mode=TwoWay}">
+            <StackLayout Orientation="Horizontal" 
+                         HorizontalOptions="Center" 
+                         Spacing="0">
+                <Label Text="Click on the Animation tab ( "  
+                       HorizontalOptions="Center"
+                       HorizontalTextAlignment="Center"                     
+                       TextColor="{DynamicResource EmptyItemSourceMessageTextColor}"
+                       Style="{DynamicResource Label16Style}"/>
+                <Image VerticalOptions="Center"
+                       Source="animation.png">
+                    <Image.HeightRequest>
+                        <OnIdiom x:TypeArguments="x:Double">
+                            <OnIdiom.Phone>
+                                <OnPlatform x:TypeArguments="x:Double"
+                                            iOS="18" 
+                                            Android="18" />
+                            </OnIdiom.Phone>
+                            <OnIdiom.Tablet>
+                                <OnPlatform x:TypeArguments="x:Double" 
+                                            iOS="27"
+                                            Android="27" />
+                            </OnIdiom.Tablet>
+                        </OnIdiom>
+                    </Image.HeightRequest>
+                </Image>
+                <Label Text=" )"  
+                        HorizontalOptions="Center" 
+                        HorizontalTextAlignment="Center"                        
+                        Style="{DynamicResource Label16Style}"                    
+                        TextColor="{DynamicResource EmptyItemSourceMessageTextColor}"/>
+            </StackLayout>
+
+            <Label Text="to start adding favorite animations."  
+                    HorizontalOptions="Center" 
+                    HorizontalTextAlignment="Center"                        
+                    TextColor="{DynamicResource EmptyItemSourceMessageTextColor}"
+                    Style="{DynamicResource Label16Style}"/>
+        </StackLayout>
+        <!--#endregion-->
+       
+    </Grid>
+</abstractions:BaseContentPage>

@@ -1,0 +1,606 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">iPhoneSimulator</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{EC16E625-6C18-4857-819B-04E799C5ECD2}</ProjectGuid>
+    <ProjectTypeGuids>{FEACFBD2-3405-455C-9665-78FE426C6842};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <TemplateGuid>{89a4fe7c-635d-49c9-8d8c-5cd363c0d68d}</TemplateGuid>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>ColorController.iOS</RootNamespace>
+    <IPhoneResourcePrefix>Resources</IPhoneResourcePrefix>
+    <AssemblyName>ColorController.iOS</AssemblyName>
+    <MtouchEnableSGenConc>true</MtouchEnableSGenConc>
+    <MtouchHttpClientHandler>NSUrlSessionHandler</MtouchHttpClientHandler>
+    <ProvisioningType>manual</ProvisioningType>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|iPhoneSimulator' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\iPhoneSimulator\Debug</OutputPath>
+    <DefineConstants>DEBUG</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <MtouchArch>x86_64</MtouchArch>
+    <MtouchLink>None</MtouchLink>
+    <MtouchDebug>true</MtouchDebug>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|iPhoneSimulator' ">
+    <DebugType>none</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\iPhoneSimulator\Release</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <MtouchLink>None</MtouchLink>
+    <MtouchArch>x86_64</MtouchArch>
+    <CodesignKey>iPhone Developer</CodesignKey>
+    <CodesignProvision>
+    </CodesignProvision>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|iPhone' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\iPhone\Debug</OutputPath>
+    <DefineConstants>DEBUG</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <MtouchArch>ARM64</MtouchArch>
+    <CodesignKey>iPhone Developer</CodesignKey>
+    <MtouchDebug>true</MtouchDebug>
+    <CodesignEntitlements>Entitlements.plist</CodesignEntitlements>
+    <MtouchLink>None</MtouchLink>
+    <MtouchInterpreter>-all</MtouchInterpreter>
+    <CodesignProvision>
+    </CodesignProvision>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|iPhone' ">
+    <DebugType>none</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\iPhone\Release</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <MtouchArch>ARM64</MtouchArch>
+    <CodesignKey>iPhone Distribution</CodesignKey>
+    <CodesignEntitlements>Entitlements.plist</CodesignEntitlements>
+    <CodesignProvision>LightMode_AppStore</CodesignProvision>
+    <BuildIpa>true</BuildIpa>
+    <MtouchLink>SdkOnly</MtouchLink>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(RunConfiguration)' == 'Default' ">
+    <AppExtensionDebugBundleId />
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="CustomRenderers\BorderLessEntryRenderer.cs" />
+    <Compile Include="CustomRenderers\CustomListViewRenderer.cs" />
+    <Compile Include="CustomRenderers\CustomScrollViewRenderer.cs" />
+    <Compile Include="CustomRenderers\CustomTabbedPageRenderer.cs" />
+    <Compile Include="CustomRenderers\HorizontalList\CenteredCollectionViewFlowLayout.cs" />
+    <Compile Include="CustomRenderers\HorizontalList\iOSHorizontalListViewRenderer.cs" />
+    <Compile Include="CustomRenderers\HorizontalList\iOSHorizontalListViewRenderer.DragAndDrop.cs" />
+    <Compile Include="CustomRenderers\HorizontalList\iOSHorizontalListViewRenderer.ScrollDelegates.cs" />
+    <Compile Include="CustomRenderers\HorizontalList\MyViewSource.cs" />
+    <Compile Include="CustomRenderers\HorizontalList\SnappingCollectionViewLayout.cs" />
+    <Compile Include="CustomRenderers\HorizontalList\UIViewCellHolderQueue.cs" />
+    <Compile Include="CustomRenderers\IconViewRenderer.cs" />
+    <Compile Include="CustomRenderers\SwipeTabbedRenderer.cs" />
+    <Compile Include="CustomRenderers\TintImageImpl.cs" />
+    <Compile Include="Main.cs" />
+    <Compile Include="AppDelegate.cs" />
+    <Compile Include="Services\LocSettings.cs" />
+    <Compile Include="Services\PlatformSpecific.cs" />
+    <None Include="Entitlements.plist" />
+    <None Include="Info.plist" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\1024.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\120.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\1201.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\152.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\167.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\180.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\20.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\29.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\40.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\401.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\402.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\58.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\581.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\60.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\76.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\80.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\801.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\87.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Contents.json">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <BundleResource Include="Resources\icon_about.png" />
+    <BundleResource Include="Resources\icon_about%402x.png" />
+    <BundleResource Include="Resources\icon_about%403x.png" />
+    <BundleResource Include="Resources\icon_feed.png" />
+    <BundleResource Include="Resources\icon_feed%402x.png" />
+    <BundleResource Include="Resources\icon_feed%403x.png" />
+    <BundleResource Include="Resources\xamarin_logo.png" />
+    <BundleResource Include="Resources\xamarin_logo%402x.png" />
+    <BundleResource Include="Resources\xamarin_logo%403x.png" />
+    <InterfaceDefinition Include="Resources\LaunchScreen.storyboard" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Core" />
+    <Reference Include="Xamarin.iOS" />
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Numerics.Vectors" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Acr.UserDialogs">
+      <Version>7.1.0.483</Version>
+    </PackageReference>
+    <PackageReference Include="Microsoft.AppCenter.Analytics">
+      <Version>4.5.3</Version>
+    </PackageReference>
+    <PackageReference Include="Microsoft.AppCenter.Crashes">
+      <Version>4.5.3</Version>
+    </PackageReference>
+    <PackageReference Include="Plugin.BLE">
+      <Version>2.1.3</Version>
+    </PackageReference>
+    <PackageReference Include="Rg.Plugins.Popup">
+      <Version>2.0.0.9</Version>
+    </PackageReference>
+    <PackageReference Include="Sharpnado.Forms.HorizontalListView">
+      <Version>1.8.1</Version>
+    </PackageReference>
+    <PackageReference Include="Sharpnado.Shadows">
+      <Version>1.2.0</Version>
+    </PackageReference>
+    <PackageReference Include="SkiaSharp.Views.Forms">
+      <Version>2.80.2</Version>
+    </PackageReference>
+    <PackageReference Include="sqlite-net-pcl">
+      <Version>1.7.335</Version>
+    </PackageReference>
+    <PackageReference Include="Udara.Plugin.XFColorPickerControl">
+      <Version>1.0.3</Version>
+    </PackageReference>
+    <PackageReference Include="Xam.Plugin.Geolocator">
+      <Version>4.5.0.6</Version>
+    </PackageReference>
+    <PackageReference Include="Xam.Plugin.LatestVersion">
+      <Version>1.1.2</Version>
+    </PackageReference>
+    <PackageReference Include="Xamarin.FFImageLoading.Forms">
+      <Version>2.4.11.982</Version>
+    </PackageReference>
+    <PackageReference Include="Xamarin.Forms" Version="5.0.0.2515" />
+    <PackageReference Include="Xamarin.Essentials" Version="1.7.3" />
+    <PackageReference Include="Xamarin.Forms.PancakeView">
+      <Version>2.3.0.759</Version>
+    </PackageReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
+  <ItemGroup>
+    <ProjectReference Include="..\ColorController\ColorController.csproj">
+      <Project>{6346F8B1-804A-463A-A649-B53AAD3BEF81}</Project>
+      <Name>ColorController</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\background.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\battery.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\button.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\Thumb.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\Thumb2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\steeltexture.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\colorPallete.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\colorPallete%402x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\colorPallete%403x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\animation.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\animation%402x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\animation%403x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\Thumb35.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\Connect.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\buttonbg.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\shadowBlue.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\doubleclick.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\updateBtn.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\forgetDeviceBtnHigh.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\updatebtnHigh.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\forgetDeviceBtn.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\diconnectOff.png">
+      <Generator>MSBuild:UpdateGeneratedFiles</Generator>
+      <SubType>Designer</SubType>
+    </AndroidResource>
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\diconnectOn.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\switchThumb30.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\switchThumb32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\switchThumb28.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\switchThumb25.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\switchThumb24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\ColorTileBG.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\ColorTile.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\updating.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\searchingBtn.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\cancelBtn.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\connectOnBtn.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\okOffBtn.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\okOnBtn.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\removeBtn.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\saveBtn.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\connectOffBtn.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\correct.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\check200.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\buttonAdd.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\buttonYes.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\buttonNO.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\buttonConnected.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\btnAddOn.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\btnCancelOn.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\btnConnectedOn.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\btnForgetDeviceOn.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\btnForgetDeviceOnHigh.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\btnNoOn.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\btnOkOff.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\btnOkOn.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\btnRemoveOn.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\btnSaveOn.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\btnSearchingOn.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\btnUpdateOn.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\btnUpdateOnHigh.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\btnYesOn.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\btnConnectBTOff.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\btnDiconnectOff.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\btnConnectingOn.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\btnDiconnectOn.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\btnConnectOff.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\btnConnectingOff.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\bluetoothOff.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\bluetoothOn.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\bluetoothOn300.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\bluetoothOff300.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\Indicator.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\buttonDisconnectOn.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\buttonConnectOff.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\Battery90.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\Battery80.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\Battery70.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\Battery60.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\Battery50.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\Battery40.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\Battery30.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\Battery20.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\Battery10.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\Battery0.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\Battery100.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\selectedIntensityBox.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\unselectedIntensityBox.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\SliderButtonOff.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\animationtab.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\colorpalettetab.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\settingstab.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\favtab.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\star.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\star%402x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\star%403x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\settings%403x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\settings%402x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\settings.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\color%403x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\color%402x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\color.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\Wifi0Bars.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\Wifi1Bar.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\Wifi2Bars.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\Wifi3Bars.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\info.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\btnConnectOff2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\TechnetiumCombined.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\navBtnConnecting.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\mainBtnConnecting.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\mainBtnConnectOff.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\ButtonPressGifV5.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\navSearchingGIF2.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\searchingGIF2.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\mainBtnConnect.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\searchingGIF.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\btnDisconnectOn.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\navBtnConnect.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\navBtnConnected.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\navBtnConnectOff.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\navSearchingGIF.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\ButtonPressGifV6.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\splashscreen.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\splashscreen2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\ButtonPressGifV7.gif" />
+  </ItemGroup>
+  <ProjectExtensions>
+    <VisualStudio>
+      <UserProperties TriggeredFromHotReload="False" />
+    </VisualStudio>
+  </ProjectExtensions>
+</Project>

@@ -1,0 +1,342 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<popuppages:BasePopupPage 
+    xmlns:popuppages="clr-namespace:ColorController.PopupPages"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+    xmlns:yummy="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView" 
+    xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+    x:Class="ColorController.PopupPages.DoubleClickPopupPage">
+    <yummy:PancakeView HorizontalOptions="FillAndExpand"                                     
+                       VerticalOptions="CenterAndExpand"                                  
+                       BackgroundColor="#994DDDFF"                            
+                       Padding="3"  >
+        <yummy:PancakeView.Border>
+            <yummy:Border Thickness="2" Color="#804DDDFF"/>
+        </yummy:PancakeView.Border>
+        <yummy:PancakeView.Shadow>
+            <yummy:DropShadow Color="#000000" Offset="10,10"/>
+        </yummy:PancakeView.Shadow>
+        <yummy:PancakeView.Margin>
+            <OnIdiom x:TypeArguments="Thickness">
+                <OnIdiom.Phone>
+                    <OnPlatform x:TypeArguments="Thickness"
+                                iOS="30,0" 
+                                Android="30,0" />
+                </OnIdiom.Phone>
+                <OnIdiom.Tablet>
+                    <OnPlatform x:TypeArguments="Thickness"
+                                iOS="100,0"
+                                Android="100,0" />
+                </OnIdiom.Tablet>
+            </OnIdiom>
+        </yummy:PancakeView.Margin>
+        <yummy:PancakeView 
+                               HorizontalOptions="FillAndExpand"  
+                               VerticalOptions="FillAndExpand"   
+                               BackgroundColor="#FF1E1D22" >
+            <yummy:PancakeView.Border>
+                <yummy:Border Thickness="1" Color="#80000000"/>
+            </yummy:PancakeView.Border>
+            <yummy:PancakeView.BackgroundGradientStops>
+                <yummy:GradientStopCollection>
+                    <yummy:GradientStop Color="#FF1E1D22" Offset="0" />
+                    <yummy:GradientStop Color="#FF27262B" Offset="0.5" />
+                    <yummy:GradientStop Color="#FF1E1D22" Offset="1" />
+                </yummy:GradientStopCollection>
+            </yummy:PancakeView.BackgroundGradientStops>
+            <yummy:PancakeView.Shadow>
+                <yummy:DropShadow Color="#FF1E1D22" Offset="5,5"/>
+            </yummy:PancakeView.Shadow>
+            <Grid RowSpacing="20">
+                <Grid.Padding>
+                    <OnIdiom x:TypeArguments="Thickness">
+                        <OnIdiom.Phone>
+                            <OnPlatform x:TypeArguments="Thickness" 
+                                        iOS="15,20,15,20"
+                                        Android="15,20,15,20" />
+                        </OnIdiom.Phone>
+                        <OnIdiom.Tablet>
+                            <OnPlatform x:TypeArguments="Thickness" 
+                                        iOS="25,30,25,30"
+                                        Android="25,30,25,30" />
+                        </OnIdiom.Tablet>
+                    </OnIdiom>
+                </Grid.Padding>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <Grid ColumnDefinitions="*,20"  
+                      HorizontalOptions="Center"
+                      RowDefinitions="Auto"   
+                      WidthRequest="100"  
+                      ColumnSpacing="0" >
+                    <Label Text="Searching"   
+                           HorizontalTextAlignment="End" >
+                        <Label.Style>
+                            <OnIdiom x:TypeArguments="Style">
+                                <OnIdiom.Phone>
+                                    <OnPlatform x:TypeArguments="Style" 
+                                                iOS="{StaticResource Label14Style}" 
+                                                Android="{StaticResource Label14Style}" />
+                                </OnIdiom.Phone>
+                                <OnIdiom.Tablet>
+                                    <OnPlatform x:TypeArguments="Style" 
+                                                iOS="{StaticResource Label14Style}"
+                                                Android="{StaticResource Label14Style}" />
+                                </OnIdiom.Tablet>
+                            </OnIdiom>
+                        </Label.Style>
+                    </Label>
+                    <Label Grid.Column="1"
+                           Text="{Binding DottedText, Mode=TwoWay}"   
+                           HorizontalTextAlignment="Start" >
+                        <Label.Style>
+                            <OnIdiom x:TypeArguments="Style">
+                                <OnIdiom.Phone>
+                                    <OnPlatform x:TypeArguments="Style" 
+                                                iOS="{StaticResource Label14Style}" 
+                                                Android="{StaticResource Label14Style}" />
+                                </OnIdiom.Phone>
+                                <OnIdiom.Tablet>
+                                    <OnPlatform x:TypeArguments="Style" 
+                                                iOS="{StaticResource Label14Style}"
+                                                Android="{StaticResource Label14Style}" />
+                                </OnIdiom.Tablet>
+                            </OnIdiom>
+                        </Label.Style>
+                    </Label>
+                </Grid>
+
+                <ffimageloading:CachedImage Grid.Row="1"
+                                            HorizontalOptions="Center" 
+                                            VerticalOptions="Center"
+                                            Success="CachedImage_Success"
+			                                Source = "ButtonPressGifV7.gif">
+                    <ffimageloading:CachedImage.HeightRequest>
+                        <OnIdiom x:TypeArguments="x:Double">
+                            <OnIdiom.Phone>
+                                <OnPlatform x:TypeArguments="x:Double"
+                                        iOS="180" 
+                                        Android="180" />
+                            </OnIdiom.Phone>
+                            <OnIdiom.Tablet>
+                                <OnPlatform x:TypeArguments="x:Double" 
+                                        iOS="270"
+                                        Android="270" />
+                            </OnIdiom.Tablet>
+                        </OnIdiom>
+                    </ffimageloading:CachedImage.HeightRequest>
+                </ffimageloading:CachedImage>
+                
+                <Grid Grid.Row="2"
+                      RowDefinitions="Auto,Auto,Auto"
+                      ColumnDefinitions="Auto,*"
+                      RowSpacing="10"
+                      Margin="20,0">
+                    <Label Text="1." 
+                           VerticalOptions="Start"
+                           VerticalTextAlignment="Start">
+                        <Label.Style>
+                            <OnIdiom x:TypeArguments="Style">
+                                <OnIdiom.Phone>
+                                    <OnPlatform x:TypeArguments="Style" 
+                                    iOS="{StaticResource Label14Style}" 
+                                    Android="{StaticResource Label14Style}" />
+                                </OnIdiom.Phone>
+                                <OnIdiom.Tablet>
+                                    <OnPlatform x:TypeArguments="Style" 
+                                    iOS="{StaticResource Label14Style}"
+                                    Android="{StaticResource Label14Style}" />
+                                </OnIdiom.Tablet>
+                            </OnIdiom>
+                        </Label.Style>
+                    </Label>
+                    <Label Grid.Column="1" 
+                           VerticalOptions="Start"
+                           VerticalTextAlignment="Start"
+                           Text="Turn on the controller (long-press).">
+                        <Label.Style>
+                            <OnIdiom x:TypeArguments="Style">
+                                <OnIdiom.Phone>
+                                    <OnPlatform x:TypeArguments="Style" 
+                                    iOS="{StaticResource Label14Style}" 
+                                    Android="{StaticResource Label14Style}" />
+                                </OnIdiom.Phone>
+                                <OnIdiom.Tablet>
+                                    <OnPlatform x:TypeArguments="Style" 
+                                    iOS="{StaticResource Label14Style}"
+                                    Android="{StaticResource Label14Style}" />
+                                </OnIdiom.Tablet>
+                            </OnIdiom>
+                        </Label.Style>
+                    </Label>
+
+                    <Label Grid.Row="1"  
+                           VerticalOptions="Start"
+                           VerticalTextAlignment="Start"
+                           Text="2.">
+                        <Label.Style>
+                            <OnIdiom x:TypeArguments="Style">
+                                <OnIdiom.Phone>
+                                    <OnPlatform x:TypeArguments="Style" 
+                                    iOS="{StaticResource Label14Style}" 
+                                    Android="{StaticResource Label14Style}" />
+                                </OnIdiom.Phone>
+                                <OnIdiom.Tablet>
+                                    <OnPlatform x:TypeArguments="Style" 
+                                    iOS="{StaticResource Label14Style}"
+                                    Android="{StaticResource Label14Style}" />
+                                </OnIdiom.Tablet>
+                            </OnIdiom>
+                        </Label.Style>
+                    </Label>
+                    <Label Grid.Row="1" 
+                           Grid.Column="1"
+                           VerticalOptions="Start"
+                           VerticalTextAlignment="Start"
+                           Text="Short-press, then immediately long-press until the controller flashes blue/green.">
+                        <Label.Style>
+                            <OnIdiom x:TypeArguments="Style">
+                                <OnIdiom.Phone>
+                                    <OnPlatform x:TypeArguments="Style" 
+                                    iOS="{StaticResource Label14Style}" 
+                                    Android="{StaticResource Label14Style}" />
+                                </OnIdiom.Phone>
+                                <OnIdiom.Tablet>
+                                    <OnPlatform x:TypeArguments="Style" 
+                                    iOS="{StaticResource Label14Style}"
+                                    Android="{StaticResource Label14Style}" />
+                                </OnIdiom.Tablet>
+                            </OnIdiom>
+                        </Label.Style>
+                    </Label>
+
+                    <Label Grid.Row="2" 
+                           VerticalOptions="Start"
+                           VerticalTextAlignment="Start"
+                           Text="3.">
+                        <Label.Style>
+                            <OnIdiom x:TypeArguments="Style">
+                                <OnIdiom.Phone>
+                                    <OnPlatform x:TypeArguments="Style" 
+                                    iOS="{StaticResource Label14Style}" 
+                                    Android="{StaticResource Label14Style}" />
+                                </OnIdiom.Phone>
+                                <OnIdiom.Tablet>
+                                    <OnPlatform x:TypeArguments="Style" 
+                                    iOS="{StaticResource Label14Style}"
+                                    Android="{StaticResource Label14Style}" />
+                                </OnIdiom.Tablet>
+                            </OnIdiom>
+                        </Label.Style>
+                    </Label>
+                    <Label Grid.Row="2"
+                           Grid.Column="1"
+                           VerticalOptions="Start"
+                           VerticalTextAlignment="Start"
+                           Text="The controller will connect shortly.">
+                        <Label.Style>
+                            <OnIdiom x:TypeArguments="Style">
+                                <OnIdiom.Phone>
+                                    <OnPlatform x:TypeArguments="Style" 
+                                    iOS="{StaticResource Label14Style}" 
+                                    Android="{StaticResource Label14Style}" />
+                                </OnIdiom.Phone>
+                                <OnIdiom.Tablet>
+                                    <OnPlatform x:TypeArguments="Style" 
+                                    iOS="{StaticResource Label14Style}"
+                                    Android="{StaticResource Label14Style}" />
+                                </OnIdiom.Tablet>
+                            </OnIdiom>
+                        </Label.Style>
+                    </Label>
+                </Grid>
+
+                <Grid Grid.Row="3">
+                    <Grid.Margin>
+                        <OnIdiom x:TypeArguments="Thickness">
+                            <OnIdiom.Phone>
+                                <OnPlatform x:TypeArguments="Thickness" 
+                                                iOS="10,0" 
+                                                Android="0" />
+                            </OnIdiom.Phone>
+                            <OnIdiom.Tablet>
+                                <OnPlatform x:TypeArguments="Thickness" 
+                                                iOS="15,0,15,10"
+                                                Android="15,0,15,10" />
+                            </OnIdiom.Tablet>
+                        </OnIdiom>
+                    </Grid.Margin>
+                    <!--<Grid.ColumnSpacing>
+                        <OnIdiom x:TypeArguments="x:Double">
+                            <OnIdiom.Phone>
+                                <OnPlatform x:TypeArguments="x:Double" 
+                                            iOS="25" 
+                                            Android="30" />
+                            </OnIdiom.Phone>
+                            <OnIdiom.Tablet>
+                                <OnPlatform x:TypeArguments="x:Double" 
+                                            iOS="10" 
+                                            Android="10" />
+                            </OnIdiom.Tablet>
+                        </OnIdiom>
+                    </Grid.ColumnSpacing>-->                  
+                    <!--<ImageButton Source="okOnBtn.png"
+                                 Clicked="OkTapped">
+                        <ImageButton.HeightRequest>
+                            <OnIdiom x:TypeArguments="x:Double">
+                                <OnIdiom.Phone>
+                                    <OnPlatform x:TypeArguments="x:Double"
+                                                iOS="30" 
+                                                Android="30" />
+                                </OnIdiom.Phone>
+                                <OnIdiom.Tablet>
+                                    <OnPlatform x:TypeArguments="x:Double"
+                                                iOS="50"
+                                                Android="50" />
+                                </OnIdiom.Tablet>
+                            </OnIdiom>
+                        </ImageButton.HeightRequest>
+                        <ImageButton.Margin>
+                            <OnIdiom x:TypeArguments="Thickness">
+                                <OnIdiom.Phone>
+                                    <OnPlatform x:TypeArguments="Thickness"
+                                                iOS="0" 
+                                                Android="0" />
+                                </OnIdiom.Phone>
+                                <OnIdiom.Tablet>
+                                    <OnPlatform x:TypeArguments="Thickness"
+                                                iOS="30,0"
+                                                Android="30,0" />
+                                </OnIdiom.Tablet>
+                            </OnIdiom>
+                        </ImageButton.Margin>
+                    </ImageButton>-->
+                    <ImageButton Source="cancelBtn.png"
+                                 HorizontalOptions="Center"
+                                 Clicked="CancelTapped">
+                        <ImageButton.HeightRequest>
+                            <OnIdiom x:TypeArguments="x:Double">
+                                <OnIdiom.Phone>
+                                    <OnPlatform x:TypeArguments="x:Double"
+                                                iOS="30" 
+                                                Android="30" />
+                                </OnIdiom.Phone>
+                                <OnIdiom.Tablet>
+                                    <OnPlatform x:TypeArguments="x:Double"
+                                                iOS="55"
+                                                Android="55" />
+                                </OnIdiom.Tablet>
+                            </OnIdiom>
+                        </ImageButton.HeightRequest> 
+                    </ImageButton>
+                </Grid>
+            </Grid>
+        </yummy:PancakeView>
+
+    </yummy:PancakeView>
+</popuppages:BasePopupPage>

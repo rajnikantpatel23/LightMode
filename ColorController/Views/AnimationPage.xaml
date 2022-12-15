@@ -1,0 +1,209 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<abstractions:BaseContentPage  xmlns:abstractions="clr-namespace:ColorController.Abstractions"
+                               xmlns="http://xamarin.com/schemas/2014/forms"
+                               xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"  
+                               xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core" 
+                               xmlns:controls="clr-namespace:ColorController.Controls"
+                               ios:Page.UseSafeArea="True"
+                               xmlns:datatemplates="clr-namespace:ColorController.DataTemplates" 
+                               xmlns:sho="http://sharpnado.com"
+                               BackgroundColor="#FF2B2B2D"
+                               x:Class="ColorController.Views.AnimationPage">
+    <abstractions:BaseContentPage.Resources>
+        <ResourceDictionary>
+            <datatemplates:SolidDataTemplate x:Key="solidDataTemplate" 
+                                             AnimationTappedEvent="AnimationTapped"
+                                             StartIconTappedEvent="StarImageTapped"
+                                             InfoIconTappedEvent="InfoIconTapped"/>
+            <datatemplates:RobocopDataTemplate x:Key="robocopDataTemplate"
+                                               AnimationTappedEvent="AnimationTapped"
+                                               StartIconTappedEvent="StarImageTapped"
+                                               InfoIconTappedEvent="InfoIconTapped"/>
+            <datatemplates:BeaconTemplate x:Key="beaconTemplate"
+                                               AnimationTappedEvent="AnimationTapped"
+                                               StartIconTappedEvent="StarImageTapped"
+                                               InfoIconTappedEvent="InfoIconTapped"/>
+            <datatemplates:BreatheTemplate x:Key="breatheTemplate"
+                                               AnimationTappedEvent="AnimationTapped"
+                                               StartIconTappedEvent="StarImageTapped"
+                                               InfoIconTappedEvent="InfoIconTapped"/>
+            <datatemplates:CyberneticTemplate x:Key="cyberneticTemplate"
+                                               AnimationTappedEvent="AnimationTapped"
+                                               StartIconTappedEvent="StarImageTapped"
+                                               InfoIconTappedEvent="InfoIconTapped"/>
+            <datatemplates:MeteorTemplate x:Key="meteorTemplate"
+                                               AnimationTappedEvent="AnimationTapped"
+                                               StartIconTappedEvent="StarImageTapped"
+                                               InfoIconTappedEvent="InfoIconTapped"/>
+            <datatemplates:NightRiderTemplate x:Key="nightRiderTemplate"
+                                               AnimationTappedEvent="AnimationTapped"
+                                               StartIconTappedEvent="StarImageTapped"
+                                               InfoIconTappedEvent="InfoIconTapped"/>
+            <datatemplates:SuperWaveTemplate x:Key="superWaveTemplate"
+                                               AnimationTappedEvent="AnimationTapped"
+                                               StartIconTappedEvent="StarImageTapped"
+                                               InfoIconTappedEvent="InfoIconTapped"/>
+            <datatemplates:TechnetiumTemplate x:Key="technetiumTemplate"
+                                               AnimationTappedEvent="AnimationTapped"
+                                               StartIconTappedEvent="StarImageTapped"
+                                               InfoIconTappedEvent="InfoIconTapped"/>
+            <datatemplates:WaveTemplate x:Key="waveTemplate"
+                                               AnimationTappedEvent="AnimationTapped"
+                                               StartIconTappedEvent="StarImageTapped"
+                                               InfoIconTappedEvent="InfoIconTapped"/>
+
+            <datatemplates:FireballDataTemplate x:Key="fireballTemplate"
+                                               AnimationTappedEvent="AnimationTapped"
+                                               StartIconTappedEvent="StarImageTapped"
+                                               InfoIconTappedEvent="InfoIconTapped"/>
+
+            <datatemplates:FirePowerDataTemplate x:Key="firePowerTemplate"
+                                               AnimationTappedEvent="AnimationTapped"
+                                               StartIconTappedEvent="StarImageTapped"
+                                               InfoIconTappedEvent="InfoIconTapped"/>
+            <datatemplates:LooperDataTemplate x:Key="lopperTemplate"
+                                               AnimationTappedEvent="AnimationTapped"
+                                               StartIconTappedEvent="StarImageTapped"
+                                               InfoIconTappedEvent="InfoIconTapped"/>
+            <datatemplates:SpectrumDataTemplate x:Key="spectrumTemplate"
+                                               AnimationTappedEvent="AnimationTapped"
+                                               StartIconTappedEvent="StarImageTapped"
+                                               InfoIconTappedEvent="InfoIconTapped"/>
+
+            <datatemplates:AudializeDataTemplate x:Key="audializeDataTemplate"
+                                               AnimationTappedEvent="AnimationTapped"
+                                               StartIconTappedEvent="StarImageTapped"
+                                               InfoIconTappedEvent="InfoIconTapped"/>
+
+            <datatemplates:BlackHoleDataTemplate x:Key="blackHoleDataTemplate"
+                                               AnimationTappedEvent="AnimationTapped"
+                                               StartIconTappedEvent="StarImageTapped"
+                                               InfoIconTappedEvent="InfoIconTapped"/>
+
+            <datatemplates:ChromaticDataTemplate x:Key="chromaticDataTemplate"
+                                               AnimationTappedEvent="AnimationTapped"
+                                               StartIconTappedEvent="StarImageTapped"
+                                               InfoIconTappedEvent="InfoIconTapped"/>
+
+            <datatemplates:HazardsDataTemplate x:Key="hazardsDataTemplate"
+                                               AnimationTappedEvent="AnimationTapped"
+                                               StartIconTappedEvent="StarImageTapped"
+                                               InfoIconTappedEvent="InfoIconTapped"/>
+
+            <datatemplates:SunFadeDataTemplate x:Key="sunFadeDataTemplate"
+                                               AnimationTappedEvent="AnimationTapped"
+                                               StartIconTappedEvent="StarImageTapped"
+                                               InfoIconTappedEvent="InfoIconTapped"/>
+
+            <datatemplates:YingYangDataTemplate x:Key="yingYangDataTemplate"
+                                               AnimationTappedEvent="AnimationTapped"
+                                               StartIconTappedEvent="StarImageTapped"
+                                               InfoIconTappedEvent="InfoIconTapped"/>
+
+            <!--30-July-2022-->
+            <datatemplates:BlockchainDataTemplate x:Key="blockchainDataTemplate"
+                                               AnimationTappedEvent="AnimationTapped"
+                                               StartIconTappedEvent="StarImageTapped"
+                                               InfoIconTappedEvent="InfoIconTapped"/>
+            <datatemplates:BombsAwayDataTemplate x:Key="bombsAwayDataTemplate"
+                                               AnimationTappedEvent="AnimationTapped"
+                                               StartIconTappedEvent="StarImageTapped"
+                                               InfoIconTappedEvent="InfoIconTapped"/>
+            <datatemplates:DiffractionDataTemplate x:Key="diffractionDataTemplate"
+                                               AnimationTappedEvent="AnimationTapped"
+                                               StartIconTappedEvent="StarImageTapped"
+                                               InfoIconTappedEvent="InfoIconTapped"/>
+            <datatemplates:Dual_MeteorDataTemplate x:Key="dual_MeteorDataTemplate"
+                                               AnimationTappedEvent="AnimationTapped"
+                                               StartIconTappedEvent="StarImageTapped"
+                                               InfoIconTappedEvent="InfoIconTapped"/>
+            <datatemplates:InitializeV3DataTemplate x:Key="initializeV3DataTemplate"
+                                               AnimationTappedEvent="AnimationTapped"
+                                               StartIconTappedEvent="StarImageTapped"
+                                               InfoIconTappedEvent="InfoIconTapped"/>
+            <datatemplates:OrbitDataTemplate x:Key="orbitDataTemplate"
+                                               AnimationTappedEvent="AnimationTapped"
+                                               StartIconTappedEvent="StarImageTapped"
+                                               InfoIconTappedEvent="InfoIconTapped"/>
+            <datatemplates:PulsarDataTemplate x:Key="pulsarDataTemplate"
+                                               AnimationTappedEvent="AnimationTapped"
+                                               StartIconTappedEvent="StarImageTapped"
+                                               InfoIconTappedEvent="InfoIconTapped"/>
+            <datatemplates:Star_PowerDataTemplate x:Key="star_PowerDataTemplate"
+                                               AnimationTappedEvent="AnimationTapped"
+                                               StartIconTappedEvent="StarImageTapped"
+                                               InfoIconTappedEvent="InfoIconTapped"/>
+
+            <datatemplates:AnimationDataTemplateSelector x:Key="animationDataTemplateSelector"
+                                                         SolidDataTemplate="{StaticResource solidDataTemplate}"
+                                                         FireballDataTemplate="{StaticResource fireballTemplate}"
+                                                         FirePowerDataTemplate="{StaticResource firePowerTemplate}"
+                                                         LooperDataTemplate="{StaticResource lopperTemplate}"
+                                                         SpectrumDataTemplate="{StaticResource spectrumTemplate}"
+                                                         RobocopDataTemplate="{StaticResource robocopDataTemplate}" 
+                                                         BeaconDataTemplate="{StaticResource beaconTemplate}" 
+                                                         BreatheDataTemplate="{StaticResource breatheTemplate}" 
+                                                         CyberneticDataTemplate="{StaticResource cyberneticTemplate}" 
+                                                         MeteorDataTemplate="{StaticResource meteorTemplate}" 
+                                                         NightRiderDataTemplate="{StaticResource nightRiderTemplate}" 
+                                                         SuperWaveDataTemplate="{StaticResource superWaveTemplate}" 
+                                                         TechnetiumDataTemplate="{StaticResource technetiumTemplate}" 
+                                                         WaveDataTemplate="{StaticResource waveTemplate}" 
+                                                         AudializeDataTemplate="{StaticResource audializeDataTemplate}" 
+                                                         BlackHoleDataTemplate="{StaticResource blackHoleDataTemplate}" 
+                                                         ChromaticDataTemplate="{StaticResource chromaticDataTemplate}" 
+                                                         HazardsDataTemplate="{StaticResource hazardsDataTemplate}" 
+                                                         SunFadeDataTemplate="{StaticResource sunFadeDataTemplate}" 
+                                                         YingYangDataTemplate="{StaticResource yingYangDataTemplate}" 
+                                                        
+                                                         BlockchainDataTemplate="{StaticResource blockchainDataTemplate}" 
+                                                         Bombs_AwayDataTemplate="{StaticResource bombsAwayDataTemplate}" 
+                                                         DiffractionDataTemplate="{StaticResource diffractionDataTemplate}" 
+                                                         Dual_MeteorDataTemplate="{StaticResource dual_MeteorDataTemplate}" 
+                                                         Initialize_V3DataTemplate="{StaticResource initializeV3DataTemplate}" 
+                                                         OrbitDataTemplate="{StaticResource orbitDataTemplate}" 
+                                                         PulsarDataTemplate="{StaticResource pulsarDataTemplate}" 
+                                                         Star_PowerDataTemplate="{StaticResource star_PowerDataTemplate}" 
+                                                         />
+        </ResourceDictionary>
+    </abstractions:BaseContentPage.Resources>
+    <Grid>
+        <Image Source="background.png" Aspect="AspectFill"/>
+       <!--<Grid BackgroundColor="#8C000000"/>-->
+
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <controls:NavigationBarControl Title="ANIMATION"/>
+
+            <Grid Grid.Row="1" 
+                  x:Name="GridContainer"
+                  Style="{DynamicResource GridMarginStyle}">
+                <sho:HorizontalListView x:Name="HorizontalListView" 
+                                        DragAndDropEndedCommand="{Binding DragAndDropEndedCommand}"
+                                        EnableDragAndDrop="False" 
+                                        ItemsSource="{Binding Animations}"
+                                        CurrentIndex="{Binding CurrentIndex}" 
+                                        ListLayout="Vertical"
+                                        ColumnCount="2"  
+                                        ItemTemplate="{StaticResource animationDataTemplateSelector}"
+                                        TapCommand="{Binding TapCommand}">
+                    <sho:HorizontalListView.ItemHeight>
+                        <OnIdiom x:TypeArguments="x:Double">
+                            <OnIdiom.Phone>
+                                <OnPlatform x:TypeArguments="x:Double" iOS="200" Android="200" />
+                            </OnIdiom.Phone>
+                            <OnIdiom.Tablet>
+                                <OnPlatform x:TypeArguments="x:Double" iOS="240" Android="240" />
+                            </OnIdiom.Tablet>
+                        </OnIdiom>
+                    </sho:HorizontalListView.ItemHeight>
+
+                </sho:HorizontalListView>
+            </Grid>
+        </Grid>
+    </Grid>
+</abstractions:BaseContentPage>

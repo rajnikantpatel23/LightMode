@@ -1,0 +1,283 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Grid xmlns="http://xamarin.com/schemas/2014/forms" 
+      xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+      x:Class="ColorController.Controls.NavigationBarControl"
+      xmlns:resources="clr-namespace:ProdKart.Resources"
+      IsClippedToBounds="False"
+      xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+      BackgroundColor="#FF2B2B2D" 
+      x:Name="this"  
+      ColumnSpacing="0"
+      Padding="10,5,5,5">
+    <Grid.HeightRequest>
+        <OnIdiom x:TypeArguments="x:Double">
+            <OnIdiom.Phone>
+                <OnPlatform x:TypeArguments="x:Double"
+                        iOS="30" 
+                        Android="30" />
+            </OnIdiom.Phone>
+            <OnIdiom.Tablet>
+                <OnPlatform x:TypeArguments="x:Double" 
+                        iOS="40"
+                        Android="40" />
+            </OnIdiom.Tablet>
+        </OnIdiom>
+    </Grid.HeightRequest>
+    <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="Auto"/>
+        <ColumnDefinition Width="Auto"/>
+        <ColumnDefinition Width="*"/>
+        <ColumnDefinition Width="Auto"/>
+        <ColumnDefinition Width="Auto"/>
+    </Grid.ColumnDefinitions>
+
+    <Grid IsVisible="{Binding ShowBackButton, Source={x:Reference this}}">
+        <Grid.GestureRecognizers>
+            <TapGestureRecognizer Tapped="BackButtonTapped"/>
+        </Grid.GestureRecognizers>
+        <Image Rotation="180"
+               Margin="0,0,5,0">
+            <Image.Source>
+                <FontImageSource Glyph="{x:Static resources:IconFont.IconFontArrow}" 
+                             Size="18" 
+                             Color="White"
+                             FontFamily="icomoon">
+                    <FontImageSource.Size>
+                        <OnIdiom x:TypeArguments="x:Double">
+                            <OnIdiom.Phone>
+                                <OnPlatform x:TypeArguments="x:Double"
+                                            iOS="18" 
+                                            Android="18" />
+                            </OnIdiom.Phone>
+                            <OnIdiom.Tablet>
+                                <OnPlatform x:TypeArguments="x:Double" 
+                                            iOS="27"
+                                            Android="27" />
+                            </OnIdiom.Tablet>
+                        </OnIdiom>
+                    </FontImageSource.Size>
+                </FontImageSource>
+            </Image.Source>
+        </Image>
+    </Grid>
+    <Label Grid.Column="1" 
+           Text="{Binding Title, Source={x:Reference this}}"
+           Style="{DynamicResource Label18Style}">
+        <Label.GestureRecognizers>
+            <TapGestureRecognizer Tapped="BackButtonTapped"/>
+        </Label.GestureRecognizers>
+    </Label>
+
+    <!--<controls:CustomButtonControl Grid.Column="3" 
+                                  IsVisible="{Binding ShowDisconnectButton, Source={x:Reference this}}"
+                                  FontSize="11" 
+                                  ScaleX="1" 
+                                  FontFamilyValue="LatoBold"
+                                  ScaleY="1.1" ButtonTextColor="{Binding ButtonTextColor, Source={x:Reference this}}"
+                                  Title="{Binding StatusText, Source={x:Reference this}}" 
+                                  VerticalOptions="Center"/>-->
+    <Grid Grid.Column="2" Margin="10,0,0,0" HorizontalOptions="EndAndExpand">
+        <!--Searching for <Device_Name>...-->
+        <StackLayout Spacing="0" Orientation="Horizontal" VerticalOptions="Center">
+            <Label Text="{Binding SearchingText, Source={x:Reference this}}" 
+                   FontFamily="LatoRegular"  
+                   VerticalOptions="Center" 
+                   VerticalTextAlignment="Center" 
+                   FontSize="12"
+                   TextColor="{DynamicResource ButtonDisabledTextColor}">
+                <Label.LineBreakMode>
+                    <OnPlatform x:TypeArguments="LineBreakMode"
+                                iOS="NoWrap" 
+                                Android="MiddleTruncation" />
+                </Label.LineBreakMode>
+            </Label>
+
+            <Label Text="{Binding DottedText, Source={x:Reference this}}" 
+               FontFamily="LatoRegular"
+               WidthRequest="20" HorizontalOptions="Start"
+               VerticalOptions="Center" 
+               VerticalTextAlignment="Center" 
+               FontSize="12" 
+               TextColor="{DynamicResource ButtonDisabledTextColor}"/>
+        </StackLayout>
+
+        <!--<Image Source="{Binding ImageBtnConnectSource, Source={x:Reference this}}"  
+               IsVisible="{Binding ImageBtnConnectIsVisible, Source={x:Reference this}}"
+               IsAnimationPlaying="{Binding IsAnimationPlaying, Source={x:Reference this}}"
+               HorizontalOptions="EndAndExpand">
+            --><!--REMOVED: --><!--
+            <Image.Behaviors>
+                <behaviour:ViewTappedButtonBehavior AnimationType="Fade"/>
+            </Image.Behaviors>
+
+            <Image.GestureRecognizers>
+                <TapGestureRecognizer Tapped="ConnectBtnTapped" CommandParameter="{Binding }"/>
+            </Image.GestureRecognizers>
+            <Image.HeightRequest>
+                <OnIdiom x:TypeArguments="x:Double">
+                    <OnIdiom.Phone>
+                        <OnPlatform x:TypeArguments="x:Double"
+                                    iOS="30" 
+                                    Android="30" />
+                    </OnIdiom.Phone>
+                    <OnIdiom.Tablet>
+                        <OnPlatform x:TypeArguments="x:Double" 
+                                    iOS="40"
+                                    Android="40" />
+                    </OnIdiom.Tablet>
+                </OnIdiom>
+            </Image.HeightRequest>
+        </Image>-->
+
+        <ffimageloading:CachedImage Source="{Binding ImageBtnConnectSource, Source={x:Reference this}}"  
+                                    IsVisible="{Binding ImageBtnConnectIsVisible, Source={x:Reference this}}"
+                                    HorizontalOptions="EndAndExpand" >
+            <!--<ffimageloading:CachedImage.Behaviors>
+                <behaviour:ViewTappedButtonBehavior AnimationType="Fade"/>
+            </ffimageloading:CachedImage.Behaviors>-->
+            <ffimageloading:CachedImage.GestureRecognizers>
+                <TapGestureRecognizer Tapped="ConnectBtnTapped" CommandParameter="{Binding }"/>
+            </ffimageloading:CachedImage.GestureRecognizers>
+            <ffimageloading:CachedImage.HeightRequest>
+                <OnIdiom x:TypeArguments="x:Double">
+                    <OnIdiom.Phone>
+                        <OnPlatform x:TypeArguments="x:Double"
+                                    iOS="30" 
+                                    Android="30" />
+                    </OnIdiom.Phone>
+                    <OnIdiom.Tablet>
+                        <OnPlatform x:TypeArguments="x:Double" 
+                                    iOS="40"
+                                    Android="40" />
+                    </OnIdiom.Tablet>
+                </OnIdiom>
+            </ffimageloading:CachedImage.HeightRequest>
+        </ffimageloading:CachedImage>
+
+    </Grid>
+
+    <Image Grid.Column="3" Margin="3,0,6,0">
+        <Image.Source>
+            <FontImageSource Glyph="{x:Static resources:IconFont.IconFontBluetooth}"   
+                             Color="{Binding BluetoothColor, Source={x:Reference this}}"
+                             FontFamily="icomoon">
+                <FontImageSource.Size>
+                    <OnIdiom x:TypeArguments="x:Double">
+                        <OnIdiom.Phone>
+                            <OnPlatform x:TypeArguments="x:Double"
+                                        iOS="20" 
+                                        Android="20" />
+                        </OnIdiom.Phone>
+                        <OnIdiom.Tablet>
+                            <OnPlatform x:TypeArguments="x:Double" 
+                                        iOS="33"
+                                        Android="33" />
+                        </OnIdiom.Tablet>
+                    </OnIdiom>
+                </FontImageSource.Size>
+            </FontImageSource>
+        </Image.Source>
+    </Image>
+
+    <!--<Grid Grid.Column="4">
+        <Image Source="bluetoothOff.png" HeightRequest="23" Margin="5,0,0,0">
+            <Image.HeightRequest>
+                <OnIdiom x:TypeArguments="x:Double">
+                    <OnIdiom.Phone>
+                        <OnPlatform x:TypeArguments="x:Double"
+                                            iOS="23" 
+                                            Android="23" />
+                    </OnIdiom.Phone>
+                    <OnIdiom.Tablet>
+                        <OnPlatform x:TypeArguments="x:Double" 
+                                            iOS="40"
+                                            Android="40" />
+                    </OnIdiom.Tablet>
+                </OnIdiom>
+            </Image.HeightRequest>
+        </Image>
+        <Image Source="bluetoothOn.png" HeightRequest="23" Margin="5,0,0,0" IsVisible="{Binding IsBluetoothOn, Source={x:Reference this}}">
+            <Image.HeightRequest>
+                <OnIdiom x:TypeArguments="x:Double">
+                    <OnIdiom.Phone>
+                        <OnPlatform x:TypeArguments="x:Double"
+                                            iOS="23" 
+                                            Android="23" />
+                    </OnIdiom.Phone>
+                    <OnIdiom.Tablet>
+                        <OnPlatform x:TypeArguments="x:Double" 
+                                            iOS="40"
+                                            Android="40" />
+                    </OnIdiom.Tablet>
+                </OnIdiom>
+            </Image.HeightRequest>
+        </Image>
+    </Grid>-->
+
+    <StackLayout Grid.Column="4" 
+                 VerticalOptions="Center">
+        <StackLayout.Spacing>
+            <OnIdiom x:TypeArguments="x:Double">
+                <OnIdiom.Phone>
+                    <OnPlatform x:TypeArguments="x:Double"
+                                iOS="2" 
+                                Android="2" />
+                </OnIdiom.Phone>
+                <OnIdiom.Tablet>
+                    <OnPlatform x:TypeArguments="x:Double" 
+                                iOS="5"
+                                Android="5" />
+                </OnIdiom.Tablet>
+            </OnIdiom>
+        </StackLayout.Spacing>
+        <!--<StackLayout.Margin>
+            <OnIdiom x:TypeArguments="Thickness">
+                <OnIdiom.Phone>
+                    <OnPlatform x:TypeArguments="Thickness"
+                                iOS="0,0,0,-12" 
+                                Android="0,0,0,-12" />
+                </OnIdiom.Phone>
+                <OnIdiom.Tablet>
+                    <OnPlatform x:TypeArguments="Thickness" 
+                                iOS="0,0,0,-18"
+                                Android="0,0,0,-18" />
+                </OnIdiom.Tablet>
+            </OnIdiom>
+        </StackLayout.Margin>-->
+        <Label Text="{Binding BatteryPercentages, Source={x:Reference this}}" 
+               Style="{DynamicResource Label9Style}"
+               FontFamily="LatoBold"  
+               HorizontalOptions="Center"  />
+        <Image  x:Name="ImageBattery"
+                IsVisible="{Binding ImageBatteryVisible, Source={x:Reference this}}" >
+            <Image.HeightRequest>
+                <OnIdiom x:TypeArguments="x:Double">
+                    <OnIdiom.Phone>
+                        <OnPlatform x:TypeArguments="x:Double"
+                                            iOS="9" 
+                                            Android="9" />
+                    </OnIdiom.Phone>
+                    <OnIdiom.Tablet>
+                        <OnPlatform x:TypeArguments="x:Double" 
+                                            iOS="15"
+                                            Android="15" />
+                    </OnIdiom.Tablet>
+                </OnIdiom>
+            </Image.HeightRequest>
+        </Image>
+    </StackLayout>
+
+    <!--<yummy:PancakeView Grid.Column="2" CornerRadius="6" HasShadow="True" Padding="2" BorderColor="#80262629" BorderThickness="1" BackgroundColor="#80000000">
+        <yummy:PancakeView  CornerRadius="5" BackgroundColor="#FF19181D" BorderColor="#000000" BorderThickness="0.5">
+            <yummy:PancakeView.BackgroundGradientStops>
+                <yummy:GradientStopCollection>
+                    <yummy:GradientStop Color="#80262629" Offset="0" />
+                    <yummy:GradientStop Color="#000000" Offset="0.5" />
+                    <yummy:GradientStop Color="#80262629" Offset="1" />
+                </yummy:GradientStopCollection>
+            </yummy:PancakeView.BackgroundGradientStops>
+            <Label Text="{Binding StatusText, Source={x:Reference this}}" VerticalTextAlignment="Center" Margin="10,5" TextColor="#FF4DDDFF" HorizontalOptions="Center" HorizontalTextAlignment="Center" FontSize="12"/>
+        </yummy:PancakeView>
+    </yummy:PancakeView>-->
+
+</Grid>

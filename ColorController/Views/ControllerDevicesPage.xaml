@@ -1,0 +1,108 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<abstractions:BaseContentPage xmlns:abstractions="clr-namespace:ColorController.Abstractions"
+                              xmlns="http://xamarin.com/schemas/2014/forms"
+                              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+                              xmlns:controls="clr-namespace:ColorController.Controls"                               
+                              xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core" 
+                              ios:Page.UseSafeArea="True"                              
+                              xmlns:resources="clr-namespace:ProdKart.Resources" 
+                              xmlns:yummy="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
+                              BackgroundColor="#FF2B2B2D"
+                              x:Class="ColorController.Views.ControllerDevicesPage">
+    <Grid> 
+        <Grid RowSpacing="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+ 
+            <controls:NavigationBarControl ShowBackButton="True"
+                                           BackButtonEvent="BackButtonTapped"
+                                           Title="DEVICES"/>
+
+            <controls:GradientBackgroundControl Grid.Row="1"/>
+
+            <ListView Grid.Row="1" 
+                      ItemsSource="{Binding Controllers}" 
+                      Header="1"   
+                      BackgroundColor="Transparent"
+                      HasUnevenRows="True" 
+                      SelectionMode="None" 
+                      SeparatorVisibility="None"
+                      VerticalScrollBarVisibility="Never">
+                <ListView.HeaderTemplate>
+                    <DataTemplate>
+                        <BoxView Color="#998F8F8F" HeightRequest="1" VerticalOptions="End" HorizontalOptions="Fill"/>
+                    </DataTemplate>
+                </ListView.HeaderTemplate>
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <Grid>
+                                <Grid.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="DeviceTapped"  
+                                                          CommandParameter="{Binding }"/>
+                                </Grid.GestureRecognizers>
+                                <Grid>
+                                    <Grid Margin="20,0"
+                                          RowDefinitions="Auto" 
+                                          ColumnDefinitions="*,20">
+                                       
+                                        <Grid ColumnDefinitions="Auto,80"
+                                              RowDefinitions="Auto" 
+                                              Margin="0,35">
+                                            <Label Text="{Binding Name}" 
+                                                   LineBreakMode="WordWrap"
+                                                   Style="{DynamicResource Label16Style}"/>
+                                            <Label Grid.Column="1"  
+                                                   Text="{Binding IsDefaultString}" 
+                                                   FontFamily="LatoItalic"
+                                                   Style="{DynamicResource Label14Style}"/>
+                                        </Grid>
+                                         
+                                        <Image Grid.Column="1" 
+                                               VerticalOptions="Center">
+                                            <Image.Source>
+                                                <FontImageSource Glyph="{x:Static resources:IconFont.IconFontArrow}" 
+                                                                 Color="White"
+                                                                 FontFamily="icomoon">
+                                                    <FontImageSource.Size>
+                                                        <OnIdiom x:TypeArguments="x:Double">
+                                                            <OnIdiom.Phone>
+                                                                <OnPlatform x:TypeArguments="x:Double"
+                                                                            iOS="18" 
+                                                                            Android="18" />
+                                                            </OnIdiom.Phone>
+                                                            <OnIdiom.Tablet>
+                                                                <OnPlatform x:TypeArguments="x:Double" 
+                                                                            iOS="27"
+                                                                            Android="27" />
+                                                            </OnIdiom.Tablet>
+                                                        </OnIdiom>
+                                                    </FontImageSource.Size>
+                                                </FontImageSource>
+                                            </Image.Source>
+                                        </Image>
+                                    </Grid>
+                                    <BoxView Color="#998F8F8F" HeightRequest="1" VerticalOptions="End" HorizontalOptions="Fill"/>
+                                </Grid>
+                            </Grid>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+
+            <Label Grid.Row="1" 
+                   Text="You have no saved devices." 
+                   VerticalOptions="End" 
+                   VerticalTextAlignment="End"
+                   Margin="0,20"
+                   IsVisible="{Binding Controllers.Count, Converter={StaticResource InverseConverter}}"
+                   HorizontalOptions="Center"
+                   HorizontalTextAlignment="Center"   
+                   TextColor="{DynamicResource EmptyItemSourceMessageTextColor}"
+                   Style="{DynamicResource Label16Style}"/>
+
+        </Grid>
+    </Grid>
+</abstractions:BaseContentPage>

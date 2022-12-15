@@ -1,0 +1,81 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<abstractions:BaseContentPage xmlns:abstractions="clr-namespace:ColorController.Abstractions"
+                              xmlns="http://xamarin.com/schemas/2014/forms"
+                              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+                              xmlns:controls="clr-namespace:ColorController.Controls"                               
+                              xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core" 
+                              ios:Page.UseSafeArea="True"                              
+                              xmlns:resources="clr-namespace:ProdKart.Resources"
+                              BackgroundColor="#FF2B2B2D"
+                              x:Class="ColorController.Views.UpdatesPage">
+    <Grid> 
+        <Grid RowSpacing="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <controls:NavigationBarControl ShowBackButton="True"
+                                           BackButtonEvent="BackButtonTapped"
+                                           Title="UPDATES"/>
+
+            <controls:GradientBackgroundControl Grid.Row="1"/>
+
+            <ListView Grid.Row="1" ItemsSource="{Binding Items}"
+                      Header="1"  
+                      BackgroundColor="Transparent"
+                      HasUnevenRows="True"
+                      SelectionMode="None"
+                      SeparatorVisibility="None"
+                      VerticalScrollBarVisibility="Never">
+                <ListView.HeaderTemplate>
+                    <DataTemplate>
+                        <BoxView Color="#998F8F8F"
+                                 HeightRequest="1"
+                                 VerticalOptions="End" 
+                                 HorizontalOptions="Fill"/>
+                    </DataTemplate>
+                </ListView.HeaderTemplate>
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <Grid>
+                                <Grid.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="ItemTapped" CommandParameter="{Binding }"/>
+                                </Grid.GestureRecognizers>
+                                <Grid Margin="20,0">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    <StackLayout Margin="0,30" Spacing="0">
+                                        <Label Text="{Binding Text}"
+                                               Style="{DynamicResource Label16Style}"/>
+                                        <Label Text="{Binding Description}"
+                                               Style="{DynamicResource Label12Style}"
+                                               FontFamily="LatoItalic"/>
+                                    </StackLayout>
+                                    <Image Grid.Column="1">
+                                        <Image.Source>
+                                            <FontImageSource 
+                                                Glyph="{x:Static resources:IconFont.IconFontArrow}" 
+                                                Size="18"
+                                                Color="{DynamicResource DefaultTextColor}"
+                                                FontFamily="icomoon"/>
+                                        </Image.Source>
+                                    </Image>
+                                </Grid>
+
+                                <BoxView Color="#998F8F8F" HeightRequest="1" 
+                                         VerticalOptions="End" 
+                                         HorizontalOptions="Fill"/>
+
+                            </Grid>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+
+        </Grid>
+    </Grid>
+</abstractions:BaseContentPage>

@@ -1,0 +1,94 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Grid xmlns="http://xamarin.com/schemas/2014/forms"
+      xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+      x:Class="ColorController.Controls.IntensitySliderControl"
+      x:Name="this" 
+      xmlns:iOS="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
+      xmlns:resources="clr-namespace:ProdKart.Resources" 
+      RowSpacing="0">
+    <!--<Label Text="{Binding StringFormat='{0:F1}', Source={x:Reference slider}, Path=Value, Mode=TwoWay}"   TextColor="Red"/>-->
+
+    <Grid VerticalOptions="Center"  
+          HorizontalOptions="Center"  >
+        <Grid ColumnSpacing="0" Scale="1.1" 
+              VerticalOptions="Center"  
+              TranslationX="20"
+              RotationY="180" 
+              RotationX="180">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="100"/>
+            </Grid.RowDefinitions>
+
+            <Grid  TranslationX="45" x:Name="GridHigh" WidthRequest="130">
+                <Grid.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="HighTapped"/>
+                </Grid.GestureRecognizers>
+                <Image Source="unselectedIntensityBox.png" VerticalOptions="Center"   IsVisible="true" ScaleX="1.1" x:Name="TabHighUnselected"/>
+                <Image Source="selectedIntensityBox.png"    VerticalOptions="Center" IsVisible="False" ScaleX="1.1" x:Name="TabHighSelected"/>
+                <Label Text="HIGH" 
+                       x:Name="LabelHigh" Margin="-15,0,0,0"
+                       HorizontalTextAlignment="Center"
+                       VerticalTextAlignment="Center"
+                       Style="{DynamicResource Label16Style}" 
+                       FontFamily="BebasNeueProBoldItalic" 
+                       RotationY="180" 
+                       RotationX="180" />
+            </Grid>
+
+            <Grid Grid.Column="1" TranslationX="25" x:Name="GridStandard" WidthRequest="130">
+                <Grid.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="StandardTapped"/>
+                </Grid.GestureRecognizers>
+                <Image Source="unselectedIntensityBox.png" VerticalOptions="Center" IsVisible="true"  ScaleX="1.1"  x:Name="TabStandardUnselected" />
+                <Image Source="selectedIntensityBox.png"   VerticalOptions="Center" IsVisible="False" ScaleX="1.1"  x:Name="TabStandardSelected"/>
+                <Label Text="STANDARD" 
+                       x:Name="LabelStandard" Margin="-15,0,0,0"
+                       HorizontalTextAlignment="Center"
+                       VerticalTextAlignment="Center"
+                       Style="{DynamicResource Label16Style}" 
+                       FontFamily="BebasNeueProBoldItalic" 
+                       RotationY="180" 
+                       RotationX="180" />
+            </Grid>
+
+            <Grid Grid.Column="2" x:Name="GridLow" WidthRequest="130" >
+                <Grid.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="LowTapped"/>
+                </Grid.GestureRecognizers>
+                <Image Source="unselectedIntensityBox.png" VerticalOptions="Center"   IsVisible="True"  x:Name="TabLowUnselected" />
+                <Image Source="selectedIntensityBox.png"   VerticalOptions="Center" IsVisible="False" x:Name="TabLowSelected"/>
+                <Label Text="LOW"
+                       x:Name="LabelLow" 
+                       HorizontalTextAlignment="Center"
+                       VerticalTextAlignment="Center"
+                       Style="{DynamicResource Label16Style}" 
+                       FontFamily="BebasNeueProBoldItalic" 
+                       RotationY="180" 
+                       RotationX="180" />
+            </Grid>
+        </Grid>
+    </Grid>
+
+    <Slider  ScaleY="1"
+             iOS:Slider.UpdateOnTap="True"
+             HorizontalOptions="Fill"
+             ThumbColor="Transparent"
+             MaximumTrackColor="Transparent"
+             MinimumTrackColor="Transparent"  
+             x:Name="slider" Value="{Binding SliderValue,  Source={x:Reference this}, Mode=TwoWay}"
+             Minimum="0" 
+             Maximum="3">
+        <!--<Slider.ThumbImageSource>
+            <FontImageSource Glyph="{x:Static resources:IconFont.IconFontSliderBG}" 
+                             Size="70" 
+                             Color="Transparent"
+                             FontFamily="icomoon"/>
+        </Slider.ThumbImageSource>-->
+    </Slider>
+
+</Grid>

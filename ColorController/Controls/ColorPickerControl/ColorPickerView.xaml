@@ -1,0 +1,98 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:skiaSharp="clr-namespace:SkiaSharp.Views.Forms;assembly=SkiaSharp.Views.Forms" 
+             xmlns:colorPicker="clr-namespace:Spillman.Xamarin.Forms.ColorPicker"
+             mc:Ignorable="d"
+             x:Class="Spillman.Xamarin.Forms.ColorPicker.ColorPickerView"
+             x:DataType="colorPicker:ColorPickerViewModel"
+             x:Name="View"
+             BackgroundColor="White" 
+             HorizontalOptions="FillAndExpand"  >
+    <ContentView.BindingContext>
+        <colorPicker:ColorPickerViewModel/>
+    </ContentView.BindingContext>
+    <StackLayout Spacing="0">
+        <StackLayout Orientation="Horizontal"
+                     Spacing="0"
+                     HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+
+            <!--<StackLayout>
+                <StackLayout Orientation="Horizontal">
+                    <Label Text="{Binding H}"/>
+                    <Label Text="{Binding S}"/>
+                    --><!--<Label Text="{Binding V}"/>--><!--
+                </StackLayout>
+                <BoxView HeightRequest="50" WidthRequest="50" Color="{Binding SelectedColor}"/>
+                <BoxView HeightRequest="50" WidthRequest="50" Color="{Binding Color}"/>
+                <BoxView HeightRequest="50" WidthRequest="50" Color="{Binding HueColor}"/>
+            </StackLayout>-->
+            <!-- Saturation and value box -->
+            <AbsoluteLayout HorizontalOptions="FillAndExpand"  IsVisible="True">
+                <BoxView AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0, 0, 1, 1"   
+                         Color="{Binding HueColor}" />
+ 
+                <!-- Selected circle -->
+                <skiaSharp:SKCanvasView x:Name="SelectedSaturationValueCanvasView" 
+                                        AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0, 0, 1, 1"  
+                                        PaintSurface="OnSelectedSaturationValuePaintSurface"
+                                        BackgroundColor="Transparent" EnableTouchEvents="True"
+                                        Touch="OnSelectedSaturationValueTouch"/>
+ 
+            </AbsoluteLayout>
+
+            <AbsoluteLayout HorizontalOptions="FillAndExpand"  IsVisible="False">
+              
+                <skiaSharp:SKCanvasView AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0, 0, 1, 1"
+                        x:Name="SkCanvasView"
+                        EnableTouchEvents="True" 
+                        PaintSurface="SkCanvasView_OnPaintSurface"
+                        Touch="SkCanvasView_OnTouch" />
+            </AbsoluteLayout>
+        </StackLayout>
+
+        <!-- Hue rainbow -->
+        <AbsoluteLayout HorizontalOptions="FillAndExpand"
+                        HeightRequest="32">
+            <skiaSharp:SKCanvasView AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0, 0, 1, 1"
+                                    PaintSurface="OnHueRainbowPaintSurface" />
+
+            <skiaSharp:SKCanvasView x:Name="SelectedHueRainbowCanvasView"
+                                    AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0, 0, 1, 1"
+                                    PaintSurface="OnSelectedHueRainbowPaintSurface"
+                                    EnableTouchEvents="True"
+                                    Touch="OnSelectedHueRainbowTouch"
+                                    BackgroundColor="Transparent" />
+        </AbsoluteLayout>
+
+        <StackLayout Orientation="Horizontal" IsVisible="False">
+            <!-- # Label -->
+            <Label VerticalOptions="Center"
+                   VerticalTextAlignment="Center"
+                   Text="#" />
+
+            <!-- Hex Entry -->
+            <Entry HorizontalOptions="FillAndExpand" VerticalOptions="Center"
+                   Text="{Binding Hex}"
+                   Keyboard="Plain"
+                   Unfocused="OnHexUnfocused" />
+
+            <!-- A Label -->
+            <Label IsVisible="{Binding IsAlphaEnabled}"
+                   VerticalOptions="Center"
+                   VerticalTextAlignment="Center"
+                   Text="A" />
+
+            <!-- Alpha Entry -->
+            <Entry x:Name="AlphaEntry"
+                   IsVisible="{Binding IsAlphaEnabled}"
+                   VerticalOptions="Center"
+                   WidthRequest="70"
+                   Text="{Binding AlphaText, Source={x:Reference View}}"
+                   Keyboard="Numeric"
+                   Unfocused="OnAlphaEntryUnfocused" />
+        </StackLayout>
+    </StackLayout>
+</ContentView>

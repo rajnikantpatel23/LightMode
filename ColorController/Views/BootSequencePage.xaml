@@ -1,0 +1,89 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<abstractions:BaseContentPage  xmlns:abstractions="clr-namespace:ColorController.Abstractions"
+                               xmlns="http://xamarin.com/schemas/2014/forms"
+                               xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+                               xmlns:controls="clr-namespace:ColorController.Controls" 
+                               xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core" 
+                               ios:Page.UseSafeArea="True" 
+                               xmlns:yummy="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
+                               BackgroundColor="#FF2B2B2D"
+                               x:Class="ColorController.Views.BootSequencePage">
+    <Grid> 
+        <Grid RowSpacing="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <controls:NavigationBarControl ShowBackButton="True"  
+                                           BackButtonEvent="BackButtonTapped"
+                                           Title="BOOT SEQUENCE"/>
+
+
+            <controls:GradientBackgroundControl Grid.Row="1"/>
+
+            <ListView Grid.Row="1" 
+                      ItemsSource="{Binding Items}"
+                      Header="1"   
+                      BackgroundColor="Transparent"
+                      HasUnevenRows="True"
+                      SelectionMode="None"
+                      SeparatorVisibility="None"
+                      VerticalScrollBarVisibility="Never">
+                <ListView.HeaderTemplate>
+                    <DataTemplate>
+                        <Grid> 
+                            <Label Margin="15,30" 
+                                   Text="Change the short animation that plays when you turn on your LightMode controller."
+                                   Style="{DynamicResource Label12Style}"   
+                                   HorizontalTextAlignment="Center" 
+                                   VerticalTextAlignment="Center"/>
+
+                            <BoxView Color="#998F8F8F"
+                                     HeightRequest="1"
+                                     VerticalOptions="End"
+                                     HorizontalOptions="Fill"/>
+
+                        </Grid>
+                    </DataTemplate>
+                </ListView.HeaderTemplate>
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <Grid>
+                                <Grid.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="BootSequenceTapped" CommandParameter="{Binding }"/>
+                                </Grid.GestureRecognizers>
+                                <yummy:PancakeView IsVisible="{Binding IsSelected, Mode=TwoWay}" BackgroundGradientStartPoint="1,0" BackgroundGradientEndPoint="1,1">
+                                    <yummy:PancakeView.BackgroundGradientStops>
+                                        <yummy:GradientStopCollection>
+                                            <yummy:GradientStop Color="#FFE3F8FB" Offset="0" />
+                                            <yummy:GradientStop Color="#FF01BAD6" Offset="0.15" />
+                                            <yummy:GradientStop Color="#FF0181B2" Offset="0.5" />
+                                            <yummy:GradientStop Color="#FF0181B2" Offset="0.8" />
+                                            <yummy:GradientStop Color="#FF01BAD6" Offset="1" />
+                                            <yummy:GradientStop Color="#FFE3F8FB" Offset="1" />
+                                        </yummy:GradientStopCollection>
+                                    </yummy:PancakeView.BackgroundGradientStops>
+                                </yummy:PancakeView>
+
+                                <Grid>
+                                    <Label Text="{Binding Text}"   
+                                           Style="{DynamicResource Label16Style}"  
+                                           HorizontalTextAlignment="Center"
+                                           VerticalTextAlignment="Center" 
+                                           Margin="35"/>
+                                    <BoxView Color="#998F8F8F" 
+                                             HeightRequest="1"
+                                             VerticalOptions="End"
+                                             HorizontalOptions="Fill"/>
+                                </Grid>
+                            </Grid>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+
+        </Grid>
+    </Grid>
+</abstractions:BaseContentPage>

@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Grid xmlns="http://xamarin.com/schemas/2014/forms"             
+      xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"           
+      x:Class="ColorController.Controls.TitleArrowControl"
+      xmlns:resources="clr-namespace:ProdKart.Resources" 
+      xmlns:behaviour="clr-namespace:ProdKart.Behaviour"
+      x:Name="this">
+    <Grid Margin="15,0">
+        
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="Auto"/>
+        </Grid.ColumnDefinitions>
+        <Label Text="{Binding Title, Source={x:Reference this}}" 
+               Style="{DynamicResource Label16Style}"  
+               Margin="0,35"/>
+
+        <Image Grid.Column="1">
+            <Image.Source>
+                <FontImageSource Glyph="{x:Static resources:IconFont.IconFontArrow}" 
+                                 Color="White"
+                                 FontFamily="icomoon">
+                    <FontImageSource.Size>
+                        <OnIdiom x:TypeArguments="x:Double">
+                            <OnIdiom.Phone>
+                                <OnPlatform x:TypeArguments="x:Double"
+                                            iOS="18" 
+                                            Android="18" />
+                            </OnIdiom.Phone>
+                            <OnIdiom.Tablet>
+                                <OnPlatform x:TypeArguments="x:Double" 
+                                            iOS="27"
+                                            Android="27" />
+                            </OnIdiom.Tablet>
+                        </OnIdiom>
+                    </FontImageSource.Size>
+                </FontImageSource>
+            </Image.Source>
+        </Image>
+    </Grid>
+    <BoxView Color="#998F8F8F" 
+             HeightRequest="1" 
+             VerticalOptions="End" 
+             HorizontalOptions="Fill"/>
+</Grid>

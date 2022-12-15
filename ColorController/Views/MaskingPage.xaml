@@ -1,0 +1,57 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"  
+             BackgroundColor="Black"
+             xmlns:iOS="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
+             iOS:Page.UseSafeArea="True"
+             xmlns:xfColorPickerControl="clr-namespace:Udara.Plugin.XFColorPickerControl;assembly=Udara.Plugin.XFColorPickerControl" 
+             xmlns:yummy="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
+             x:Class="ThomasPOC.Views.MaskingPage">
+    <Grid RowDefinitions="1.5*,0.5*,Auto" Padding="5">
+
+        <Grid >
+            <yummy:PancakeView BackgroundGradientStartPoint="0.3,0" HeightRequest="300"  WidthRequest="300"  Margin="70,0"
+                               BackgroundGradientEndPoint="1,0"  
+                               HorizontalOptions="Center"  
+                               VerticalOptions="Center"   >
+                <yummy:PancakeView.BackgroundGradientStops>
+                    <yummy:GradientStopCollection>
+                        <yummy:GradientStop Color="{Binding SelectedColor, Mode=TwoWay}" 
+                                            Offset="0"  />
+                        <yummy:GradientStop Color="{Binding Color2, Mode=TwoWay}" 
+                                            Offset="0.5"   />
+                    </yummy:GradientStopCollection>
+                </yummy:PancakeView.BackgroundGradientStops>
+            </yummy:PancakeView>
+
+            <Image Source="robocopwhite" x:Name="ImageRobocopWhite" IsVisible="False"  HeightRequest="300" HorizontalOptions="Center" VerticalOptions="Center" />
+            <Image Source="RobocopMask" x:Name="ImageRobocopBlack" IsVisible="False"  HeightRequest="300" HorizontalOptions="Center" VerticalOptions="Center"/>
+
+        </Grid>
+        <xfColorPickerControl:ColorPicker  Grid.Row="1" 
+	                        x:Name="ColorPicker"  
+	                        ColorFlowDirection="Horizontal"
+	                        ColorSpectrumStyle="HueToTintStyle"
+	                        HorizontalOptions="FillAndExpand"
+	                        PickedColorChanged="ColorPicker_PickedColorChanged"
+	                        PointerRingBorderUnits="0.2"
+	                        PointerRingDiameterUnits="1.0"
+	                        PointerRingPositionXUnits="0.9"
+	                        PointerRingPositionYUnits="0.1">
+
+        </xfColorPickerControl:ColorPicker>
+
+
+        <Grid Grid.Row="2">
+            <Button Text="Back" 
+                    Style="{DynamicResource ButtonDarkStyle}" 
+                    Clicked="GoBack"/>
+            <Button Grid.Column="1"
+                    x:Name="buttonMode"
+                    Text="Dark Mode"  
+                    Style="{DynamicResource ButtonDarkStyle}" 
+                    Clicked="ChangeMode"/>
+        </Grid>
+
+    </Grid>
+</ContentPage>

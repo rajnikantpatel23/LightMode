@@ -1,0 +1,76 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<abstractions:BaseContentPage xmlns:abstractions="clr-namespace:ColorController.Abstractions"
+                              xmlns="http://xamarin.com/schemas/2014/forms"
+                              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+                              xmlns:controls="clr-namespace:ColorController.Controls"                               
+                              xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core" 
+                              ios:Page.UseSafeArea="True"
+                              xmlns:yummy="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
+                              BackgroundColor="#FF2B2B2D"
+                              x:Class="ColorController.Views.ControllerDetailPage">
+    <Grid>
+        <!--<Image Source="background.png" Aspect="AspectFill"/>-->
+       <!--<Grid BackgroundColor="#8C000000"/>-->
+
+        <Grid RowSpacing="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+ 
+            <controls:NavigationBarControl ShowBackButton="True"
+                                           BackButtonEvent="BackButtonTapped"
+                                           Title="{Binding Title}"/>
+
+            <controls:GradientBackgroundControl Grid.Row="1"/>
+
+            <StackLayout Grid.Row="1"
+                         Spacing="30">
+                <Grid>
+                    <Grid.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="ToggleButtonTapped"/>
+                    </Grid.GestureRecognizers>
+                    <Grid Margin="20,0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <Label  Text="Set as default" 
+                                Style="{DynamicResource Label16Style}" 
+                                Margin="0,35"/>
+
+                        <controls:CustomSwitchControl Grid.Column="1"
+                                                      x:Name="switchControl"/>
+
+                        <BoxView Grid.Column="1" HorizontalOptions="Fill" HeightRequest="10"/>
+                    </Grid>
+                    <BoxView Color="#998F8F8F" HeightRequest="1" VerticalOptions="End" HorizontalOptions="Fill"/>
+                </Grid>
+
+                <!--<Label Text="{Binding Source={x:Reference switchControl}, Path=SwitchStatus}"/>-->
+
+                <ImageButton Source="forgetDeviceBtnHigh.png" 
+                             Command="{Binding ForgetDeviceBtnTappedCommand}">
+                    <ImageButton.HeightRequest>
+                        <OnIdiom x:TypeArguments="x:Double">
+                            <OnIdiom.Phone>
+                                <OnPlatform x:TypeArguments="x:Double"
+                                                iOS="35" 
+                                                Android="35" />
+                            </OnIdiom.Phone>
+                            <OnIdiom.Tablet>
+                                <OnPlatform x:TypeArguments="x:Double"
+                                                iOS="60"
+                                                Android="60" />
+                            </OnIdiom.Tablet>
+                        </OnIdiom>
+                    </ImageButton.HeightRequest>
+                </ImageButton>
+            </StackLayout>
+
+        </Grid>
+    </Grid>
+</abstractions:BaseContentPage>

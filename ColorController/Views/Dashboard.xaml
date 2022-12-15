@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<controls:ExtendedTabbedPage xmlns:controls="clr-namespace:ColorController.Controls"
+                             xmlns="http://xamarin.com/schemas/2014/forms"
+                             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+                             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                             mc:Ignorable="d"
+                             NavigationPage.HasNavigationBar="False"
+                             xmlns:android="clr-namespace:Xamarin.Forms.PlatformConfiguration.AndroidSpecific;assembly=Xamarin.Forms.Core"
+                             xmlns:views="clr-namespace:ColorController.Views"
+                             android:TabbedPage.BarItemColor="{DynamicResource TabbedPageBarItemColor}"
+                             android:TabbedPage.BarSelectedItemColor="{DynamicResource DefaultTextColor}" 
+                             android:TabbedPage.ToolbarPlacement="Bottom" 
+                             android:TabbedPage.IsSwipePagingEnabled="False"
+                             BarBackgroundColor="{DynamicResource BarBackgroundColor}"  
+                             x:Name="dashboard"
+                             BackgroundColor="{DynamicResource TabBackgroundColor}" 
+                             UnselectedTabColor="{DynamicResource TabUnselectedColor}"
+                             SelectedTabColor="{DynamicResource TabSelectedColor}"
+                             BarTextColor="{DynamicResource TabBackgroundColor}" 
+                             x:Class=" ColorController.Views.Dashboard">
+    <controls:ExtendedTabbedPage.Effects>
+        <controls:NoShiftEffect />
+    </controls:ExtendedTabbedPage.Effects>
+    <!--<controls:ExtendedTabbedPage.Children>
+        <views:FavoritesPage Title="" x:Name="favorites"/>
+        <views:ColorsPage Title="" x:Name="colors"/>
+        <views:AnimationPage Title="" x:Name="animations"/>
+        <NavigationPage Title="" x:Name="settings">
+            <x:Arguments>
+                <views:SettingsPage Title=""/>
+            </x:Arguments>
+        </NavigationPage>
+    </controls:ExtendedTabbedPage.Children>-->
+</controls:ExtendedTabbedPage>

@@ -1,0 +1,92 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Grid xmlns="http://xamarin.com/schemas/2014/forms"
+      xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+      xmlns:yummy="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
+      x:Name="this"
+      x:Class="ColorController.Controls.CustomCheckBoxControl">
+    <Grid.GestureRecognizers>
+        <TapGestureRecognizer Tapped="CheckboxTapped"/>
+    </Grid.GestureRecognizers>
+    <Grid>
+        <Grid.GestureRecognizers>
+            <TapGestureRecognizer Tapped="CheckboxTapped"/>
+        </Grid.GestureRecognizers>
+        <yummy:PancakeView  
+                        HorizontalOptions="Center"
+                        VerticalOptions="Center"
+                        BackgroundColor="#FF100F14" >
+            <yummy:PancakeView.Border>
+                <yummy:Border Thickness="1" Color="#FF2B292E"/>
+            </yummy:PancakeView.Border>
+            <yummy:PancakeView.GestureRecognizers>
+                <TapGestureRecognizer Tapped="CheckboxTapped"/>
+            </yummy:PancakeView.GestureRecognizers>
+            <yummy:PancakeView  
+                            BackgroundColor="#FF121116"  
+                            HorizontalOptions="Center"
+                            VerticalOptions="Center">
+                <yummy:PancakeView.Border>
+                    <yummy:Border Thickness="5" Color="#800D0C11"/>
+                </yummy:PancakeView.Border>
+                <yummy:PancakeView.HeightRequest>
+                    <OnIdiom x:TypeArguments="x:Double">
+                        <OnIdiom.Phone>
+                            <OnPlatform x:TypeArguments="x:Double"
+                                            iOS="20" 
+                                            Android="20" />
+                        </OnIdiom.Phone>
+                        <OnIdiom.Tablet>
+                            <OnPlatform x:TypeArguments="x:Double" 
+                                            iOS="25"
+                                            Android="25" />
+                        </OnIdiom.Tablet>
+                    </OnIdiom>
+                </yummy:PancakeView.HeightRequest>
+                <yummy:PancakeView.WidthRequest>
+                    <OnIdiom x:TypeArguments="x:Double">
+                        <OnIdiom.Phone>
+                            <OnPlatform x:TypeArguments="x:Double"
+                                            iOS="20" 
+                                            Android="20" />
+                        </OnIdiom.Phone>
+                        <OnIdiom.Tablet>
+                            <OnPlatform x:TypeArguments="x:Double" 
+                                            iOS="25"
+                                            Android="25" />
+                        </OnIdiom.Tablet>
+                    </OnIdiom>
+                </yummy:PancakeView.WidthRequest>
+            </yummy:PancakeView>
+        </yummy:PancakeView>
+
+        <Image Source="correct.png"  
+               IsVisible="{Binding CheckBoxStatus, Source={x:Reference this}}" 
+               Margin="0,-10,-10,0"
+               HorizontalOptions="Center" 
+               VerticalOptions="Center">
+            <Image.HeightRequest>
+                <OnIdiom x:TypeArguments="x:Double">
+                    <OnIdiom.Phone>
+                        <OnPlatform x:TypeArguments="x:Double"
+                                            iOS="25" 
+                                            Android="25" />
+                    </OnIdiom.Phone>
+                    <OnIdiom.Tablet>
+                        <OnPlatform x:TypeArguments="x:Double" 
+                                            iOS="30"
+                                            Android="30" />
+                    </OnIdiom.Tablet>
+                </OnIdiom>
+            </Image.HeightRequest>
+            <Image.GestureRecognizers>
+                <TapGestureRecognizer Tapped="CheckboxTapped"/>
+            </Image.GestureRecognizers>
+        </Image>
+    </Grid>
+
+    <BoxView HeightRequest="40" WidthRequest="25" Color="Transparent" HorizontalOptions="Center" VerticalOptions="Center">
+        <BoxView.GestureRecognizers>
+            <TapGestureRecognizer Tapped="CheckboxTapped"/>
+        </BoxView.GestureRecognizers>
+    </BoxView>
+</Grid>

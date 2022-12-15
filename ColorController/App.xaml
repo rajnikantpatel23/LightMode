@@ -1,0 +1,332 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Application xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:converter="clr-namespace:ColorController.Converters"
+             x:Class="ColorController.App">
+    <!--
+        Define global resources and styles here, that apply to all pages in your app.
+    -->
+    <Application.Resources>
+        
+        <ResourceDictionary>
+            <converter:SelectedItemBorderColorConverter x:Key="SelectedItemBorderColorConverter"/>
+            <converter:SelectedAnimationBorderColorConverter x:Key="SelectedAnimationBorderColorConverter"/>
+            <converter:ButtonGlowEffectConverter x:Key="ButtonGlowEffectConverter"/>
+            <converter:InverseConverter x:Key="InverseConverter"/>
+            <converter:StringCaseConverter x:Key="StringCaseConverter"/>
+            <converter:VersionToBoolConverter x:Key="VersionToBoolConverter"/>
+
+            <Color x:Key="Primary">#FF1C1B20</Color>
+            <Color x:Key="AquaColor">#00FFFF</Color>
+            <Color x:Key="ButtonTextColor">#FF4DDDFF</Color>
+            <Color x:Key="ButtonDisabledTextColor">#FF686868</Color>
+            <Color x:Key="DefaultTextColor">#FFFFFFFF</Color>
+            <Color x:Key="BluetoothOffColor">#80000000</Color>
+            <Color x:Key="BluetoothOnColor">#FF4DDDFF</Color>
+            <Color x:Key="TabSelectedColor">#FFFFFFFF</Color>
+            <Color x:Key="TabUnselectedColor">#CC808080</Color>
+            <Color x:Key="TabBackgroundColor">#FF2F3A4F</Color>
+            <Color x:Key="BarBackgroundColor">#FF283040</Color>
+            <Color x:Key="TabbedPageBarItemColor">#FFD1D1D6</Color>
+            <Color x:Key="EmptyItemSourceMessageTextColor">#D7D7D7</Color>
+
+            <!--#region Label9Style -->
+            <OnPlatform x:Key="FontSize9" 
+                        x:TypeArguments="x:Double"
+                        iOS="9"
+                        Android="9"/>
+
+            <OnPlatform x:Key="FontSize13" 
+                        x:TypeArguments="x:Double"
+                        iOS="13"
+                        Android="13"/>
+
+            <Style TargetType="Label" x:Key="Label9Style">
+                <Setter Property="TextColor" Value="{DynamicResource DefaultTextColor}"/>
+                <Setter Property="FontSize" >
+                    <OnIdiom x:TypeArguments="x:Double" 
+                             Phone="{StaticResource FontSize9}" 
+                             Tablet="{StaticResource FontSize13}" />
+                </Setter>
+                <Setter Property="FontFamily" Value="LatoRegular"/>
+                <Setter Property="VerticalTextAlignment" Value="Center"/>
+            </Style>
+            <!--#endregion-->
+
+            <!--#region Label12Style -->
+            <OnPlatform x:Key="FontSize12" 
+                        x:TypeArguments="x:Double"
+                        iOS="12"
+                        Android="12"/>
+
+            <OnPlatform x:Key="FontSize18" 
+                        x:TypeArguments="x:Double"
+                        iOS="18"
+                        Android="18"/>
+
+            <Style TargetType="Label" x:Key="Label12Style">
+                <Setter Property="TextColor" Value="{DynamicResource DefaultTextColor}"/>
+                <Setter Property="FontSize" >
+                    <OnIdiom x:TypeArguments="x:Double" 
+                             Phone="{StaticResource FontSize12}" 
+                             Tablet="18" />
+                </Setter>
+                <Setter Property="FontFamily" Value="LatoRegular"/>
+                <Setter Property="VerticalTextAlignment" Value="Center"/>
+            </Style>
+            <!--#endregion-->
+
+
+
+            <!--#region Label10Style -->
+            <OnPlatform x:Key="FontSize10" 
+                        x:TypeArguments="x:Double"
+                        iOS="10"
+                        Android="10"/>
+
+            <OnPlatform x:Key="FontSize15" 
+                        x:TypeArguments="x:Double"
+                        iOS="15"
+                        Android="15"/>
+
+            <Style TargetType="Label" x:Key="Label10Style">
+                <Setter Property="TextColor" Value="{DynamicResource DefaultTextColor}"/>
+                <Setter Property="FontSize" >
+                    <OnIdiom x:TypeArguments="x:Double" 
+                             Phone="{StaticResource FontSize10}" 
+                             Tablet="{StaticResource FontSize15}" />
+                </Setter>
+                <Setter Property="FontFamily" Value="LatoRegular"/>
+                <Setter Property="VerticalTextAlignment" Value="Center"/>
+            </Style>
+            <!--#endregion-->
+
+            
+
+            <!--#region Label14Style -->
+            <OnPlatform x:Key="FontSize14" 
+                        x:TypeArguments="x:Double"
+                        iOS="14"
+                        Android="14"/>
+
+            <OnPlatform x:Key="FontSize21" 
+                        x:TypeArguments="x:Double"
+                        iOS="21"
+                        Android="21"/>
+
+            <Style TargetType="Label" x:Key="Label14Style">
+                <Setter Property="TextColor" Value="{DynamicResource DefaultTextColor}"/>
+                <Setter Property="FontSize">
+                    <OnIdiom x:TypeArguments="x:Double" 
+                             Tablet="{StaticResource FontSize21}" 
+                             Phone="{StaticResource FontSize14}" />
+                </Setter>
+                <Setter Property="FontFamily" Value="LatoRegular"/>
+                <Setter Property="VerticalTextAlignment" Value="Center"/>
+            </Style>
+            <!--#endregion-->
+
+            <!--#region Label16Style -->
+            <OnPlatform x:Key="FontSize16" 
+                        x:TypeArguments="x:Double"
+                        iOS="16"
+                        Android="16"/>
+
+            <OnPlatform x:Key="FontSiz24" 
+                        x:TypeArguments="x:Double"
+                        iOS="24"
+                        Android="24"/>
+
+            <Style TargetType="Label" x:Key="Label16Style">
+                <Setter Property="TextColor" Value="{DynamicResource DefaultTextColor}"/>
+                <Setter Property="FontSize">
+                    <OnIdiom x:TypeArguments="x:Double" 
+                             Tablet="{StaticResource FontSiz24}" 
+                             Phone="{StaticResource FontSize16}" />
+                </Setter>
+                <Setter Property="FontFamily" Value="LatoRegular"/>
+                <Setter Property="VerticalTextAlignment" Value="Center"/>
+            </Style>
+            <!--#endregion-->
+
+            <!--#region Label18Style -->
+            <!--<OnPlatform x:Key="FontSize18" 
+                        x:TypeArguments="x:Double"
+                        iOS="18"
+                        Android="18"/>-->
+
+            <OnPlatform x:Key="FontSize27" 
+                        x:TypeArguments="x:Double"
+                        iOS="27"
+                        Android="27"/>
+
+            <Style TargetType="Label" x:Key="Label18Style">
+                <Setter Property="TextColor" Value="{DynamicResource DefaultTextColor}"/>
+                <Setter Property="FontSize">
+                    <OnIdiom x:TypeArguments="x:Double" 
+                             Tablet="{StaticResource FontSize27}" 
+                             Phone="{StaticResource FontSize18}" />
+                </Setter>
+                <Setter Property="FontFamily" Value="LatoRegular"/>
+                <Setter Property="VerticalTextAlignment" Value="Center"/>
+            </Style>
+            <!--#endregion-->
+            
+            <!--#region Label20Style -->
+            <OnPlatform x:Key="FontSize20" 
+                        x:TypeArguments="x:Double"
+                        iOS="20"
+                        Android="20"/>
+
+            <OnPlatform x:Key="FontSize30" 
+                        x:TypeArguments="x:Double"
+                        iOS="30"
+                        Android="30"/>
+
+            <Style TargetType="Label" x:Key="Label20Style">
+                <Setter Property="TextColor" Value="{DynamicResource DefaultTextColor}"/>
+                <Setter Property="FontSize">
+                    <OnIdiom x:TypeArguments="x:Double" 
+                             Tablet="{StaticResource FontSize30}" 
+                             Phone="{StaticResource FontSize20}" />
+                </Setter>
+                <Setter Property="FontFamily" Value="LatoRegular"/>
+                <Setter Property="VerticalTextAlignment" Value="Center"/>
+            </Style>
+            <!--#endregion-->
+            
+            <!--#region Label22Style -->
+            <OnPlatform x:Key="FontSize22" 
+                        x:TypeArguments="x:Double"
+                        iOS="22"
+                        Android="22"/>
+
+            <OnPlatform x:Key="FontSize32" 
+                        x:TypeArguments="x:Double"
+                        iOS="32"
+                        Android="32"/>
+
+            <Style TargetType="Label" x:Key="Label22Style">
+                <Setter Property="TextColor" Value="{DynamicResource DefaultTextColor}"/>
+                <Setter Property="FontSize" >
+                    <OnIdiom x:TypeArguments="x:Double" 
+                             Phone="{StaticResource FontSize22}" 
+                             Tablet="{StaticResource FontSize32}" />
+                </Setter>
+                <Setter Property="FontFamily" Value="LatoRegular"/>
+                <Setter Property="VerticalTextAlignment" Value="Center"/>
+            </Style>
+
+            <!--#endregion-->
+
+            <!--#region Label13Style -->
+            <Style TargetType="Label" x:Key="Label13Style">
+                <Setter Property="TextColor" Value="{DynamicResource DefaultTextColor}"/>
+                <Setter Property="FontSize">
+                    <OnIdiom x:TypeArguments="x:Double" 
+                             Tablet="{StaticResource FontSize20}" 
+                             Phone="{StaticResource FontSize13}" />
+                </Setter>
+                <Setter Property="FontFamily" Value="LatoRegular"/>
+                <Setter Property="VerticalTextAlignment" Value="Center"/>
+            </Style>
+            <!--#endregion-->
+
+            <Style TargetType="Label" x:Key="LabelMicroStyle">
+                <Setter Property="TextColor" Value="{DynamicResource DefaultTextColor}"/>
+                <Setter Property="FontSize" Value="12"/>
+                <Setter Property="FontFamily" Value="LatoRegular"/>
+                <Setter Property="VerticalTextAlignment" Value="Center"/>
+            </Style>
+
+            <Style TargetType="Label" x:Key="LabelMediumStyle">
+                <Setter Property="TextColor" Value="{DynamicResource DefaultTextColor}"/>
+                <Setter Property="FontSize" Value="16"/>
+                <Setter Property="FontFamily" Value="LatoRegular"/>
+                <Setter Property="VerticalTextAlignment" Value="Center"/>
+            </Style>
+
+            <Style TargetType="Label" x:Key="LabelDefaultStyle">
+                <Setter Property="TextColor" Value="{DynamicResource DefaultTextColor}"/>
+                <Setter Property="FontSize" Value="18"/>
+                <Setter Property="FontFamily" Value="LatoRegular"/>
+                <Setter Property="VerticalTextAlignment" Value="Center"/>
+            </Style>
+
+            <Style TargetType="Label" x:Key="LabelTitleStyle">
+                <Setter Property="TextColor" Value="{DynamicResource DefaultTextColor}"/>
+                <Setter Property="FontSize" Value="20"/>
+                <Setter Property="FontFamily" Value="LatoRegular"/>
+                <Setter Property="VerticalTextAlignment" Value="Center"/>
+            </Style>
+
+            <Style TargetType="Label" x:Key="LabelLargeStyle">
+                <Setter Property="TextColor" Value="{DynamicResource DefaultTextColor}"/>
+                <Setter Property="FontSize" Value="22"/>
+                <Setter Property="FontFamily" Value="LatoRegular"/>
+                <Setter Property="VerticalTextAlignment" Value="Center"/>
+            </Style>
+
+
+            <Style TargetType="Button">
+                <Setter Property="TextColor" Value="White"></Setter>
+                <Setter Property="VisualStateManager.VisualStateGroups">
+                    <VisualStateGroupList>
+                        <VisualStateGroup x:Name="CommonStates">
+                            <VisualState x:Name="Normal">
+                                <VisualState.Setters>
+                                    <Setter Property="BackgroundColor" Value="{StaticResource Primary}" />
+                                </VisualState.Setters>
+                            </VisualState>
+                            <VisualState x:Name="Disabled">
+                                <VisualState.Setters>
+                                    <Setter Property="BackgroundColor" Value="#332196F3" />
+                                </VisualState.Setters>
+                            </VisualState>
+                        </VisualStateGroup>
+                    </VisualStateGroupList>
+                </Setter>
+            </Style>
+
+            <Style TargetType="ImageButton">
+                <Setter Property="BackgroundColor" Value="Transparent"/>
+            </Style>
+
+
+            <Style TargetType="Grid" x:Key="GridMarginStyle">
+                <Setter Property="Padding">
+                    <OnIdiom x:TypeArguments="Thickness">
+                        <OnIdiom.Phone>
+                            <OnPlatform x:TypeArguments="Thickness"
+                                                iOS="0" 
+                                                Android="0" />
+                        </OnIdiom.Phone>
+                        <OnIdiom.Tablet>
+                            <OnPlatform x:TypeArguments="Thickness" 
+                                                iOS="10,10,10,0"
+                                                Android="10,10,10, 0" />
+                        </OnIdiom.Tablet>
+                    </OnIdiom>
+                </Setter>
+            </Style>
+
+            <Style TargetType="Grid" x:Key="GridMarginStylePortrait">
+                <Setter Property="Padding">
+                    <OnIdiom x:TypeArguments="Thickness">
+                        <OnIdiom.Phone>
+                            <OnPlatform x:TypeArguments="Thickness"
+                                                iOS="0" 
+                                                Android="0" />
+                        </OnIdiom.Phone>
+                        <OnIdiom.Tablet>
+                            <OnPlatform x:TypeArguments="Thickness" 
+                                                iOS="30,10,30,0"
+                                                Android="30,10,30,0" />
+                        </OnIdiom.Tablet>
+                    </OnIdiom>
+                </Setter>
+            </Style>
+
+        </ResourceDictionary>        
+    </Application.Resources>
+</Application>

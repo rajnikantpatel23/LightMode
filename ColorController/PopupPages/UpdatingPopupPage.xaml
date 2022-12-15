@@ -1,0 +1,111 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<popuppages:BasePopupPage 
+    xmlns:popuppages="clr-namespace:ColorController.PopupPages"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+    xmlns:yummy="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView" 
+    xmlns:controls="clr-namespace:ColorController.Controls"
+    x:Class="ColorController.PopupPages.UpdatingPopupPage">
+    <yummy:PancakeView   HorizontalOptions="FillAndExpand"                                     
+                           VerticalOptions="Center"                                  
+                           BackgroundColor="#994DDDFF"                            
+                           Padding="3" >
+        <yummy:PancakeView.Border>
+            <yummy:Border Thickness="2" Color="#804DDDFF"/>
+        </yummy:PancakeView.Border>
+        <yummy:PancakeView.Margin>
+            <OnIdiom x:TypeArguments="Thickness">
+                <OnIdiom.Phone>
+                    <OnPlatform x:TypeArguments="Thickness"
+                                            iOS="30,0" 
+                                            Android="30,0" />
+                </OnIdiom.Phone>
+                <OnIdiom.Tablet>
+                    <OnPlatform x:TypeArguments="Thickness" 
+                                            iOS="100,0"
+                                            Android="100,0" />
+                </OnIdiom.Tablet>
+            </OnIdiom>
+        </yummy:PancakeView.Margin>
+        <yummy:PancakeView Grid.Row="1"  
+                               HorizontalOptions="FillAndExpand"  
+                               VerticalOptions="FillAndExpand" 
+                               BackgroundColor="#FF1E1D22" >
+            <yummy:PancakeView.Border>
+                <yummy:Border Thickness="1" Color="#80000000"/>
+            </yummy:PancakeView.Border>
+            <yummy:PancakeView.BackgroundGradientStops>
+                <yummy:GradientStopCollection>
+                    <yummy:GradientStop Color="#FF1E1D22" Offset="0" />
+                    <yummy:GradientStop Color="#FF27262B" Offset="0.5" />
+                    <yummy:GradientStop Color="#FF1E1D22" Offset="1" />
+                </yummy:GradientStopCollection>
+            </yummy:PancakeView.BackgroundGradientStops>
+            <yummy:PancakeView.Shadow>
+                <yummy:DropShadow Color="#FF1E1D22" Offset="5,5"/>
+            </yummy:PancakeView.Shadow>
+            <StackLayout Spacing="20">
+                <StackLayout.Margin>
+                    <OnIdiom x:TypeArguments="Thickness">
+                        <OnIdiom.Phone>
+                            <OnPlatform x:TypeArguments="Thickness"
+                                        iOS="20" 
+                                        Android="20" />
+                        </OnIdiom.Phone>
+                        <OnIdiom.Tablet>
+                            <OnPlatform x:TypeArguments="Thickness" 
+                                        iOS="150,30"
+                                        Android="150,30" />
+                        </OnIdiom.Tablet>
+                    </OnIdiom>
+                </StackLayout.Margin> 
+
+                <Label Text="{Binding UpperTextMessage, Mode=TwoWay}" 
+                       HorizontalTextAlignment="Center" 
+                       VerticalTextAlignment="Center"
+                       Style="{DynamicResource Label14Style}" />
+
+                <StackLayout Margin="-10,0">
+                    <ProgressBar  
+                                ScaleY="{OnPlatform Android=1, iOS=2}" 
+                                x:Name="progressBar"
+                                ProgressColor="{StaticResource AquaColor}" 
+                                BackgroundColor="Gray"
+                                HeightRequest="5"/>
+
+                    <Label FontAttributes="Bold"
+                               FontSize="20" 
+                               VerticalOptions="CenterAndExpand" 
+                               HorizontalOptions="CenterAndExpand" 
+                               TextColor="White" 
+                               Text="{Binding ProgressValue, StringFormat='{0:f0}%'}"/>
+                </StackLayout>
+
+                <Label Text="This process can take several minutes. Please do not turn off bluetooth." 
+                       HorizontalTextAlignment="Center" 
+                       VerticalTextAlignment="Center"
+                       Style="{DynamicResource Label14Style}" />
+
+                <ImageButton Source="cancelBtn.png" 
+                             HorizontalOptions="Center"
+                             Clicked="CancelClicked">
+                    <ImageButton.HeightRequest>
+                        <OnIdiom x:TypeArguments="x:Double">
+                            <OnIdiom.Phone>
+                                <OnPlatform x:TypeArguments="x:Double"
+                                                iOS="30" 
+                                                Android="30" />
+                            </OnIdiom.Phone>
+                            <OnIdiom.Tablet>
+                                <OnPlatform x:TypeArguments="x:Double" 
+                                                iOS="45"
+                                                Android="45" />
+                            </OnIdiom.Tablet>
+                        </OnIdiom>
+                    </ImageButton.HeightRequest>
+                </ImageButton>
+            </StackLayout>
+        </yummy:PancakeView>
+
+    </yummy:PancakeView>
+</popuppages:BasePopupPage>

@@ -1,0 +1,74 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Grid xmlns="http://xamarin.com/schemas/2014/forms" 
+      xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+      xmlns:yummy="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
+      x:Class="ColorController.Controls.CustomSwitchControl" 
+      Grid.Column="1" 
+      HeightRequest="26"  
+      x:Name="this"
+      WidthRequest="50"
+      HorizontalOptions="Center" 
+      VerticalOptions="Center">
+    <Grid.GestureRecognizers>
+        <TapGestureRecognizer Tapped="SwitchTapped"/>
+    </Grid.GestureRecognizers>
+    <!--Custom Slider Bar-->
+    <yummy:PancakeView VerticalOptions="Center" x:Name="sliderBack" 
+                                               HeightRequest="24"   
+                                               CornerRadius="12"  
+                                               BackgroundColor="#FF4DDDFF">
+        <yummy:PancakeView.Border>
+            <yummy:Border Thickness="1" Color="#FF4DDDF"/>
+        </yummy:PancakeView.Border>
+        <yummy:PancakeView.Shadow>
+            <yummy:DropShadow Color="#00FFFF" 
+                                  x:Name="sliderShadow"
+                                  Offset="5,3"/>
+        </yummy:PancakeView.Shadow>
+    </yummy:PancakeView>
+
+    <!--Actual Slider--><!--
+
+    <Slider MaximumTrackColor="Transparent"   IsVisible="False"
+                VerticalOptions="Center" HeightRequest="12"
+                ThumbColor="#FF35343C" 
+                DragCompleted="SliderControl_DragCompleted"
+                ThumbImageSource="switchThumb24"   
+                MinimumTrackColor="Transparent"    
+                Minimum="0"
+                x:Name="sliderControl"
+                Maximum="1"/>-->
+
+    <yummy:PancakeView   x:Name="thumbOff" IsVisible="False"  Margin="2,0" HeightRequest="22" WidthRequest="22" CornerRadius="11" HorizontalOptions="Start" VerticalOptions="Center"  BackgroundColor="#FF35343C">
+        <yummy:PancakeView.Border>
+            <yummy:Border Thickness="2" Color="#FFFFFF"/>
+        </yummy:PancakeView.Border>
+    </yummy:PancakeView>
+
+   
+    <yummy:PancakeView    x:Name="thumbOn" Margin="2,0" IsVisible="False"  HeightRequest="22" WidthRequest="22" CornerRadius="11" HorizontalOptions="End" VerticalOptions="Center"  BackgroundColor="#FF35343C"  BackgroundGradientStartPoint="1,0" 
+                   BackgroundGradientEndPoint="1,1">
+        <yummy:PancakeView.Border>
+            <yummy:Border Thickness="2" Color="#FF4DDDFF"/>
+        </yummy:PancakeView.Border>
+        <yummy:PancakeView.Shadow>
+            <yummy:DropShadow Color="#00FFFF"  
+                                  Offset="5,5"/>
+        </yummy:PancakeView.Shadow>
+        <yummy:PancakeView.BackgroundGradientStops>
+            <yummy:GradientStopCollection>
+                <yummy:GradientStop Color="#FF42404B" Offset="0" />
+                <yummy:GradientStop Color="#FF34333B" Offset="0.5" />
+                <yummy:GradientStop Color="#FF25242A" Offset="1" />
+            </yummy:GradientStopCollection>
+
+        </yummy:PancakeView.BackgroundGradientStops>
+    </yummy:PancakeView>
+
+    <BoxView Color="Transparent" 
+             HorizontalOptions="Center" 
+             VerticalOptions="Center"
+             HeightRequest="26"  
+             WidthRequest="50"/>
+
+</Grid>

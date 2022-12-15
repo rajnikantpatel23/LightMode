@@ -1,0 +1,208 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<popuppages:BasePopupPage 
+    xmlns:popuppages="clr-namespace:ColorController.PopupPages"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+    xmlns:yummy="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView" 
+    xmlns:controls="clr-namespace:ColorController.Controls"
+    CloseWhenBackgroundIsClicked="False"
+    x:Class="ColorController.PopupPages.EnterDeviceNamePopupPage">
+    <yummy:PancakeView HorizontalOptions="FillAndExpand"                                     
+                       VerticalOptions="CenterAndExpand"                                  
+                       BackgroundColor="#994DDDFF"                            
+                       Padding="3"      >
+        <yummy:PancakeView.Border>
+            <yummy:Border Color="#804DDDFF" Thickness="2"/>
+        </yummy:PancakeView.Border>
+        <yummy:PancakeView.Shadow>
+            <yummy:DropShadow Color="#000000" Offset="10,10"/>
+        </yummy:PancakeView.Shadow>
+        <yummy:PancakeView.Margin>
+            <OnIdiom x:TypeArguments="Thickness">
+                <OnIdiom.Phone>
+                    <OnPlatform x:TypeArguments="Thickness"
+                                iOS="30,0" 
+                                Android="30,0" />
+                </OnIdiom.Phone>
+                <OnIdiom.Tablet>
+                    <OnPlatform x:TypeArguments="Thickness"
+                                iOS="80,0"
+                                Android="80,0" />
+                </OnIdiom.Tablet>
+            </OnIdiom>
+        </yummy:PancakeView.Margin>
+        <yummy:PancakeView  HorizontalOptions="FillAndExpand"  
+                            VerticalOptions="Center"
+                            BackgroundColor="#FF1E1D22" >
+            <yummy:PancakeView.Border>
+                <yummy:Border Color="#80000000" Thickness="1"/>
+            </yummy:PancakeView.Border>
+            <yummy:PancakeView.BackgroundGradientStops>
+                <yummy:GradientStopCollection>
+                    <yummy:GradientStop Color="#FF1E1D22" Offset="0" />
+                    <yummy:GradientStop Color="#FF27262B" Offset="0.5" />
+                    <yummy:GradientStop Color="#FF1E1D22" Offset="1" />
+                </yummy:GradientStopCollection>
+            </yummy:PancakeView.BackgroundGradientStops>
+            <yummy:PancakeView.Shadow>
+                <yummy:DropShadow Color="#FF1E1D22" Offset="5,5"/>
+            </yummy:PancakeView.Shadow>
+            <Grid VerticalOptions="Center"
+                  RowDefinitions="Auto,Auto,Auto,Auto">
+                <Grid.RowSpacing>
+                    <OnIdiom x:TypeArguments="x:Double">
+                        <OnIdiom.Phone>
+                            <OnPlatform x:TypeArguments="x:Double"
+                                            iOS="15" 
+                                            Android="15" />
+                        </OnIdiom.Phone>
+                        <OnIdiom.Tablet>
+                            <OnPlatform x:TypeArguments="x:Double" 
+                                            iOS="30"
+                                            Android="30" />
+                        </OnIdiom.Tablet>
+                    </OnIdiom>
+                </Grid.RowSpacing>
+                <Grid.Padding>
+                    <OnIdiom x:TypeArguments="Thickness">
+                        <OnIdiom.Phone>
+                            <OnPlatform x:TypeArguments="Thickness"
+                                iOS="20" 
+                                Android="20" />
+                        </OnIdiom.Phone>
+                        <OnIdiom.Tablet>
+                            <OnPlatform x:TypeArguments="Thickness"
+                                iOS="40"
+                                Android="40" />
+                        </OnIdiom.Tablet>
+                    </OnIdiom>
+                </Grid.Padding>
+
+                <StackLayout Grid.Row="0" VerticalOptions="Center" 
+                             Spacing="15">
+                    <Label Text="Connected!" 
+                           HorizontalTextAlignment="Center"  
+                           Style="{DynamicResource Label14Style}" />
+
+                    <Label Text="Please name your device." 
+                           HorizontalTextAlignment="Center"  
+                           Style="{DynamicResource Label14Style}" />
+                </StackLayout>
+
+                <yummy:PancakeView Grid.Row="1" VerticalOptions="Center"  BackgroundColor="#FF100F14"   CornerRadius="5" HorizontalOptions="FillAndExpand">
+                    <yummy:PancakeView.Border>
+                        <yummy:Border Thickness="1" Color="#FF2B292E"/>
+                    </yummy:PancakeView.Border>
+                    <yummy:PancakeView.CornerRadius>
+                        <OnIdiom x:TypeArguments="CornerRadius">
+                            <OnIdiom.Phone>
+                                <OnPlatform x:TypeArguments="CornerRadius"
+                                            iOS="5" 
+                                            Android="5" />
+                            </OnIdiom.Phone>
+                            <OnIdiom.Tablet>
+                                <OnPlatform x:TypeArguments="CornerRadius"
+                                            iOS="8"
+                                            Android="8" />
+                            </OnIdiom.Tablet>
+                        </OnIdiom>
+                    </yummy:PancakeView.CornerRadius>
+                    <yummy:PancakeView  BackgroundColor="#FF121116" HorizontalOptions="FillAndExpand" VerticalOptions="Center">
+                        <yummy:PancakeView.Border>
+                            <yummy:Border Thickness="5" Color="#800D0C11"/>
+                        </yummy:PancakeView.Border>
+                        <yummy:PancakeView.CornerRadius>
+                            <OnIdiom x:TypeArguments="CornerRadius">
+                                <OnIdiom.Phone>
+                                    <OnPlatform x:TypeArguments="CornerRadius"
+                                            iOS="5" 
+                                            Android="5" />
+                                </OnIdiom.Phone>
+                                <OnIdiom.Tablet>
+                                    <OnPlatform x:TypeArguments="CornerRadius"
+                                            iOS="8"
+                                            Android="8" />
+                                </OnIdiom.Tablet>
+                            </OnIdiom>
+                        </yummy:PancakeView.CornerRadius>
+                        <yummy:PancakeView.HeightRequest>
+                            <OnIdiom x:TypeArguments="x:Double">
+                                <OnIdiom.Phone>
+                                    <OnPlatform x:TypeArguments="x:Double"
+                                            iOS="34" 
+                                            Android="42" />
+                                </OnIdiom.Phone>
+                                <OnIdiom.Tablet>
+                                    <OnPlatform x:TypeArguments="x:Double" 
+                                            iOS="60"
+                                            Android="60" />
+                                </OnIdiom.Tablet>
+                            </OnIdiom>
+                        </yummy:PancakeView.HeightRequest>
+                        <Entry BackgroundColor="Transparent" 
+                               Text="{Binding DeviceName, Mode=TwoWay}"
+                               HorizontalTextAlignment="Center" 
+                               FontFamily="LatoBold" 
+                               MaxLength="25"
+                               TextColor="{DynamicResource DefaultTextColor}"
+                               VerticalOptions="Center"
+                               HorizontalOptions="FillAndExpand">
+                            <Entry.FontSize>
+                                <OnIdiom x:TypeArguments="x:Double">
+                                    <OnIdiom.Phone>
+                                        <OnPlatform x:TypeArguments="x:Double"
+                                            iOS="18" 
+                                            Android="18" />
+                                    </OnIdiom.Phone>
+                                    <OnIdiom.Tablet>
+                                        <OnPlatform x:TypeArguments="x:Double" 
+                                            iOS="27"
+                                            Android="27" />
+                                    </OnIdiom.Tablet>
+                                </OnIdiom>
+                            </Entry.FontSize>
+                        </Entry>
+
+                    </yummy:PancakeView>
+                </yummy:PancakeView>
+
+                <Grid VerticalOptions="Center" Grid.Row="2"
+                      ColumnDefinitions="Auto,*"
+                      ColumnSpacing="20">
+                    <controls:CustomCheckBoxControl x:Name="checkBox" CheckBoxStatus="{Binding IsDefault, Mode=TwoWay}" VerticalOptions="Center"/>
+
+                    <StackLayout Grid.Column="1" 
+                                     Spacing="0" 
+                                     VerticalOptions="Center">
+                        <Label Text="Set as default device." 
+                                   Style="{DynamicResource Label14Style}"/>
+                        <Label Text="(Always pairs to this device if others are present)" 
+                                   Style="{DynamicResource Label10Style}"  
+                                   FontFamily="LatoItalic"/>
+                    </StackLayout>
+                </Grid>
+
+                <!--<Label Text="{Binding Source={x:Reference checkBox}, Path=CheckBoxStatus}"/>-->
+
+                <ImageButton Source="okOnBtn.png" Clicked="OkTapped" Margin="0,5" Grid.Row="3" VerticalOptions="Center">
+                    <ImageButton.HeightRequest>
+                        <OnIdiom x:TypeArguments="x:Double">
+                            <OnIdiom.Phone>
+                                <OnPlatform x:TypeArguments="x:Double"
+                                            iOS="30" 
+                                            Android="30" />
+                            </OnIdiom.Phone>
+                            <OnIdiom.Tablet>
+                                <OnPlatform x:TypeArguments="x:Double" 
+                                            iOS="55"
+                                            Android="55" />
+                            </OnIdiom.Tablet>
+                        </OnIdiom>
+                    </ImageButton.HeightRequest>
+                </ImageButton>
+
+            </Grid>
+        </yummy:PancakeView>
+
+    </yummy:PancakeView>
+</popuppages:BasePopupPage>   

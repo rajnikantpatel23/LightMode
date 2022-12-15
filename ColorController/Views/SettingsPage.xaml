@@ -1,0 +1,88 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<abstractions:BaseContentPage xmlns:abstractions="clr-namespace:ColorController.Abstractions"
+                              xmlns="http://xamarin.com/schemas/2014/forms"
+                              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+                              xmlns:controls="clr-namespace:ColorController.Controls"                               
+                              xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core" 
+                              ios:Page.UseSafeArea="True"
+                              BackgroundColor="#FF2B2B2D"
+                              x:Class="ColorController.Views.SettingsPage">
+    <Grid> 
+        <Grid RowSpacing="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <controls:NavigationBarControl Title="SETTINGS"/>
+
+            <controls:GradientBackgroundControl Grid.Row="1"/>
+
+            <StackLayout Grid.Row="1" 
+                         Spacing="0"> 
+                <BoxView Color="#998F8F8F" 
+                         HeightRequest="1"
+                         VerticalOptions="End" 
+                         HorizontalOptions="Fill"
+                         Margin="0,30,0,0"/>
+                <controls:TitleArrowControl Title="Boot Sequence" IsVisible="False">
+                    <controls:TitleArrowControl.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding BootSequenceTappedCommand}"/>
+                    </controls:TitleArrowControl.GestureRecognizers>
+                </controls:TitleArrowControl>
+                <Grid>
+                    <Grid.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="AutoConnectTapped"/>
+                    </Grid.GestureRecognizers>
+                    <Grid  Margin="15,15,15,20"
+                           ColumnSpacing="30" 
+                           VerticalOptions="Center"> 
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <StackLayout  Margin="0" VerticalOptions="Center">
+                            <Label Text="Auto-Connect" 
+                                   Style="{DynamicResource Label16Style}"   />
+                            <Label Text="Automatically searches for your default controller every time you open this app. Your controller must be in bluetooth pairing mode to auto-connect."           
+                                   Style="{DynamicResource Label14Style}"
+                                   Margin="0,5"/> 
+                        </StackLayout>
+
+                        <controls:CustomSwitchControl Grid.Column="1" 
+                                                      x:Name="switchControl"/>
+
+                        <BoxView Grid.Column="1" HorizontalOptions="Fill" HeightRequest="10"/>
+                    </Grid>
+                    <BoxView Color="#998F8F8F" 
+                             HeightRequest="1" 
+                             VerticalOptions="End"
+                             HorizontalOptions="Fill"/>
+                </Grid>
+                <controls:TitleArrowControl Title="Devices">
+                    <controls:TitleArrowControl.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding DevicesTappedCommand}"/>
+                    </controls:TitleArrowControl.GestureRecognizers>
+                </controls:TitleArrowControl>
+                <controls:TitleArrowControl Title="Updates">
+                    <controls:TitleArrowControl.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding UpdatesTappedCommand}"/>
+                    </controls:TitleArrowControl.GestureRecognizers>
+                </controls:TitleArrowControl>
+                <!--<controls:TitleArrowControl Title="Testing Page">
+                    <controls:TitleArrowControl.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OpenTestPage"/>
+                    </controls:TitleArrowControl.GestureRecognizers>
+                </controls:TitleArrowControl>-->
+                <!--<controls:TitleArrowControl Title="Masking Page">
+                    <controls:TitleArrowControl.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OpenMaskingPage"/>
+                    </controls:TitleArrowControl.GestureRecognizers>
+                </controls:TitleArrowControl>-->
+            </StackLayout>
+        </Grid>
+    </Grid>
+</abstractions:BaseContentPage>

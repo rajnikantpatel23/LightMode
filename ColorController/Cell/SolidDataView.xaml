@@ -1,0 +1,108 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+             xmlns:controls="clr-namespace:ColorController.Controls" 
+             xmlns:skia="clr-namespace:SkiaSharp.Views.Forms;assembly=SkiaSharp.Views.Forms" 
+             xmlns:pancakeview="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
+             xmlns:Effects="clr-namespace:ColorController.Controls"
+             x:Class="ColorController.Cell.SolidDataView"
+             Visual="Material">
+    <Grid Padding="8">
+        <controls:AnimationTileShadowControl IsVisible="{Binding IsSelected, Mode=TwoWay}"/>
+
+        <pancakeview:PancakeView>
+            <pancakeview:PancakeView.GestureRecognizers>
+                <TapGestureRecognizer Tapped="AnimationTapped"
+                                  CommandParameter="{Binding }"/>
+            </pancakeview:PancakeView.GestureRecognizers>
+            <pancakeview:PancakeView.Border>
+                <pancakeview:Border Color="{Binding IsSelected, Converter={StaticResource SelectedAnimationBorderColorConverter}}" Thickness="2"/>
+            </pancakeview:PancakeView.Border>
+            <pancakeview:PancakeView.CornerRadius>
+                <OnIdiom x:TypeArguments="CornerRadius">
+                    <OnIdiom.Phone>
+                        <OnPlatform x:TypeArguments="CornerRadius" iOS="5" Android="5" />
+                    </OnIdiom.Phone>
+                    <OnIdiom.Tablet>
+                        <OnPlatform x:TypeArguments="CornerRadius" iOS="10" Android="10" />
+                    </OnIdiom.Tablet>
+                </OnIdiom>
+            </pancakeview:PancakeView.CornerRadius>
+            <pancakeview:PancakeView.HeightRequest>
+                <OnIdiom x:TypeArguments="x:Double">
+                    <OnIdiom.Phone>
+                        <OnPlatform x:TypeArguments="x:Double" iOS="170" Android="170" />
+                    </OnIdiom.Phone>
+                    <OnIdiom.Tablet>
+                        <OnPlatform x:TypeArguments="x:Double" iOS="240" Android="240" />
+                    </OnIdiom.Tablet>
+                </OnIdiom>
+            </pancakeview:PancakeView.HeightRequest>
+
+            <Grid RowDefinitions="Auto, *" RowSpacing="0">
+                <controls:AnimationMenuBarControl InfoIconTappedEvent="InfoIconTapped"
+                                                      StarIconTappedEvent="StarIconTapped"/>
+
+                <Grid Grid.Row="1"  IsClippedToBounds="True">
+                   
+
+                    <skia:SKCanvasView x:Name="canvasView"
+                           VerticalOptions="FillAndExpand"
+                                       Margin="-20"
+                                      
+                           PaintSurface="OnCanvasViewPaintSurface" />
+
+                    <Slider x:Name="hueSlider"
+                            IsVisible="false"
+                Margin="10, 0"
+                ValueChanged="OnSliderValueChanged" />
+
+                    <Label x:Name="hueLabel"  IsVisible="false"
+               HorizontalTextAlignment="Center" />
+
+                    <Slider x:Name="saturationSlider"  IsVisible="false"
+                Minimum="-1" Maximum="1"
+                Margin="10, 0"
+                ValueChanged="OnSliderValueChanged" />
+
+                    <Label x:Name="saturationLabel"  IsVisible="false"
+               HorizontalTextAlignment="Center" />
+
+                    <Slider x:Name="luminositySlider"  IsVisible="false"
+                Minimum="-1"
+                Margin="10, 0"
+                ValueChanged="OnSliderValueChanged" />
+
+                    <Label x:Name="luminosityLabel"  IsVisible="false"
+               HorizontalTextAlignment="Center" />
+
+
+                    <!--<Image Source="SolidGlow"
+                           x:Name="glow"
+                               Effects:TintImageEffect.TintColor="{Binding SelectedColor1}"
+                               Margin="-20" IsVisible="false"
+                               HorizontalOptions="Center"
+                               VerticalOptions="Center" />
+
+                        <Image Source="SolidStroke"
+                               Effects:TintImageEffect.TintColor="{Binding SelectedColor1}"
+                               Margin="-20"
+                               HorizontalOptions="Center"
+                               VerticalOptions="Center" />
+
+                        <Image Source="SolidBaseTrans"
+                               Effects:TintImageEffect.TintColor="{Binding SelectedColor1}"
+                               Margin="-20"
+                               HorizontalOptions="Center"
+                               VerticalOptions="Center" />
+
+                        <Image Source="SolidBaseTrans.png"
+                               Margin="-20"
+                               HorizontalOptions="Center"
+                               VerticalOptions="Center"/>-->
+
+                </Grid>
+            </Grid>
+        </pancakeview:PancakeView>
+    </Grid>
+</ContentView>

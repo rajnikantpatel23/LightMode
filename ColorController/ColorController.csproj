@@ -1,0 +1,495 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <ProduceReferenceAssembly>true</ProduceReferenceAssembly>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Blockchain.lmd" />
+    <None Remove="Bombs_Away.lmd" />
+    <None Remove="cybernetic.lmd" />
+    <None Remove="DataTemplates\Favorites\NightRiderFavoriteDataTemplate.xaml~RF6240877c.TMP" />
+    <None Remove="Diffraction.lmd" />
+    <None Remove="Dual_Meteor.lmd" />
+    <None Remove="Fireball.lmd" />
+    <None Remove="Initialize.lmd" />
+    <None Remove="Looper.lmd" />
+    <None Remove="Meteor.lmd" />
+    <None Remove="Orbit.lmd" />
+    <None Remove="patt_1093.lmd" />
+    <None Remove="portal.lmd" />
+    <None Remove="Pulsar.lmd" />
+    <None Remove="Resources\Fonts\BebasNeue-Regular.ttf" />
+    <None Remove="Resources\Fonts\BebasNeueProBoldItalic.otf" />
+    <None Remove="Resources\Fonts\BebasNeueProItalic.otf" />
+    <None Remove="Resources\Fonts\BebasNeueProRegular.otf" />
+    <None Remove="Resources\Fonts\FontAwesomeBrandRegular400.otf" />
+    <None Remove="Resources\Fonts\FontAwesomeFreeRegular400.otf" />
+    <None Remove="Resources\Fonts\FontAwesomeFreeSolid400.otf" />
+    <None Remove="Resources\Fonts\icomoon.ttf" />
+    <None Remove="Resources\Fonts\Lato-Bold.ttf" />
+    <None Remove="Resources\Fonts\Lato-Italic.ttf" />
+    <None Remove="Resources\Fonts\Lato-Regular.ttf" />
+    <None Remove="Resources\Fonts\Lato-Thin.ttf" />
+    <None Remove="Resources\Fonts\tabicons.ttf" />
+    <None Remove="Resources\Images\AudializeCombined.png" />
+    <None Remove="Resources\Images\BeaconCombined.png" />
+    <None Remove="Resources\Images\BlackHoleCombined.png" />
+    <None Remove="Resources\Images\Blockchain.png" />
+    <None Remove="Resources\Images\Bombs_Away.png" />
+    <None Remove="Resources\Images\ChromaticCombined.png" />
+    <None Remove="Resources\Images\CyberneticCombined.png" />
+    <None Remove="Resources\Images\Diffraction.png" />
+    <None Remove="Resources\Images\Dual_Meteor.png" />
+    <None Remove="Resources\Images\Fireball.png" />
+    <None Remove="Resources\Images\FireballCombined.png" />
+    <None Remove="Resources\Images\FirePower.png" />
+    <None Remove="Resources\Images\FirePowerCombined.png" />
+    <None Remove="Resources\Images\Hazards.png" />
+    <None Remove="Resources\Images\Initialize_V3.png" />
+    <None Remove="Resources\Images\Looper.png" />
+    <None Remove="Resources\Images\LooperCombined.png" />
+    <None Remove="Resources\Images\MeteorCombined.png" />
+    <None Remove="Resources\Images\NightRiderCombined.png" />
+    <None Remove="Resources\Images\Orbit.png" />
+    <None Remove="Resources\Images\OxygenCombined.png" />
+    <None Remove="Resources\Images\PortalCombined.png" />
+    <None Remove="Resources\Images\Pulsar.png" />
+    <None Remove="Resources\Images\RobocopCombined.png" />
+    <None Remove="Resources\Images\Solid.png" />
+    <None Remove="Resources\Images\SolidCombined.png" />
+    <None Remove="Resources\Images\Spectrum.png" />
+    <None Remove="Resources\Images\SpectrumCombined.png" />
+    <None Remove="Resources\Images\Star_Power.png" />
+    <None Remove="Resources\Images\SunFade.png" />
+    <None Remove="Resources\Images\TechnetiumCombined.png" />
+    <None Remove="Resources\Images\WaveCombined.png" />
+    <None Remove="Resources\Images\YingYang.png" />
+    <None Remove="Robocop.lmd" />
+    <None Remove="Star_Power.lmd" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Blockchain.lmd" />
+    <EmbeddedResource Include="Bombs_Away.lmd" />
+    <EmbeddedResource Include="cybernetic.lmd" />
+    <EmbeddedResource Include="Diffraction.lmd" />
+    <EmbeddedResource Include="Dual_Meteor.lmd" />
+    <EmbeddedResource Include="Fireball.lmd" />
+    <EmbeddedResource Include="Initialize.lmd" />
+    <EmbeddedResource Include="Looper.lmd" />
+    <EmbeddedResource Include="Meteor.lmd" />
+    <EmbeddedResource Include="Orbit.lmd" />
+    <EmbeddedResource Include="patt_1093.lmd" />
+    <EmbeddedResource Include="portal.lmd" />
+    <EmbeddedResource Include="Pulsar.lmd" />
+    <EmbeddedResource Include="Resources\Fonts\BebasNeue-Regular.ttf" />
+    <EmbeddedResource Include="Resources\Fonts\BebasNeueProBoldItalic.otf" />
+    <EmbeddedResource Include="Resources\Fonts\BebasNeueProItalic.otf" />
+    <EmbeddedResource Include="Resources\Fonts\BebasNeueProRegular.otf" />
+    <EmbeddedResource Include="Resources\Fonts\FontAwesomeBrandRegular400.otf" />
+    <EmbeddedResource Include="Resources\Fonts\FontAwesomeFreeRegular400.otf" />
+    <EmbeddedResource Include="Resources\Fonts\FontAwesomeFreeSolid400.otf" />
+    <EmbeddedResource Include="Resources\Fonts\icomoon.ttf" />
+    <EmbeddedResource Include="Resources\Fonts\Lato-Bold.ttf" />
+    <EmbeddedResource Include="Resources\Fonts\Lato-Italic.ttf" />
+    <EmbeddedResource Include="Resources\Fonts\Lato-Regular.ttf" />
+    <EmbeddedResource Include="Resources\Fonts\Lato-Thin.ttf" />
+    <EmbeddedResource Include="Resources\Fonts\tabicons.ttf" />
+    <EmbeddedResource Include="Resources\Images\AudializeCombined.png" />
+    <EmbeddedResource Include="Resources\Images\BeaconCombined.png" />
+    <EmbeddedResource Include="Resources\Images\BlackHoleCombined.png" />
+    <EmbeddedResource Include="Resources\Images\Blockchain.png" />
+    <EmbeddedResource Include="Resources\Images\Bombs_Away.png" />
+    <EmbeddedResource Include="Resources\Images\ChromaticCombined.png" />
+    <EmbeddedResource Include="Resources\Images\CyberneticCombined.png" />
+    <EmbeddedResource Include="Resources\Images\Diffraction.png" />
+    <EmbeddedResource Include="Resources\Images\Dual_Meteor.png" />
+    <EmbeddedResource Include="Resources\Images\Fireball.png" />
+    <EmbeddedResource Include="Resources\Images\FireballCombined.png" />
+    <EmbeddedResource Include="Resources\Images\FirePower.png" />
+    <EmbeddedResource Include="Resources\Images\FirePowerCombined.png" />
+    <EmbeddedResource Include="Resources\Images\Hazards.png" />
+    <EmbeddedResource Include="Resources\Images\Initialize_V3.png" />
+    <EmbeddedResource Include="Resources\Images\Looper.png" />
+    <EmbeddedResource Include="Resources\Images\LooperCombined.png" />
+    <EmbeddedResource Include="Resources\Images\MeteorCombined.png" />
+    <EmbeddedResource Include="Resources\Images\NightRiderCombined.png" />
+    <EmbeddedResource Include="Resources\Images\Orbit.png" />
+    <EmbeddedResource Include="Resources\Images\OxygenCombined.png" />
+    <EmbeddedResource Include="Resources\Images\PortalCombined.png" />
+    <EmbeddedResource Include="Resources\Images\Pulsar.png" />
+    <EmbeddedResource Include="Resources\Images\RobocopCombined.png" />
+    <EmbeddedResource Include="Resources\Images\Solid.png" />
+    <EmbeddedResource Include="Resources\Images\SolidCombined.png" />
+    <EmbeddedResource Include="Resources\Images\Spectrum.png" />
+    <EmbeddedResource Include="Resources\Images\SpectrumCombined.png" />
+    <EmbeddedResource Include="Resources\Images\Star_Power.png" />
+    <EmbeddedResource Include="Resources\Images\SunFade.png" />
+    <EmbeddedResource Include="Resources\Images\TechnetiumCombined.png" />
+    <EmbeddedResource Include="Resources\Images\WaveCombined.png" />
+    <EmbeddedResource Include="Resources\Images\YingYang.png" />
+    <EmbeddedResource Include="Robocop.lmd" />
+    <EmbeddedResource Include="Star_Power.lmd" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Acr.UserDialogs" Version="7.1.0.483" />
+    <PackageReference Include="Microsoft.AppCenter.Analytics" Version="4.5.3" />
+    <PackageReference Include="Microsoft.AppCenter.Crashes" Version="4.5.3" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+    <PackageReference Include="Plugin.BLE" Version="2.1.3" />
+    <PackageReference Include="Rg.Plugins.Popup" Version="2.0.0.9" />
+    <PackageReference Include="Sharpnado.Forms.HorizontalListView" Version="1.8.1" />
+    <PackageReference Include="Sharpnado.Shadows" Version="1.2.0" />
+    <PackageReference Include="Sharpnado.TaskLoaderView" Version="2.3.0" />
+    <PackageReference Include="SkiaSharp.Views.Forms" Version="2.80.2" />
+    <PackageReference Include="sqlite-net-pcl" Version="1.7.335" />
+    <PackageReference Include="Udara.Plugin.XFColorPickerControl" Version="1.0.3" />
+    <PackageReference Include="Xam.Plugin.Geolocator" Version="4.5.0.6" />
+    <PackageReference Include="Xam.Plugin.LatestVersion" Version="1.1.2" />
+    <PackageReference Include="Xamarin.FFImageLoading.Forms" Version="2.4.11.982" />
+    <PackageReference Include="Xamarin.Forms" Version="5.0.0.2515" />  
+    <PackageReference Include="Xamarin.Essentials" Version="1.7.3" />  
+    <PackageReference Include="Xamarin.Forms.PancakeView" Version="2.3.0.759" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Abstractions\BaseContentPage.xaml.cs">
+      <DependentUpon>BaseContentPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="DataTemplates\Animations\ChromaticDataTemplate.xaml.cs">
+      <DependentUpon>ChromaticDataTemplate.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="DataTemplates\Animations\BlackHoleDataTemplate.xaml.cs">
+      <DependentUpon>BlackHoleDataTemplate.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="DataTemplates\Animations\Star_PowerDataTemplate.xaml.cs">
+      <DependentUpon>Star_PowerDataTemplate.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="DataTemplates\Animations\PulsarDataTemplate.xaml.cs">
+      <DependentUpon>PulsarDataTemplate.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="DataTemplates\Animations\OrbitDataTemplate.xaml.cs">
+      <DependentUpon>OrbitDataTemplate.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="DataTemplates\Animations\InitializeV3DataTemplate.xaml.cs">
+      <DependentUpon>InitializeV3DataTemplate.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="DataTemplates\Animations\Dual_MeteorDataTemplate.xaml.cs">
+      <DependentUpon>Dual_MeteorDataTemplate.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="DataTemplates\Animations\DiffractionDataTemplate.xaml.cs">
+      <DependentUpon>DiffractionDataTemplate.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="DataTemplates\Animations\BombsAwayDataTemplate.xaml.cs">
+      <DependentUpon>BombsAwayDataTemplate.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="DataTemplates\Favorites\Star_PowerFavoriteDataTemplate.xaml.cs">
+      <DependentUpon>Star_PowerFavoriteDataTemplate.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="DataTemplates\Favorites\PulsarFavoriteDataTemplate.xaml.cs">
+      <DependentUpon>PulsarFavoriteDataTemplate.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="DataTemplates\Favorites\OrbitFavoriteDataTemplate.xaml.cs">
+      <DependentUpon>OrbitFavoriteDataTemplate.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="DataTemplates\Favorites\Initialize_V3FavoriteDataTemplate.xaml.cs">
+      <DependentUpon>Initialize_V3FavoriteDataTemplate.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="DataTemplates\Favorites\Dual_MeteorFavoriteDataTemplate.xaml.cs">
+      <DependentUpon>Dual_MeteorFavoriteDataTemplate.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="DataTemplates\Favorites\DiffractionFavoriteDataTemplate.xaml.cs">
+      <DependentUpon>DiffractionFavoriteDataTemplate.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="DataTemplates\Favorites\Bombs_AwayFavoriteDataTemplate.xaml.cs">
+      <DependentUpon>Bombs_AwayFavoriteDataTemplate.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="DataTemplates\Favorites\BlockchainFavoriteDataTemplate.xaml.cs">
+      <DependentUpon>BlockchainFavoriteDataTemplate.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="DataTemplates\Favorites\HazardsFavoriteDataTemplate.xaml.cs">
+      <DependentUpon>HazardsFavoriteDataTemplate.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="DataTemplates\Favorites\SpectrumFavoriteDataTemplate.xaml.cs">
+      <DependentUpon>SpectrumFavoriteDataTemplate.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="DataTemplates\Favorites\LooperFavoriteDataTemplate.xaml.cs">
+      <DependentUpon>LooperFavoriteDataTemplate.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="DataTemplates\Favorites\AudializeFavoriteDataTemplate.xaml.cs">
+      <DependentUpon>AudializeFavoriteDataTemplate.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="DataTemplates\Favorites\BlackHoleFavoriteDataTemplate.xaml.cs">
+      <DependentUpon>BlackHoleFavoriteDataTemplate.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="DataTemplates\Favorites\ChromaticFavoriteDataTemplate.xaml.cs">
+      <DependentUpon>ChromaticFavoriteDataTemplate.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="DataTemplates\Favorites\FirePowerFavoriteDataTemplate.xaml.cs">
+      <DependentUpon>FirePowerFavoriteDataTemplate.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="DataTemplates\Favorites\FireballFavoriteDataTemplate.xaml.cs">
+      <DependentUpon>FireballFavoriteDataTemplate.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="DataTemplates\Favorites\SunFadeFavoriteDataTemplate.xaml.cs">
+      <DependentUpon>SunFadeFavoriteDataTemplate.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="DataTemplates\Favorites\WaveFavoriteDataTemplate.xaml.cs">
+      <DependentUpon>WaveFavoriteDataTemplate.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="DataTemplates\Favorites\TechnetiumFavoriteDataTemplate.xaml.cs">
+      <DependentUpon>TechnetiumFavoriteDataTemplate.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="DataTemplates\Favorites\SuperWaveFavoriteDataTemplate.xaml.cs">
+      <DependentUpon>SuperWaveFavoriteDataTemplate.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="DataTemplates\Favorites\NightRiderFavoriteDataTemplate.xaml.cs">
+      <DependentUpon>NightRiderFavoriteDataTemplate.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="DataTemplates\Favorites\MeteorFavoriteDataTemplate.xaml.cs">
+      <DependentUpon>MeteorFavoriteDataTemplate.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="DataTemplates\Favorites\CyberneticFavoriteDataTemplate.xaml.cs">
+      <DependentUpon>CyberneticFavoriteDataTemplate.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="DataTemplates\Favorites\BreatheFavoriteDataTemplate.xaml.cs">
+      <DependentUpon>BreatheFavoriteDataTemplate.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="DataTemplates\Favorites\BeaconFavoriteDataTemplate.xaml.cs">
+      <DependentUpon>BeaconFavoriteDataTemplate.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="DataTemplates\Favorites\YingYangFavoriteDataTemplate.xaml.cs">
+      <DependentUpon>YingYangFavoriteDataTemplate.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="DataTemplates\Animations\YingYangDataTemplate.xaml.cs">
+      <DependentUpon>YingYangDataTemplate.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="DataTemplates\Animations\SunFadeDataTemplate.xaml.cs">
+      <DependentUpon>SunFadeDataTemplate.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="DataTemplates\Animations\TechnetiumTemplate.xaml.cs">
+      <DependentUpon>TechnetiumTemplate.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="DataTemplates\Animations\HazardsDataTemplate.xaml.cs">
+      <DependentUpon>HazardsDataTemplate.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="DataTemplates\Animations\WaveTemplate.xaml.cs">
+      <DependentUpon>WaveTemplate.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="DataTemplates\Animations\SuperWaveTemplate.xaml.cs">
+      <DependentUpon>SuperWaveTemplate.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="DataTemplates\Animations\NightRiderTemplate.xaml.cs">
+      <DependentUpon>NightRiderTemplate.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="DataTemplates\Animations\MeteorTemplate.xaml.cs">
+      <DependentUpon>MeteorTemplate.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="DataTemplates\Animations\CyberneticTemplate.xaml.cs">
+      <DependentUpon>CyberneticTemplate.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="DataTemplates\Animations\BreatheTemplate.xaml.cs">
+      <DependentUpon>BreatheTemplate.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="DataTemplates\Favorites\RobocopFavoriteDataTemplate.xaml.cs">
+      <DependentUpon>RobocopFavoriteDataTemplate.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="DataTemplates\Favorites\SolidFavoriteDataTemplate.xaml.cs">
+      <DependentUpon>SolidFavoriteDataTemplate.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="DataTemplates\Animations\BeaconTemplate.xaml.cs">
+      <DependentUpon>BeaconTemplate.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="DataTemplates\Animations\BlockchainDataTemplate.xaml.cs">
+      <DependentUpon>BlockchainDataTemplate.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="PopupPages\WatchVideoLinkPopupPage.xaml.cs">
+      <DependentUpon>WatchVideoLinkPopupPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="PopupPages\LocationAlertPopupPage.xaml.cs">
+      <DependentUpon>LocationAlertPopupPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="PopupPages\AlertPopupPageWithOkCancel.xaml.cs">
+      <DependentUpon>AlertPopupPageWithOkCancel.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="PopupPages\FiveGNetworkAlertPopupPage.xaml.cs">
+      <DependentUpon>FiveGNetworkAlertPopupPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="PopupPages\AnimationInfoPopupPage.xaml.cs">
+      <DependentUpon>AnimationInfoPopupPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="PopupPages\AlertPopupPage.xaml.cs">
+      <DependentUpon>AlertPopupPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="PopupPages\EnterSSIDPasswordPopupPage.xaml.cs">
+      <DependentUpon>EnterSSIDPasswordPopupPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="PopupPages\UpdateControllerConfirmationPopUpPage.xaml.cs">
+      <DependentUpon>UpdateControllerConfirmationPopUpPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="PopupPages\UpdatingPopupPage.xaml.cs">
+      <DependentUpon>UpdatingPopupPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="PopupPages\ConnectedPopupPage.xaml.cs">
+      <DependentUpon>ConnectedPopupPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="StringResources\StringResource.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>StringResource.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Views\ColorsTabPage.xaml.cs">
+      <DependentUpon>ColorsTabPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\ControllerUpdateDetailPage.xaml.cs">
+      <DependentUpon>ControllerUpdateDetailPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\ControllerDevicesPage.xaml.cs">
+      <DependentUpon>ControllerDevicesPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\AppUpdateDetailPage.xaml.cs">
+      <DependentUpon>AppUpdateDetailPage.xaml</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="Abstractions\BaseContentPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Cell\ImageHueSaturationView.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Cell\SolidDataView.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Controls\AnimationMenuBarControl.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Controls\AnimationTileShadowControl.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Controls\CustomButtonControl.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Controls\CustomCheckBoxControl.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Controls\CustomSwitchControl.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Controls\FavoriteMenuBarControl.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Controls\GradientBackgroundControl.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Controls\IntensitySliderControl.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Controls\NavigationBarControl.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Controls\TitleArrowControl.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Controls\UpdateShieldControl.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="DataTemplates\Animations\AudializeDataTemplate.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="DataTemplates\Animations\FireballDataTemplate.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="DataTemplates\Animations\FirePowerDataTemplate.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="DataTemplates\Animations\LooperDataTemplate.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="DataTemplates\Animations\RobocopDataTemplate.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="DataTemplates\Animations\SolidDataTemplate.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="DataTemplates\Animations\SpectrumDataTemplate.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="PopupPages\AvailableWifiPopupPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="PopupPages\BasePopupPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="PopupPages\DoubleClickPopupPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="PopupPages\EnterDeviceNamePopupPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="PopupPages\EnterWifiPasswordPopupPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="PopupPages\ForgetDeviceConfirmationPopupPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="PopupPages\ConnectedPopupPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="StringResources\StringResource.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>StringResource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="TestPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\AnimationPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\BootSequencePage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\ColorsPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\ControllerDetailPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\ControllerDevicesPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\Dashboard.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\FavoritesPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\MaskingPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\SettingsPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\AppUpdateDetailPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\Testing\ControllerUpdatePage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\UpdatesPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+  </ItemGroup>
+</Project>

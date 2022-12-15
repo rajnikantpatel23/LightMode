@@ -1,0 +1,58 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+              xmlns:Effects="clr-namespace:ColorController.Controls"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ColorController.TestPage">
+    <ContentPage.Content>
+        <CollectionView ItemsSource="{Binding Animations}" ItemSizingStrategy="MeasureAllItems" ItemsLayout="VerticalGrid, 2">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Grid>
+                        <Grid Padding="10" BackgroundColor="Red" Margin="5" HeightRequest="150">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+                            <Grid Grid.RowSpan="2" HeightRequest="100" VerticalOptions="Center" IsVisible="True">
+                                <Grid  BackgroundColor="#FF1E1D22" IsClippedToBounds="True">
+                                   
+                                    <Image Source="SolidGlow"
+                               Effects:TintImageEffect.TintColor="Red"
+                               HorizontalOptions="Center"
+                               VerticalOptions="Center" />
+
+                                    <!--<Image Source="SolidStroke"
+                               Effects:TintImageEffect.TintColor="Red"
+                               HorizontalOptions="Center"
+                               VerticalOptions="Center" />
+
+                                    <Image Source="SolidBaseTrans"
+                               Effects:TintImageEffect.TintColor="Red"
+                               HorizontalOptions="Center"
+                               VerticalOptions="Center" />
+
+                                    <Image Source="SolidBaseTrans.png"
+                               HorizontalOptions="Center"
+                               VerticalOptions="Center"/>-->
+
+                                </Grid>
+                            </Grid>
+                            <Label Grid.Column="1"
+                               Text="{Binding Title}" TextColor="Black"
+                               FontAttributes="Bold" />
+                            <Label Grid.Row="1"
+                               Grid.Column="1"
+                               Text="{Binding Title}"
+                               FontAttributes="Italic"
+                               VerticalOptions="End" />
+                        </Grid>
+                    </Grid>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </ContentPage.Content>
+</ContentPage>
