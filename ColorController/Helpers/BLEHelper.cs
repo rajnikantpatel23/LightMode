@@ -43,8 +43,8 @@ namespace ColorController.Helpers
         //    }
         //}
 
-        private string _serviceId = "4fafc201-1fb5-459e-8fcc-c5c9c331914b";
-        private string _characteristicsId = "beb5483e-36e1-4688-b7f5-ea07361b26a8";
+        private Guid _serviceId = new Guid("4fafc201-1fb5-459e-8fcc-c5c9c331914b");
+        private Guid _characteristicsId = new Guid("beb5483e-36e1-4688-b7f5-ea07361b26a8");
 
         List<IDevice> devices;
 
@@ -66,29 +66,25 @@ namespace ColorController.Helpers
                     }
                 };
 
-                CrossBluetoothLE.Current.Adapter.DeviceDisconnected += OnDeviceDisconnected;
-                CrossBluetoothLE.Current.Adapter.DeviceConnectionLost += OnDeviceConnectionLost;
-                CrossBluetoothLE.Current.Adapter.DeviceConnected += OnDeviceConnected;
+                CrossBluetoothLE.Current.Adapter.DeviceConnected += (s, a) =>
+                {
+                    Debug.WriteLine("DeviceConnected"); 
+                };
+
+                CrossBluetoothLE.Current.Adapter.DeviceDisconnected += (s, a) =>
+                {
+                    Debug.WriteLine("OnDeviceDisconnected");
+                };
+
+                CrossBluetoothLE.Current.Adapter.DeviceConnectionLost += async (s, a) =>
+                {
+                    Debug.WriteLine("OnDeviceConnectionLost Start");
+                    await Disconnect(false);
+                    Debug.WriteLine("OnDeviceConnectionLost End");
+                };
             }
-        }
-
-        private void OnDeviceConnected(object sender, DeviceEventArgs e)
-        {
-            Debug.WriteLine("DeviceConnected");
-        }
-
-        private async void OnDeviceConnectionLost(object sender, DeviceErrorEventArgs e)
-        {
-            Debug.WriteLine("OnDeviceConnectionLost Start");
-            await Disconnect(false);
-            Debug.WriteLine("OnDeviceConnectionLost End");
-        }
-
-        private void OnDeviceDisconnected(object sender, DeviceEventArgs e)
-        {
-            Debug.WriteLine("OnDeviceDisconnected");
-        }
-
+        } 
+        
         int timer = 0;
          
         public async Task<List<IDevice>> ScanDevices(int timeOut = 1000, bool loop = false, bool isExecuted = false, int endTime = 5)
@@ -288,14 +284,13 @@ namespace ColorController.Helpers
                     SendMessageToDisplayDisconnectButton();
 
                     CloseButtonPressPopupPage();
-
+                     
                     //Get service
-                    var services = await device.GetServicesAsync();
-                    var service = services.FirstOrDefault(x => x.Id == new Guid(_serviceId));
+                    var service = await device.GetServiceAsync(_serviceId);
 
                     //Get characteristic
-                    var characteristics = await service.GetCharacteristicsAsync();
-                    var characteristic = characteristics.FirstOrDefault(x => x.Id == new Guid(_characteristicsId));
+                    var characteristic = await service.GetCharacteristicAsync(_characteristicsId);
+
                     App.Characteristic = characteristic;
 
                     characteristic.ValueUpdated += Characteristic_ValueUpdated;
@@ -451,27 +446,7 @@ namespace ColorController.Helpers
             }
         }
 
-        public void SendMessageToDisplayConnectButton()
-        {
-            App.ConnectionState = ConnectionButtonState.ShowConnect;
-            App.IsScanningAlreadyGoingOn = false;
-            MessagingCenter.Send<object, string>(this, StringResource.Connection, StringResource.ShowConnect);
-        }
-
-        internal void SendMessageToDisplayDisconnectButton()
-        {
-            App.ConnectionState = ConnectionButtonState.ShowDisconnect;
-            App.IsScanningAlreadyGoingOn = false;
-            MessagingCenter.Send<object, string>(this, StringResource.Connection, StringResource.ShowDisconnect);
-        }
-
-        internal void SendMessageToDisplayConnectingButton()
-        {
-            App.ConnectionState = ConnectionButtonState.ShowSearchingButton;
-            App.IsScanningAlreadyGoingOn = true;
-            MessagingCenter.Send<object, string>(this, StringResource.Connection, "ShowSearchingButton");
-        }
-
+        #region ConnectToKnownDevice
         public async Task<bool> ConnectToKnownDevice(Guid guid)
         {
             bool isConneted = false;
@@ -507,12 +482,10 @@ namespace ColorController.Helpers
                 SendMessageToDisplayDisconnectButton();
 
                 //Get service
-                var services = await device.GetServicesAsync();
-                var service = services.FirstOrDefault(x => x.Id == new Guid(_serviceId));
-
+                var service = await device.GetServiceAsync(_serviceId);
+               
                 //Get characteristic
-                var characteristics = await service.GetCharacteristicsAsync();
-                var characteristic = characteristics.FirstOrDefault(x => x.Id == new Guid(_characteristicsId));
+                var characteristic = await service.GetCharacteristicAsync(_characteristicsId);
                 App.Characteristic = characteristic;
 
                 characteristic.ValueUpdated += Characteristic_ValueUpdated;
@@ -554,7 +527,8 @@ namespace ColorController.Helpers
             }
 
             return isConneted;
-        }
+        } 
+        #endregion
 
         public void CloseButtonPressPopupPage()
         {
@@ -824,7 +798,6 @@ namespace ColorController.Helpers
             Debug.WriteLine($"---------------------------------------------------------------------------------------");
         }
 
-
         private void Characteristic_ValueUpdated(object o, CharacteristicUpdatedEventArgs args)
         {
             try
@@ -890,5 +863,28 @@ namespace ColorController.Helpers
                 Microsoft.AppCenter.Crashes.Crashes.TrackError(ex, new Dictionary<string, string> { { "Characteristic_ValueUpdated", $"{ex.StackTrace}" } });
             }
         }
+
+        #region Send Messages
+        public void SendMessageToDisplayConnectButton()
+        {
+            App.ConnectionState = ConnectionButtonState.ShowConnect;
+            App.IsScanningAlreadyGoingOn = false;
+            MessagingCenter.Send<object, string>(this, StringResource.Connection, StringResource.ShowConnect);
+        }
+
+        internal void SendMessageToDisplayDisconnectButton()
+        {
+            App.ConnectionState = ConnectionButtonState.ShowDisconnect;
+            App.IsScanningAlreadyGoingOn = false;
+            MessagingCenter.Send<object, string>(this, StringResource.Connection, StringResource.ShowDisconnect);
+        }
+
+        internal void SendMessageToDisplayConnectingButton()
+        {
+            App.ConnectionState = ConnectionButtonState.ShowSearchingButton;
+            App.IsScanningAlreadyGoingOn = true;
+            MessagingCenter.Send<object, string>(this, StringResource.Connection, "ShowSearchingButton");
+        }
+        #endregion
     }
 }

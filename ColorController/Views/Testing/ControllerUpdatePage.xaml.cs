@@ -1,13 +1,10 @@
 ﻿using Acr.UserDialogs;
 using ColorController;
 using Plugin.BLE.Abstractions.Contracts;
-using Plugin.BLE.Abstractions.EventArgs;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.IO;
-using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -46,7 +43,6 @@ namespace BLESample1.Views
         {
             InitializeComponent();
             BindingContext = this;
-            App.ControllerUpdatePage = this;
             selectedCharacteristic = App.Characteristic;
             CommandText = "PING";
             OutputSource = new ObservableCollection<string>();
