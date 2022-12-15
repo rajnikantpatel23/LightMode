@@ -1,7 +1,6 @@
 ﻿using ColorController.Helpers;
 using ColorController.StringResources;
 using ColorController.Views;
-using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Forms;
 
@@ -16,6 +15,14 @@ namespace ColorController.ViewModels
             set { _switchStatus = value; OnPropertyChanged(nameof(SwitchStatus)); }
         }
 
+        private bool _isExpanded;
+        public bool IsExpanded
+        {
+            get { return _isExpanded; }
+            set { _isExpanded = value; OnPropertyChanged(nameof(IsExpanded)); }
+        }
+
+        public ICommand DetailsTappedCommand { get; set; }
         public ICommand BootSequenceTappedCommand { get; set; }
         public ICommand DevicesTappedCommand { get; set; }
         public ICommand UpdatesTappedCommand { get; set; }
@@ -32,7 +39,13 @@ namespace ColorController.ViewModels
             BootSequenceTappedCommand = new Command(BootSequenceTapped);
             DevicesTappedCommand = new Command(DevicesTapped);
             UpdatesTappedCommand = new Command(UpdatesTapped);
+            DetailsTappedCommand = new Command(DetailsTapped);
             _navigation = navigation;
+        }
+
+        private void DetailsTapped(object obj)
+        {
+            IsExpanded = false;
         }
 
         /// <summary>
@@ -88,6 +101,6 @@ namespace ColorController.ViewModels
         private async void BootSequenceTapped()
         {
             await _navigation.PushAsync(new BootSequencePage());
-        } 
+        }
     }
 }

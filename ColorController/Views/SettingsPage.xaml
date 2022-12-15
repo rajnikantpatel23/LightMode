@@ -6,8 +6,11 @@
                               xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core" 
                               ios:Page.UseSafeArea="True"
                               BackgroundColor="#FF2B2B2D"
+                              xmlns:xct="http://xamarin.com/schemas/2020/toolkit" 
+                              xmlns:viewmodels="clr-namespace:ColorController.ViewModels" 
+                              x:DataType="viewmodels:SettingsViewModel"
                               x:Class="ColorController.Views.SettingsPage">
-    <Grid> 
+    <Grid>
         <Grid RowSpacing="0">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
@@ -18,71 +21,119 @@
 
             <controls:GradientBackgroundControl Grid.Row="1"/>
 
-            <StackLayout Grid.Row="1" 
-                         Spacing="0"> 
-                <BoxView Color="#998F8F8F" 
-                         HeightRequest="1"
-                         VerticalOptions="End" 
-                         HorizontalOptions="Fill"
-                         Margin="0,30,0,0"/>
-                <controls:TitleArrowControl Title="Boot Sequence" IsVisible="False">
-                    <controls:TitleArrowControl.GestureRecognizers>
-                        <TapGestureRecognizer Command="{Binding BootSequenceTappedCommand}"/>
-                    </controls:TitleArrowControl.GestureRecognizers>
-                </controls:TitleArrowControl>
-                <Grid>
-                    <Grid.GestureRecognizers>
-                        <TapGestureRecognizer Tapped="AutoConnectTapped"/>
-                    </Grid.GestureRecognizers>
-                    <Grid  Margin="15,15,15,20"
-                           ColumnSpacing="30" 
-                           VerticalOptions="Center"> 
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="Auto"/>
-                        </Grid.ColumnDefinitions>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto"/>
-                        </Grid.RowDefinitions>
-                        <StackLayout  Margin="0" VerticalOptions="Center">
-                            <Label Text="Auto-Connect" 
-                                   Style="{DynamicResource Label16Style}"   />
-                            <Label Text="Automatically searches for your default controller every time you open this app. Your controller must be in bluetooth pairing mode to auto-connect."           
-                                   Style="{DynamicResource Label14Style}"
-                                   Margin="0,5"/> 
-                        </StackLayout>
+            <ScrollView Grid.Row="1">
+                <StackLayout>
 
-                        <controls:CustomSwitchControl Grid.Column="1" 
-                                                      x:Name="switchControl"/>
+                    <ImageButton
+                             HorizontalOptions="Center"
+                             VerticalOptions="Center"
+                             Source="pairNewDevice.png" Margin="0,30,0,10"
+                             WidthRequest="{OnIdiom Phone=250, Tablet=450}"/>
 
-                        <BoxView Grid.Column="1" HorizontalOptions="Fill" HeightRequest="10"/>
-                    </Grid>
+                    <Label Text="You only need to do this once per device."      
+                           HorizontalTextAlignment="Center"
+                           HorizontalOptions="Center" 
+                           FontFamily="LatoItalic" 
+                           Style="{DynamicResource Label14Style}" />
+
                     <BoxView Color="#998F8F8F" 
-                             HeightRequest="1" 
-                             VerticalOptions="End"
+                             HeightRequest="1" Margin="0,15"
+                             VerticalOptions="End" 
                              HorizontalOptions="Fill"/>
-                </Grid>
-                <controls:TitleArrowControl Title="Devices">
-                    <controls:TitleArrowControl.GestureRecognizers>
-                        <TapGestureRecognizer Command="{Binding DevicesTappedCommand}"/>
-                    </controls:TitleArrowControl.GestureRecognizers>
-                </controls:TitleArrowControl>
-                <controls:TitleArrowControl Title="Updates">
-                    <controls:TitleArrowControl.GestureRecognizers>
-                        <TapGestureRecognizer Command="{Binding UpdatesTappedCommand}"/>
-                    </controls:TitleArrowControl.GestureRecognizers>
-                </controls:TitleArrowControl>
-                <!--<controls:TitleArrowControl Title="Testing Page">
+
+                    <Grid RowDefinitions="Auto,Auto,Auto">
+                        <Grid  Margin="15,0"
+                           ColumnSpacing="30" 
+                           VerticalOptions="Center">
+                            <Grid.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="AutoConnectTapped"/>
+                            </Grid.GestureRecognizers>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+                            <StackLayout VerticalOptions="Center">
+                                <Label Text="Search in Background" 
+                                       Style="{DynamicResource Label16Style}"   />
+                                <Label Text="App continuously searches for your saved device(s) when your phone's Bluetooth is on. Turning this on means you don't have to tap CONNECT every time you want to connect your controller."           
+                                       Style="{DynamicResource Label14Style}"
+                                       Margin="0,5"/>
+                                <Label Text="You still must put your controller in pairing mode (blue/green flashing) to connect."           
+                                       Style="{DynamicResource Label14Style}"
+                                       Margin="0,5"/>
+                            </StackLayout>
+
+                            <controls:CustomSwitchControl Grid.Column="1"  
+                                                          VerticalOptions="Start"
+                                                          x:Name="switchControl"/>
+                        </Grid>
+
+                        <Grid Grid.Row="1"
+                              Margin="15,0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <xct:Expander x:Name="expander" 
+                                          IsExpanded="{Binding IsExpanded}">
+                                <xct:Expander.Header>
+                                    <StackLayout>
+                                        <Label Text="Read more..."
+                                               FontFamily="LatoItalic" 
+                                               IsVisible="{Binding Source={x:Reference expander}, Path=IsExpanded, Converter={StaticResource InverseConverter}}"
+                                               Style="{StaticResource Label14Style}"
+                                               Margin="0,5"/>
+                                    </StackLayout>
+                                </xct:Expander.Header>
+
+                                <Grid>
+                                    <Grid.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding DetailsTappedCommand}"/>
+                                    </Grid.GestureRecognizers>
+                                    <Label Text="The main difference between Search in Background and previously Auto-Connect is that Auto-Connect required you to open the LightMode app to begin searching for your default device. Search in Background searches for ALL your saved devices even while the app is minimized or your phone is locked. 
+Now, you only need to put your controller in pairing mode (short-press, followed by long-press) and the LightMode app will automatically find and connect to it.
+Search in Background also can connect to multiple saved devices. Put all your devices in pairing mode and the LightMode app will automatically connect to all that are saved in the LightMode app."           
+                                   Style="{DynamicResource Label14Style}" 
+                                   Margin="0,5"/>
+                                </Grid>
+                            </xct:Expander>
+
+                            <BoxView Grid.Column="1"
+                                     WidthRequest="{Binding Source={x:Reference switchControl}, Path=Width}"/>
+                        </Grid>
+
+                        <BoxView Grid.Row="2" 
+                                 Color="#998F8F8F" 
+                                 HeightRequest="1" 
+                                 VerticalOptions="End"
+                                 HorizontalOptions="Fill"/>
+                    </Grid>
+
+                    <controls:TitleArrowControl Title="Devices">
+                        <controls:TitleArrowControl.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding DevicesTappedCommand}"/>
+                        </controls:TitleArrowControl.GestureRecognizers>
+                    </controls:TitleArrowControl>
+                    <controls:TitleArrowControl Title="Updates">
+                        <controls:TitleArrowControl.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding UpdatesTappedCommand}"/>
+                        </controls:TitleArrowControl.GestureRecognizers>
+                    </controls:TitleArrowControl>
+                    <!--<controls:TitleArrowControl Title="Testing Page">
                     <controls:TitleArrowControl.GestureRecognizers>
                         <TapGestureRecognizer Tapped="OpenTestPage"/>
                     </controls:TitleArrowControl.GestureRecognizers>
                 </controls:TitleArrowControl>-->
-                <!--<controls:TitleArrowControl Title="Masking Page">
+                    <!--<controls:TitleArrowControl Title="Masking Page">
                     <controls:TitleArrowControl.GestureRecognizers>
                         <TapGestureRecognizer Tapped="OpenMaskingPage"/>
                     </controls:TitleArrowControl.GestureRecognizers>
                 </controls:TitleArrowControl>-->
-            </StackLayout>
+                </StackLayout>
+            </ScrollView>
         </Grid>
     </Grid>
 </abstractions:BaseContentPage>

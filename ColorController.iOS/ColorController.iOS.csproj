@@ -210,6 +210,9 @@
     <PackageReference Include="Xam.Plugin.LatestVersion">
       <Version>1.1.2</Version>
     </PackageReference>
+    <PackageReference Include="Xamarin.CommunityToolkit">
+      <Version>2.0.5</Version>
+    </PackageReference>
     <PackageReference Include="Xamarin.FFImageLoading.Forms">
       <Version>2.4.11.982</Version>
     </PackageReference>
@@ -597,6 +600,9 @@
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="Resources\ButtonPressGifV7.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\pairNewDevice.png" />
   </ItemGroup>
   <ProjectExtensions>
     <VisualStudio>
