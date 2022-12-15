@@ -139,7 +139,7 @@ namespace ColorController.Helpers
                                             PopupNavigation.Instance.PushAsync(new DoubleClickPopupPage());
                                         });
                                     }
-                                    MessagingCenter.Send(this, StringResource.Connection, "RestartScanning");
+                                    MessagingCenter.Send<object, string>(this, StringResource.Connection, "RestartScanning");
                                 }
                             }
 
@@ -151,7 +151,7 @@ namespace ColorController.Helpers
                         Debug.WriteLine($"BLEHelper: {ex.Message}");
                     }
 
-                    MessagingCenter.Send(this, StringResource.Connection, "STOP");
+                    MessagingCenter.Send<object, string>(this, StringResource.Connection, "STOP");
 
                     //SendMessageToDisplayConnectButton();
                     await StopScanning();
@@ -170,7 +170,7 @@ namespace ColorController.Helpers
             {
                 Debug.WriteLine($"BLEHelper: {ex.Message}");
                 App.ConnectionState = ConnectionButtonState.ShowConnect;
-                MessagingCenter.Send(this, StringResource.Connection, StringResource.ShowConnect);
+                MessagingCenter.Send<object, string>(this, StringResource.Connection, StringResource.ShowConnect);
             }
 
             return devices;
@@ -184,7 +184,7 @@ namespace ColorController.Helpers
             }
 
             App.ConnectionState = ConnectionButtonState.ShowSearchingButton;
-            MessagingCenter.Send(this, StringResource.Connection, StringResource.ShowConnecting);
+            MessagingCenter.Send<object, string>(this, StringResource.Connection, StringResource.ShowConnecting);
 
             bool isConneted = false;
             IDevice device = null;
@@ -429,7 +429,7 @@ namespace ColorController.Helpers
             finally
             {
                 App.ConnectionState = ConnectionButtonState.ShowConnect;
-                MessagingCenter.Send(this, StringResource.Connection, "QUIT");
+                MessagingCenter.Send<object, string>(this, StringResource.Connection, "QUIT");
                 App.Characteristic = null;
                 App.BatterPercentages = null;
                 UserDialogs.Instance.HideLoading();
@@ -455,21 +455,21 @@ namespace ColorController.Helpers
         {
             App.ConnectionState = ConnectionButtonState.ShowConnect;
             App.IsScanningAlreadyGoingOn = false;
-            MessagingCenter.Send(this, StringResource.Connection, StringResource.ShowConnect);
+            MessagingCenter.Send<object, string>(this, StringResource.Connection, StringResource.ShowConnect);
         }
 
         internal void SendMessageToDisplayDisconnectButton()
         {
             App.ConnectionState = ConnectionButtonState.ShowDisconnect;
             App.IsScanningAlreadyGoingOn = false;
-            MessagingCenter.Send(this, StringResource.Connection, StringResource.ShowDisconnect);
+            MessagingCenter.Send<object, string>(this, StringResource.Connection, StringResource.ShowDisconnect);
         }
 
         internal void SendMessageToDisplayConnectingButton()
         {
             App.ConnectionState = ConnectionButtonState.ShowSearchingButton;
             App.IsScanningAlreadyGoingOn = true;
-            MessagingCenter.Send(this, StringResource.Connection, "ShowSearchingButton");
+            MessagingCenter.Send<object, string>(this, StringResource.Connection, "ShowSearchingButton");
         }
 
         public async Task<bool> ConnectToKnownDevice(Guid guid)
@@ -482,7 +482,7 @@ namespace ColorController.Helpers
             }
 
             App.ConnectionState = ConnectionButtonState.ShowSearchingText;
-            MessagingCenter.Send(this, StringResource.Connection, "ShowSearchingText");
+            MessagingCenter.Send<object, string>(this, StringResource.Connection, "ShowSearchingText");
 
             try
             {
@@ -875,7 +875,7 @@ namespace ColorController.Helpers
                             //BatterPOWR 11\r\n
                             var responseArray = response.Split(' ');
                             var batteryPercentages = Regex.Replace(responseArray[1], "\n|\r", string.Empty);
-                            MessagingCenter.Send(this, StringResource.POWR, batteryPercentages);
+                            MessagingCenter.Send<object, string>(this, StringResource.POWR, batteryPercentages);
                             App.BatterPercentages = batteryPercentages;
                         }
 

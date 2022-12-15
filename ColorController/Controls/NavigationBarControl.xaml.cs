@@ -160,8 +160,8 @@ namespace ColorController.Controls
 
         private void SubscribeBLEHelperToReceiveBatteryNotifications()
         {
-            MessagingCenter.Unsubscribe<BLEHelper, string>(this, StringResource.POWR);
-            MessagingCenter.Subscribe<BLEHelper, string>(this, StringResource.POWR, (sender, batteryPercentage) =>
+            MessagingCenter.Unsubscribe<object, string>(this, StringResource.POWR);
+            MessagingCenter.Subscribe<object, string>(this, StringResource.POWR, (sender, batteryPercentage) =>
             {
                 DisplayBatteryStatus(batteryPercentage);
             });
@@ -172,8 +172,8 @@ namespace ColorController.Controls
         /// </summary>
         private void SubscribeBLEHelperToReceiveConnectionStatusNotifications()
         {
-            MessagingCenter.Unsubscribe<BLEHelper, string>(this, StringResource.Connection);
-            MessagingCenter.Subscribe<BLEHelper, string>(this, StringResource.Connection, async (sender, args) =>
+            MessagingCenter.Unsubscribe<object, string>(this, StringResource.Connection);
+            MessagingCenter.Subscribe<object, string>(this, StringResource.Connection, async (sender, args) =>
             {
                 switch (args)
                 {

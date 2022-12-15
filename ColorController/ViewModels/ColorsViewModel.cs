@@ -154,8 +154,8 @@ namespace ColorController.ViewModels
         /// </summary>
         private void SubscribeBLEHelperToReceiveConnectionStatusNotifications()
         {
-            MessagingCenter.Unsubscribe<BLEHelper, string>(this, StringResource.Connection);
-            MessagingCenter.Subscribe<BLEHelper, string>(this, StringResource.Connection, (sender, args) =>
+            MessagingCenter.Unsubscribe<object, string>(this, StringResource.Connection);
+            MessagingCenter.Subscribe<object, string>(this, StringResource.Connection, (sender, args) =>
             {
                 switch (args)
                 {
