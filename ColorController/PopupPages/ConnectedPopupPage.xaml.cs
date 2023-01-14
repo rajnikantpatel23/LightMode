@@ -1,7 +1,6 @@
 ﻿using Rg.Plugins.Popup.Services;
 using System;
 using System.Threading.Tasks;
-using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -22,11 +21,11 @@ namespace ColorController.PopupPages
         /// <summary>
         /// Constructor
         /// </summary>
-        public ConnectedPopupPage()
+        public ConnectedPopupPage(string controllerName)
         {
             InitializeComponent();
             BindingContext = this;
-            TextMessage = Preferences.Get("defaultControllerName", string.Empty);
+            TextMessage = controllerName;
             _runTimer = true;
             StartSearchingTimer();
         }
@@ -44,7 +43,7 @@ namespace ColorController.PopupPages
                     }
                     catch (Exception)
                     {
-                         
+
                     }
                     return _runTimer;
                 });

@@ -532,7 +532,7 @@ namespace ColorController.Helpers
         private async Task DisplayConnectedToDeviceNamePopupFor1Second()
         {
             CloseUpdatingFirmwarePopupPage();
-            await PopupNavigation.Instance.PushAsync(new ConnectedPopupPage());
+            await PopupNavigation.Instance.PushAsync(new ConnectedPopupPage(""));
         }
 
         private void GetVersionOfController(string response)

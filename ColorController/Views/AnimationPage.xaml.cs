@@ -49,26 +49,26 @@ namespace ColorController.Views
                 var selectedAnimation = tappedEventArgs.Parameter as AnimationModel;
                 DisplayBlueBorderAroundSelectedAnimation(selectedAnimation);
                 DeselectAnimationFromFavoritePageList();
+                await Play(selectedAnimation);
+                //if (!string.IsNullOrWhiteSpace(App.ConnectedControllerVersion))
+                //{
+                //    var animationControllerVersion = new Version(selectedAnimation.ControllerVersion);
+                //    var connectedControllerVersion = new Version(App.ConnectedControllerVersion);
 
-                if (!string.IsNullOrWhiteSpace(App.ConnectedControllerVersion))
-                {
-                    var animationControllerVersion = new Version(selectedAnimation.ControllerVersion);
-                    var connectedControllerVersion = new Version(App.ConnectedControllerVersion);
+                //    if (connectedControllerVersion >= animationControllerVersion)
+                //    {
+                //        await Play(selectedAnimation);
+                //    }
+                //    else
+                //    {
+                //        if (!_platformSpecific.IsActivityFinishing())
+                //        {
+                //            await PopupNavigation.Instance.PushAsync(new UpdateControllerConfirmationPopUpPage(Navigation));
+                //        }
+                //    }
 
-                    if (connectedControllerVersion >= animationControllerVersion)
-                    {
-                        await Play(selectedAnimation);
-                    }
-                    else
-                    {
-                        if (!_platformSpecific.IsActivityFinishing())
-                        {
-                            await PopupNavigation.Instance.PushAsync(new UpdateControllerConfirmationPopUpPage(Navigation));
-                        }
-                    }
-
-                    await Task.Delay(500);
-                }
+                //    await Task.Delay(500);
+                //}
 
                 _isClicked = false;
             }

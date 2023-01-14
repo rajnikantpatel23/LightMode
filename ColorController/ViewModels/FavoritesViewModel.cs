@@ -67,6 +67,7 @@ namespace ColorController.ViewModels
                 pageSize: _pageSize,
                 loadingThreshold: 0.25f);
             AnimationLoaderNotifier = new TaskLoaderNotifier<IReadOnlyCollection<FavoriteAnimation>>();
+            StartTimerToRunBackgroundTask();
         }
 
         private void Load()
@@ -178,6 +179,39 @@ namespace ColorController.ViewModels
                 Load();
             }
             return base.OnPageAppering();
+        }
+
+        private void StartTimerToRunBackgroundTask()
+        {
+            try
+            {
+                Device.StartTimer(TimeSpan.FromSeconds(10), () =>
+                {
+                    try
+                    {
+                        var message = Preferences.Get("search_in_background", false) ? 
+                                        nameof(MessageType.StartLongRunningTaskMessage) : 
+                                        nameof(MessageType.StopLongRunningTaskMessage);
+
+                        MessagingCenter.Send<object>(this, message);
+                        
+                        Task.Run(() =>
+                        {
+                            //awaitable task
+                        });
+                    }
+                    catch (Exception)
+                    {
+                        CommonUtils.WriteLog("Exception: StartTimerToRunBackgroundTask() Inside Device.StartTimer()");
+                    }
+
+                    return true;
+                });
+            }
+            catch (Exception ex)
+            {
+                CommonUtils.WriteLog("Exception: StartTimerToRunBackgroundTask()");
+            }
         }
     }
 }

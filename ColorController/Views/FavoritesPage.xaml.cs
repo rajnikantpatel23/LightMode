@@ -64,40 +64,41 @@ namespace ColorController.Views
                     var selectedAnimation = tappedEventArgs.Parameter as FavoriteAnimation;
                     DisplayBlueBorderAroundSelectedAnimation(selectedAnimation);
                     DeselectAnimationFromAnimationPageList();
+                    await Play(selectedAnimation);
 
-                    if (!string.IsNullOrWhiteSpace(App.ConnectedControllerVersion))
-                    {
-                        selectedAnimationVersion = Constants.GetAnimations().FirstOrDefault(x => x.AnimationType == selectedAnimation.AnimationType).ControllerVersion;
+                    //if (!string.IsNullOrWhiteSpace(App.ConnectedControllerVersion))
+                    //{
+                    //    selectedAnimationVersion = Constants.GetAnimations().FirstOrDefault(x => x.AnimationType == selectedAnimation.AnimationType).ControllerVersion;
 
-                        var isAnimationVersionParsed = Version.TryParse(selectedAnimationVersion, out Version animationControllerVersion);
-                        var isControllerVersionParsed = Version.TryParse(App.ConnectedControllerVersion, out Version connectedControllerVersion);
+                    //    var isAnimationVersionParsed = Version.TryParse(selectedAnimationVersion, out Version animationControllerVersion);
+                    //    var isControllerVersionParsed = Version.TryParse(App.ConnectedControllerVersion, out Version connectedControllerVersion);
 
-                        if (isAnimationVersionParsed && isControllerVersionParsed)
-                        {
-                            if (connectedControllerVersion >= animationControllerVersion)
-                            {
-                                await Play(selectedAnimation);
-                            }
-                            else
-                            {
-                                if (!_platformSpecific.IsActivityFinishing())
-                                {
-                                    await PopupNavigation.Instance.PushAsync(new UpdateControllerConfirmationPopUpPage(Navigation));
-                                }
-                            }
+                    //    if (isAnimationVersionParsed && isControllerVersionParsed)
+                    //    {
+                    //        if (connectedControllerVersion >= animationControllerVersion)
+                    //        {
+                    //            await Play(selectedAnimation);
+                    //        }
+                    //        else
+                    //        {
+                    //            if (!_platformSpecific.IsActivityFinishing())
+                    //            {
+                    //                await PopupNavigation.Instance.PushAsync(new UpdateControllerConfirmationPopUpPage(Navigation));
+                    //            }
+                    //        }
 
-                            await Task.Delay(500);
-                        }
-                        else
-                        {
-                            Microsoft.AppCenter.Crashes.Crashes.TrackError(null, new Dictionary<string, string>
-                            {
-                                { "FavoritePage: AnimationTapped() Not able to parse version", null },
-                                { "Selected Animation Version", $"{selectedAnimationVersion}" },
-                                { "Connected Controller Version", $"{App.ConnectedControllerVersion}" },
-                            });
-                        }
-                    }
+                    //        await Task.Delay(500);
+                    //    }
+                    //    else
+                    //    {
+                    //        Microsoft.AppCenter.Crashes.Crashes.TrackError(null, new Dictionary<string, string>
+                    //        {
+                    //            { "FavoritePage: AnimationTapped() Not able to parse version", null },
+                    //            { "Selected Animation Version", $"{selectedAnimationVersion}" },
+                    //            { "Connected Controller Version", $"{App.ConnectedControllerVersion}" },
+                    //        });
+                    //    }
+                    //}
                 }
             }
             catch (Exception ex)

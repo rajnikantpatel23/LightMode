@@ -90,6 +90,7 @@
     <Compile Include="CustomRenderers\TintImageImpl.cs" />
     <Compile Include="Main.cs" />
     <Compile Include="AppDelegate.cs" />
+    <Compile Include="Services\iOSLongRunningTask.cs" />
     <Compile Include="Services\LocSettings.cs" />
     <Compile Include="Services\PlatformSpecific.cs" />
     <None Include="Entitlements.plist" />
@@ -603,6 +604,9 @@
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="Resources\pairNewDevice.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\searchingTextGif.gif" />
   </ItemGroup>
   <ProjectExtensions>
     <VisualStudio>

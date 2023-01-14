@@ -24,12 +24,16 @@
             <ScrollView Grid.Row="1">
                 <StackLayout>
 
-                    <ImageButton
+                    <Image
                              HorizontalOptions="Center"
                              VerticalOptions="Center"
-                             Source="pairNewDevice.png" Margin="0,30,0,10"
-                             Command="{Binding PairNewDeviceCommand}"
-                             WidthRequest="{OnIdiom Phone=250, Tablet=450}"/>
+                             Source="{Binding PairNewDeviceButtonImage}" Margin="0,30,0,10"
+                             IsAnimationPlaying="{Binding IsAnimationPlaying}"
+                             WidthRequest="{OnIdiom Phone=250, Tablet=450}">
+                        <Image.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding PairNewDeviceCommand}"/>
+                        </Image.GestureRecognizers>
+                    </Image>
 
                     <Label Text="You only need to do this once per device."      
                            HorizontalTextAlignment="Center"
@@ -70,6 +74,8 @@
                             <controls:CustomSwitchControl Grid.Column="1"  
                                                           VerticalOptions="Start"
                                                           x:Name="switchControl"/>
+
+                            <BoxView Grid.Column="1"/>
                         </Grid>
 
                         <Grid Grid.Row="1"

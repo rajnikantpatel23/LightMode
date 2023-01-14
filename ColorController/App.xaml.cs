@@ -12,11 +12,53 @@ using Microsoft.AppCenter.Analytics;
 using Microsoft.AppCenter.Crashes;
 using ColorController.Abstractions;
 using FFImageLoading;
+using Plugin.BLE.Abstractions.Contracts;
+using Plugin.BLE;
+using Plugin.BLE.Abstractions.EventArgs;
+using ColorController.Helpers;
 
 namespace ColorController
 {
     public partial class App : Application
     {
+        //private static IAdapter _adapter;
+        //public static IAdapter Adapter
+        //{
+        //    get
+        //    {
+        //        if (_adapter == null)
+        //        {
+        //            _adapter = CrossBluetoothLE.Current.Adapter;
+        //            Adapter.DeviceDiscovered += Adapter_DeviceDiscovered;
+        //            Adapter.DeviceConnected += Adapter_DeviceConnected;
+        //            Adapter.DeviceDisconnected += Adapter_DeviceDisconnected;
+        //            Adapter.DeviceConnectionLost += Adapter_DeviceConnectionLost;
+        //        }
+
+        //        return _adapter;
+        //    }
+        //}
+
+        private static void Adapter_DeviceConnectionLost(object sender, DeviceErrorEventArgs e)
+        {
+            CommonUtils.WriteLog("Adapter_DeviceConnectionLost");
+        }
+
+        private static void Adapter_DeviceDisconnected(object sender, DeviceEventArgs e)
+        {
+            CommonUtils.WriteLog("Adapter_DeviceDisconnected");
+        }
+
+        private static void Adapter_DeviceConnected(object sender, DeviceEventArgs e)
+        {
+            CommonUtils.WriteLog("Device Connected!");
+        }
+
+        private static void Adapter_DeviceDiscovered(object sender, DeviceEventArgs e)
+        {
+            CommonUtils.WriteLog("Adapter_DeviceDiscovered");
+        }
+
         //Don't update until not confirm by Thomas
         public static Version LatestFirmwareVersion = new Version("3.1.14");
 
@@ -60,9 +102,10 @@ namespace ColorController
         public static Controller ConnectedController { get; set; }
         public static bool LMDSentSuccessfully { get; internal set; }
         public static string StoredAnimationId { get; internal set; }
+        public static bool IsBackgroundTaskRunning { get; set; }
 
         public static int SIZE = 240;
-
+       
         public App()
         {
             InitializeComponent();

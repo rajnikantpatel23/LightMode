@@ -115,7 +115,7 @@ namespace ColorController.PopupPages
                 await SendCommand("DFUU");
                 UserDialogs.Instance.HideLoading();
                 await Task.Delay(delay);
-                new BLEHelper(false).SendMessageToDisplayConnectButton();
+                BlueToothService.SendMessageToDisplayConnectButton();
 
                 StartAutoConnectingInBackground();
             }
@@ -335,8 +335,7 @@ namespace ColorController.PopupPages
                     App.IsScanningAlreadyGoingOn = true;
                     App.IsAutoScanningGoingOn = true;
 
-                    var bLEHelper = new BLEHelper(false);
-                    var isConnected = await bLEHelper.ConnectToKnownDevice(new Guid(App.ConnectedController.Id));
+                    var isConnected = await BlueToothService.ConnectToKnownDeviceInBackground(App.ConnectedController);
                     if (!isConnected && App.ConnectionState != ConnectionButtonState.ShowDisconnect)
                     {
                         StartAutoConnectingInBackground();

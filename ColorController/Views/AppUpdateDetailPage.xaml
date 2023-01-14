@@ -18,7 +18,6 @@
            
             <controls:NavigationBarControl ShowBackButton="True"
                                            BackButtonEvent="BackButtonTapped"
-                                           SearchingText="{Binding TextSearching, Mode=TwoWay}"
                                            Title="{Binding Item.Text}"/>
 
             <controls:GradientBackgroundControl Grid.Row="1"/>

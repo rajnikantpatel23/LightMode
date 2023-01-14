@@ -2,8 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using ColorController.Enums;
+using ColorController.iOS.Services;
 using Foundation;
 using UIKit;
+using Xamarin.Forms;
 
 namespace ColorController.iOS
 {
@@ -33,6 +36,7 @@ namespace ColorController.iOS
             TaskScheduler.UnobservedTaskException += TaskSchedulerOnUnobservedTaskException;
             UIApplication.SharedApplication.SetMinimumBackgroundFetchInterval(UIApplication.BackgroundFetchIntervalMinimum);
             LoadApplication(new App());
+            WireupLongRunningTask();
 
             return base.FinishedLaunching(app, options);
         }
@@ -54,6 +58,30 @@ namespace ColorController.iOS
         private void CurrentDomainOnUnhandledException(object sender, UnhandledExceptionEventArgs e)
         {
             var ex = e.ExceptionObject;
+        }
+
+        private iOSLongRunningTask _longRunningTask;
+
+        void WireupLongRunningTask()
+        {
+            MessagingCenter.Unsubscribe<object>(this, nameof(MessageType.StartLongRunningTaskMessage));
+            MessagingCenter.Subscribe<object>(this, nameof(MessageType.StartLongRunningTaskMessage), async message =>
+            {
+                if (App.IsBackgroundTaskRunning)
+                    return;
+
+                _longRunningTask = new iOSLongRunningTask();
+                await _longRunningTask.Start();
+            });
+
+            MessagingCenter.Unsubscribe<object>(this, nameof(MessageType.StopLongRunningTaskMessage));
+            MessagingCenter.Subscribe<object>(this, nameof(MessageType.StopLongRunningTaskMessage), message =>
+            {
+                App.IsBackgroundTaskRunning = false;
+
+                _longRunningTask = new iOSLongRunningTask();
+                _longRunningTask.Stop();
+            });
         }
     }
 }

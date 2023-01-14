@@ -1,6 +1,7 @@
 ﻿using ColorController.Controls;
 using ColorController.Enums;
 using ColorController.Helpers;
+using ColorController.Services;
 using ColorController.ViewModels;
 using ColorController.Views;
 using Rg.Plugins.Popup.Extensions;
@@ -17,6 +18,7 @@ namespace ColorController.PopupPages
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class DoubleClickPopupPage : BasePopupPage
     {
+        public IBlueToothService BlueToothService => DependencyService.Get<IBlueToothService>();
         bool _runTimer = true;
         int _timeSpend = 0;
 
@@ -73,8 +75,9 @@ namespace ColorController.PopupPages
         {
             _runTimer = false;
             await Navigation.PopPopupAsync();
-           
-            new BLEHelper(false).SendMessageToDisplayConnectButton();
+
+            BlueToothService.SendMessageToDisplayConnectButton();
+            await BlueToothService.StopScanning();
         }
 
         public void StartSearchingTimer()
@@ -101,14 +104,13 @@ namespace ColorController.PopupPages
                         {
                             Navigation.PopPopupAsync();
                         }
-                        
-                        var bleHelper = new BLEHelper(false);
-                        bleHelper.StopScanning();
+                         
+                        BlueToothService.StopScanning();
 
                         if (App.ConnectionState != ConnectionButtonState.ShowDisconnect)
                         {
                             //Send Message to display 'Connect' button
-                            bleHelper.SendMessageToDisplayConnectButton();
+                            BlueToothService.SendMessageToDisplayConnectButton();
                             //Open WatchVideoLinkPopupPage page
                             PopupNavigation.Instance.PushAsync(new WatchVideoLinkPopupPage());
                         }

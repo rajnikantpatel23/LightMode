@@ -55,9 +55,10 @@ namespace ColorController.Views
             {
                 App.IsAutoScanningGoingOn = false;
 
-                var bleHelper = new BLEHelper(false);
-                await bleHelper.StopScanning();
-                bleHelper.SendMessageToDisplayConnectButton();
+                //var bleHelper = new BLEHelper(false);
+                //await bleHelper.StopScanning();
+                //bleHelper.SendMessageToDisplayConnectButton();
+                _viewModel.BlueToothService.SendMessageToDisplayConnectButton();
             }
         }
     }

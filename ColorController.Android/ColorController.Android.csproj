@@ -140,7 +140,9 @@
     <Compile Include="MainActivity.cs" />
     <Compile Include="Resources\Resource.designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\BackgroundJob.cs" />
     <Compile Include="Services\LocSettings.cs" />
+    <Compile Include="Services\LongRunningTaskService.cs" />
     <Compile Include="Services\PlatformSpecific.cs" />
     <Compile Include="Services\WifiConnector.cs" />
   </ItemGroup>
@@ -556,6 +558,9 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable\pairNewDevice.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\searchingTextGif.gif" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <ProjectExtensions>

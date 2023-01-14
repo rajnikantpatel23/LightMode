@@ -1,7 +1,11 @@
 ﻿using ColorController.Helpers;
+using ColorController.Services;
 using ColorController.StringResources;
 using ColorController.Views;
+using Plugin.BLE.Abstractions.Contracts;
 using System;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Forms;
 
@@ -23,6 +27,20 @@ namespace ColorController.ViewModels
             set { _isExpanded = value; OnPropertyChanged(nameof(IsExpanded)); }
         }
 
+        private bool _isAnimationPlaying;
+        public bool IsAnimationPlaying
+        {
+            get { return _isAnimationPlaying; }
+            set { _isAnimationPlaying = value; OnPropertyChanged(nameof(IsAnimationPlaying)); }
+        }
+
+        private string _pairNewDeviceButtonImage = "pairNewDevice.png";
+        public string PairNewDeviceButtonImage
+        {
+            get { return _pairNewDeviceButtonImage; }
+            set { _pairNewDeviceButtonImage = value; OnPropertyChanged(nameof(PairNewDeviceButtonImage)); }
+        }
+
         public ICommand DetailsTappedCommand { get; set; }
         public ICommand BootSequenceTappedCommand { get; set; }
         public ICommand DevicesTappedCommand { get; set; }
@@ -30,6 +48,7 @@ namespace ColorController.ViewModels
         public ICommand PairNewDeviceCommand { get; set; }
 
         private INavigation _navigation;
+        private bool _isClicked;
 
         /// <summary>
         /// Constructor
@@ -46,9 +65,64 @@ namespace ColorController.ViewModels
             _navigation = navigation;
         }
 
-        private async void PairNewDevice(object obj)
+        CancellationTokenSource _cancellationTokenSource; 
+
+        private void PairNewDevice()
         {
-            await BlueToothService.ScanAndConnectDevice();
+            try
+            {
+                Task.Run(async () => 
+                {
+                    try
+                    {
+                        if (_isClicked)
+                        {
+                            _cancellationTokenSource.Cancel();
+                            return;
+                        }
+                        _isClicked = true;
+
+                        if (_cancellationTokenSource != null)
+                        {
+                            _cancellationTokenSource.Cancel();
+                        }
+                        _cancellationTokenSource = new CancellationTokenSource();
+
+                        IsAnimationPlaying = true;
+
+                        Device.BeginInvokeOnMainThread(() =>
+                        {
+                            PairNewDeviceButtonImage = "searchingGIF2.png";
+                        });
+
+                        await BlueToothService.ScanAndConnectDevice_2(_cancellationTokenSource.Token);
+
+                        Device.BeginInvokeOnMainThread(() =>
+                        {
+                            PairNewDeviceButtonImage = "pairNewDevice.png";
+                        });
+
+                        IsAnimationPlaying = false;
+                        _isClicked = false;
+                    }
+                    catch (OperationCanceledException)
+                    {
+
+                    }
+                    catch (Exception ex)
+                    {
+
+                    }
+                });
+            }
+            catch (OperationCanceledException)
+            {
+
+            }
+            catch (Exception ex)
+            {
+                 
+            }
         }
 
         private void DetailsTapped(object obj)

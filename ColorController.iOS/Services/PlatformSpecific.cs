@@ -15,6 +15,7 @@ namespace ColorController.iOS.Services
 {
     public class PlatformSpecific : IPlatformSpecific
     {
+
         public bool GetBluetoothStatus()
         {
             var bluetoothManager = new CBCentralManager(new CbCentralDelegate(), DispatchQueue.DefaultGlobalQueue,
@@ -75,6 +76,8 @@ namespace ColorController.iOS.Services
 
     public class CbCentralDelegate : CBCentralManagerDelegate
     {
+        public IBlueToothService BlueToothService => DependencyService.Get<IBlueToothService>(); 
+
         public override void UpdatedState(CBCentralManager central)
         {
             if (central.State == CBCentralManagerState.PoweredOn)
@@ -86,7 +89,7 @@ namespace ColorController.iOS.Services
             {
                 System.Console.WriteLine("Powered Off");
                 App.IsiOSBluetoothOn = false;
-                new BLEHelper(false).SendMessageToDisplayConnectButton();
+                BlueToothService.SendMessageToDisplayConnectButton();
             }
         }
     }

@@ -1,18 +1,15 @@
 ﻿using Acr.UserDialogs;
 using ColorController.Enums;
-using ColorController.Helpers;
 using ColorController.PopupPages;
 using ColorController.Services;
 using ColorController.StringResources;
 using Plugin.BLE;
 using Plugin.BLE.Abstractions.Contracts;
 using Plugin.BLE.Abstractions.EventArgs;
-using Plugin.Geolocator;
 using Rg.Plugins.Popup.Services;
 using System;
 using System.Diagnostics;
 using System.Threading.Tasks;
-using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -32,12 +29,12 @@ namespace ColorController.Controls
             set { SetValue(ImageBtnConnectSourceProperty, value); }
         }
 
-        public static readonly BindableProperty SearchingTextProperty = BindableProperty.Create(nameof(SearchingText), typeof(string), typeof(NavigationBarControl), string.Empty);
-        public string SearchingText
-        {
-            get { return (string)GetValue(SearchingTextProperty); }
-            set { SetValue(SearchingTextProperty, value); }
-        }
+        //public static readonly BindableProperty SearchingTextProperty = BindableProperty.Create(nameof(SearchingText), typeof(string), typeof(NavigationBarControl), string.Empty);
+        //public string SearchingText
+        //{
+        //    get { return (string)GetValue(SearchingTextProperty); }
+        //    set { SetValue(SearchingTextProperty, value); }
+        //}
           
         public static readonly BindableProperty DottedTextProperty = BindableProperty.Create(nameof(DottedText), typeof(string), typeof(NavigationBarControl), string.Empty);
         public string DottedText
@@ -55,16 +52,6 @@ namespace ColorController.Controls
                 SetValue(IsBluetoothOnProperty, value);
             }
         } 
-        
-        public static readonly BindableProperty ImageBtnConnectIsVisibleProperty = BindableProperty.Create(nameof(ImageBtnConnectIsVisible), typeof(bool), typeof(CustomButtonControl), false);
-        public bool ImageBtnConnectIsVisible
-        {
-            get { return (bool)GetValue(ImageBtnConnectIsVisibleProperty); }
-            set
-            {
-                SetValue(ImageBtnConnectIsVisibleProperty, value);
-            }
-        }
            
         public static readonly BindableProperty ImageBatteryVisibleProperty = BindableProperty.Create(nameof(ImageBatteryVisible), typeof(bool), typeof(CustomButtonControl), false);
         public bool ImageBatteryVisible
@@ -131,37 +118,37 @@ namespace ColorController.Controls
         public NavigationBarControl()
         {
             InitializeComponent();
+            searchingTextGif.IsVisible = false;
             CrossBluetoothLE.Current.StateChanged += BluetoothStateChanged;
             ShowBluetoothColor(CrossBluetoothLE.Current.State);
             DisplayBatteryStatus(App.BatterPercentages);
-            SubscribeBLEHelperToReceiveBatteryNotifications();
+            SubscribeToReceiveBatteryNotifications();
             DisplayConnectionButton();
-            SubscribeBLEHelperToReceiveConnectionStatusNotifications();
-            StartSearchingTimer();
+            SubscribeToReceiveConnectionStatusNotifications();
+            SubscribeToReceiveSearchingDottedTextMessage();
         }
 
-        private void DisplayConnectionButton()
+        private async void DisplayConnectionButton()
         {
-            switch (App.ConnectionState)
+            var savedDeviceCount = await App.Database.GetSavedDeviceCount();
+            //- Condition #1: No saved devices & app/controller NOT connected                   =>  PAIR NEW DEVICE
+            if (savedDeviceCount == 0 && !BlueToothService.IsAppConnectedWithDevice)
             {
-                case ConnectionButtonState.ShowConnect:
-                    ShowConnectButton();
-                    break; 
-                case ConnectionButtonState.ShowSearchingButton:
-                    ShowConnectingButton();
-                    break;
-                case ConnectionButtonState.ShowSearchingText:
-                    ShowConnectingText();
-                    break;
-                case ConnectionButtonState.ShowDisconnect:
-                    ShowDisconnectButton();
-                    break;
-                default:
-                    break;
+                ShowPairNewDeviceButton();
+            }
+            //- Condition #2: At least 1 device saved & app/controller NOT connected            =>  CONNECT
+            else if (savedDeviceCount > 0 && !BlueToothService.IsAppConnectedWithDevice)
+            {
+                ShowConnectButton();
+            }
+            //- Condition #3: app is connected to one or more devices.                          =>  DISCONNECT 
+            else if (BlueToothService.IsAppConnectedWithDevice)
+            {
+                ShowDisconnectButton();
             }
         }
 
-        private void SubscribeBLEHelperToReceiveBatteryNotifications()
+        private void SubscribeToReceiveBatteryNotifications()
         {
             MessagingCenter.Unsubscribe<object, string>(this, StringResource.POWR);
             MessagingCenter.Subscribe<object, string>(this, StringResource.POWR, (sender, batteryPercentage) =>
@@ -173,81 +160,23 @@ namespace ColorController.Controls
         /// <summary>
         /// Call this method to receive connection notifications from BLEHelper 
         /// </summary>
-        private void SubscribeBLEHelperToReceiveConnectionStatusNotifications()
+        private void SubscribeToReceiveConnectionStatusNotifications()
         {
             MessagingCenter.Unsubscribe<object, string>(this, StringResource.Connection);
-            MessagingCenter.Subscribe<object, string>(this, StringResource.Connection, async (sender, args) =>
+            MessagingCenter.Subscribe<object, string>(this, StringResource.Connection, (sender, args) =>
             {
-                switch (args)
-                {
-                    case "ShowSearchingButton":
-                        ShowConnectingButton();
-                        HideBatteryIndicator();
-                        break;
+                DisplayConnectionButton();
+            });
+        }
 
-                    case "ShowSearchingText":
-                        ShowConnectingText();
-                        StartSearchingTimer();
-                        HideBatteryIndicator();
-                        break;                    
-                    
-                    //case "ShowSearching":
-                    //    if (App.ConnectButtonClicked)
-                    //    {
-                    //        ShowConnectingButton();
-                    //    }
-                    //    else
-                    //    {
-                    //        ShowConnectingText();
-                    //        StartSearchingTimer();
-                    //    }
-                    //    HideBatteryIndicator();
-                    //    break;
-
-                    //case "ShowConnecting":
-                    //    if (App.ConnectButtonClicked)
-                    //    {
-                    //        ShowConnectingButton();
-                    //    }
-                    //    else
-                    //    { 
-                    //        ShowConnectingText();
-                    //        StartSearchingTimer();
-                    //    }
-                    //    HideBatteryIndicator();
-                    //    break;
-
-                    case "ShowConnect":
-                        ShowConnectButton();
-                        HideBatteryIndicator();
-                        break;
-
-                    case "ShowDisconnect":
-
-                        if (string.IsNullOrWhiteSpace(SearchingText))
-                        {
-                            SearchingText = string.Empty;
-                            DottedText = string.Empty;
-                            ImageBtnConnectSource = "navBtnConnected.png";
-                        }
-                        else
-                        {
-                            DottedText = string.Empty;
-                            SearchingText = "CONNECTED!";
-                        } 
-                        await Task.Delay(1000);
-                        SearchingText = string.Empty;
-                        ShowDisconnectButton();
-                        break;
-
-                    case "QUIT":
-                        ShowConnectButton();
-                        HideBatteryIndicator();
-                        break;
-
-                    default:
-                        break;
-                }
+        private void SubscribeToReceiveSearchingDottedTextMessage()
+        { 
+            MessagingCenter.Unsubscribe<object, bool>(this, MessageType.DisplaySearchingForDevicesText.ToString());
+            MessagingCenter.Subscribe<object, bool>(this, MessageType.DisplaySearchingForDevicesText.ToString(), (sender, show) =>
+            {
+                Device.BeginInvokeOnMainThread(() => { searchingTextGif.IsVisible = show; });
+               
+                //searchingTextGif.IsAnimationPlaying = show;
             });
         }
 
@@ -272,8 +201,6 @@ namespace ColorController.Controls
 
         private void ShowBluetoothColor(BluetoothState bluetoothState)
         {
-            ImageBtnConnectIsVisible = true;
-
             switch (bluetoothState)
             {
                 case BluetoothState.Unknown:
@@ -399,8 +326,7 @@ namespace ColorController.Controls
                     {
                         UserDialogs.Instance.ShowLoading(StringResource.PleaseWait);
                         await Task.Delay(2000);
-                        var bleHelper = new BLEHelper(false);
-                        await bleHelper.StopScanning();
+                        await BlueToothService.StopScanning();
                         if (App.ConnectionState == ConnectionButtonState.ShowDisconnect)
                         {
                             Debug.WriteLine("Already Connected....");
@@ -408,13 +334,14 @@ namespace ColorController.Controls
                         else
                         {
                             Debug.WriteLine("SendMessageToDisplayConnectButton()");
-                            bleHelper.SendMessageToDisplayConnectButton();
+                            BlueToothService.SendMessageToDisplayConnectButton();
                         }
                         UserDialogs.Instance.HideLoading();
                     }
                     else if (selectedImage.File == "btnDisconnectOn.png")
                     {
-                        await new BLEHelper(false).Disconnect();
+                        //await new BLEHelper(false).Disconnect();
+                        await BlueToothService.Disconnect();
                     }
                 }
             }
@@ -424,18 +351,22 @@ namespace ColorController.Controls
             }
         }
 
+        private void ShowPairNewDeviceButton()
+        { 
+            //ImageBatteryVisible = true;
+            ImageBtnConnectSource = "pairNewDevice.png";
+            //DottedText = string.Empty;
+        }
+
         private void ShowDisconnectButton()
         { 
-            ImageBtnConnectIsVisible = true;
             ImageBatteryVisible = true;
             ImageBtnConnectSource = "btnDisconnectOn.png";
-            SearchingText = string.Empty;
             DottedText = string.Empty;
         }
 
         private void ShowConnectButton()
         {
-            ImageBtnConnectIsVisible = true;
             IsAnimationPlaying = false;
             ImageBatteryVisible = false;
             if (CrossBluetoothLE.Current.IsOn)
@@ -446,138 +377,35 @@ namespace ColorController.Controls
             {
                 ImageBtnConnectSource = "navBtnConnectOff.png";
             }
-            SearchingText = string.Empty;
             DottedText = string.Empty;
         }
-
-        private void ShowConnectingText()
-        {
-            ImageBtnConnectIsVisible = false;
-            IsAnimationPlaying = false;
-            ImageBatteryVisible = false;
-            ImageBtnConnectSource = null;
-            var defaultControllerName = Preferences.Get("defaultControllerName", string.Empty);
-            SearchingText = $"Searching for {defaultControllerName}";
-        }
-
-        private void ShowConnectingButton()
-        {
-            if (!ImageBtnConnectIsVisible)
-            {
-                ImageBtnConnectIsVisible = true;
-            }
-            ImageBatteryVisible = false;
-
-            var selectedImage = ImageBtnConnectSource as FileImageSource;
-            if (selectedImage != null && selectedImage.File != "navSearchingGIF2.gif")
-            {
-                ImageBtnConnectSource = "navSearchingGIF2.gif";
-            }
-            if (selectedImage == null)
-            {
-                ImageBtnConnectSource = "navSearchingGIF2.gif";
-            }
-
-            if (!IsAnimationPlaying)
-            {
-                IsAnimationPlaying = true;
-            }
-            SearchingText = string.Empty;
-            DottedText = string.Empty;
-        }
-
+        
         private async void DisconnectBtnTapped(object sender, EventArgs e)
         {
-            await new BLEHelper(false).Disconnect();
+            await BlueToothService.Disconnect();
         }
 
-        private async void ConnectingBtnTapped(object sender, EventArgs e)
-        {
-            if (!_isClicked)
-            {
-                _isClicked = true;
-                UserDialogs.Instance.ShowLoading(StringResource.PleaseWait);
-                await Task.Delay(2000);
-                var bleHelper = new BLEHelper(false);
-                await bleHelper.StopScanning();
-                if (App.ConnectionState == ConnectionButtonState.ShowDisconnect)
-                {
-                    Debug.WriteLine("Already Connected....");
-                }
-                else
-                {
-                    Debug.WriteLine("SendMessageToDisplayConnectButton()");
-                    bleHelper.SendMessageToDisplayConnectButton();
-                }
-                UserDialogs.Instance.HideLoading();
-                _isClicked = false;
-            }
-        }
-
-        public void StartSearchingTimer()
-        {
-            if (App.ConnectionState == ConnectionButtonState.ShowSearchingText)
-            {
-                ImageBtnConnectIsVisible = false;
-
-                var defaultControllerName = Preferences.Get("defaultControllerName", string.Empty);
-                SearchingText = $"Searching for {defaultControllerName}";
-
-                Device.StartTimer(TimeSpan.FromSeconds(1), () =>
-                {
-                    if (App.ConnectionState != ConnectionButtonState.ShowSearchingText)
-                    {
-                        SearchingText = string.Empty;
-                        DottedText = string.Empty;
-                        return false;
-                    }
-
-                    if (!App.IsAutoScanningGoingOn)
-                    {
-                        SearchingText = string.Empty;
-                        DottedText = string.Empty;
-                        return false;
-                    }
-
-                    if (_backButtonClicked)
-                    {
-                        _backButtonClicked = false;
-                        SearchingText = string.Empty;
-                        DottedText = string.Empty;
-                        return false;
-                    }
-                     
-                    switch (DottedText)
-                    {
-                        case "":
-                            DottedText = ".";
-                            break;
-
-                        case ".":
-                            DottedText = "..";
-                            break;
-
-                        case "..":
-                            DottedText = "...";
-                            break;
-
-                        case "...":
-                            DottedText = "";
-                            break;
-
-                        default:
-                            SearchingText = "";
-                            break;
-                    }
-                    var value = App.ConnectionState == ConnectionButtonState.ShowSearchingText;
-                    if (!value)
-                    {
-                        SearchingText = string.Empty;
-                        DottedText = string.Empty;
-                    }
-                    return value;
-                });
-            }
-        }
+        //private async void ConnectingBtnTapped(object sender, EventArgs e)
+        //{
+        //    if (!_isClicked)
+        //    {
+        //        _isClicked = true;
+        //        UserDialogs.Instance.ShowLoading(StringResource.PleaseWait);
+        //        await Task.Delay(2000);
+        //        var bleHelper = new BLEHelper(false);
+        //        await bleHelper.StopScanning();
+        //        if (App.ConnectionState == ConnectionButtonState.ShowDisconnect)
+        //        {
+        //            Debug.WriteLine("Already Connected....");
+        //        }
+        //        else
+        //        {
+        //            Debug.WriteLine("SendMessageToDisplayConnectButton()");
+        //            bleHelper.SendMessageToDisplayConnectButton();
+        //        }
+        //        UserDialogs.Instance.HideLoading();
+        //        _isClicked = false;
+        //    }
+        //}
     }
 }

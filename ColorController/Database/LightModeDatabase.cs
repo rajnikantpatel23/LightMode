@@ -172,6 +172,16 @@ namespace ColorController.Database
             return await database.Table<Controller>().ToListAsync();
         }
 
+        public async Task<int> GetSavedDeviceCount()
+        {
+            var devices = await database.Table<Controller>().ToListAsync();
+            if(devices != null)
+            {
+                return devices.Count;
+            }
+            return 0;
+        }
+
         public Task<Controller> GetDefaultController()
         {
             return database.Table<Controller>()
