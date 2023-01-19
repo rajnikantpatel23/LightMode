@@ -82,14 +82,13 @@ namespace ColorController.iOS.Services
         {
             if (central.State == CBCentralManagerState.PoweredOn)
             {
-                System.Console.WriteLine("Powered On");
+                CommonUtils.WriteLog("BlueTooth Powered On");
                 App.IsiOSBluetoothOn = true;
             }
             else
             {
-                System.Console.WriteLine("Powered Off");
+                CommonUtils.WriteLog("BlueTooth Powered Off");
                 App.IsiOSBluetoothOn = false;
-                BlueToothService.SendMessageToDisplayConnectButton();
             }
         }
     }

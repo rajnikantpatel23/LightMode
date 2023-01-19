@@ -50,7 +50,6 @@
 
         <!--Connect/Searching/Disconnect Button-->
         <ffimageloading:CachedImage Grid.Column="1"
-                                    IsVisible="False"
                                     Source="{Binding ImageBtnConnectSource, Source={x:Reference this}}"  
                                     HeightRequest="{OnIdiom Phone=30, Tablet=40}"
                                     HorizontalOptions="EndAndExpand" >

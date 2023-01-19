@@ -608,6 +608,9 @@
   <ItemGroup>
     <BundleResource Include="Resources\searchingTextGif.gif" />
   </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\pair_new_device_small.png" />
+  </ItemGroup>
   <ProjectExtensions>
     <VisualStudio>
       <UserProperties TriggeredFromHotReload="False" />

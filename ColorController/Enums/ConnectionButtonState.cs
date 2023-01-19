@@ -2,9 +2,9 @@
 {
     public enum ConnectionButtonState
     {
+        PairNewDevice,
         ShowConnect,
         ShowSearchingButton,
-        ShowSearchingText,
         ShowDisconnect
     }
 }

@@ -11,8 +11,6 @@ namespace ColorController.Services
 {
     public interface IBlueToothService
     {
-        Task ScanAndConnectDevice(CancellationToken token = default);
-
         Task<List<ICharacteristic>> GetCharacteristics();
 
         Task SendCommandToController(string command, bool executeStartUpdate = true);
@@ -58,11 +56,6 @@ namespace ColorController.Services
 
         Task StopScanning();
 
-        void SendMessageToDisplayConnectButton();
-        void SendMessageToDisplayDisconnectButton();
-        void SendMessageToDisplayConnectingButton();
-
-
-        Task ScanAndConnectDevice_2(CancellationToken cancellationToken = default);
+        Task ScanAndConnectDevice2(CancellationToken cancellationToken = default);
     }
 }

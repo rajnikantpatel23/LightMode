@@ -34,7 +34,7 @@ namespace ColorController.ViewModels
             set { _isAnimationPlaying = value; OnPropertyChanged(nameof(IsAnimationPlaying)); }
         }
 
-        private string _pairNewDeviceButtonImage = "pairNewDevice.png";
+        private string _pairNewDeviceButtonImage = "pair_new_device_small.png";
         public string PairNewDeviceButtonImage
         {
             get { return _pairNewDeviceButtonImage; }
@@ -48,7 +48,6 @@ namespace ColorController.ViewModels
         public ICommand PairNewDeviceCommand { get; set; }
 
         private INavigation _navigation;
-        private bool _isClicked;
 
         /// <summary>
         /// Constructor
@@ -75,35 +74,29 @@ namespace ColorController.ViewModels
                 {
                     try
                     {
-                        if (_isClicked)
+                        if (IsAnimationPlaying)
                         {
-                            _cancellationTokenSource.Cancel();
+                            App.CancellationTokenSource.Cancel();
                             return;
                         }
-                        _isClicked = true;
-
-                        if (_cancellationTokenSource != null)
-                        {
-                            _cancellationTokenSource.Cancel();
-                        }
-                        _cancellationTokenSource = new CancellationTokenSource();
 
                         IsAnimationPlaying = true;
 
                         Device.BeginInvokeOnMainThread(() =>
                         {
-                            PairNewDeviceButtonImage = "searchingGIF2.png";
+                            PairNewDeviceButtonImage = "searchingGIF2.gif";
                         });
-
-                        await BlueToothService.ScanAndConnectDevice_2(_cancellationTokenSource.Token);
+                       
+                        App.ResetCancellationToken();
+                     
+                        App.IsScanningAlreadyGoingOn= true;
+                        await BlueToothService.ScanAndConnectDevice2(App.CancellationTokenSource.Token);
+                        App.IsScanningAlreadyGoingOn = false;
 
                         Device.BeginInvokeOnMainThread(() =>
                         {
-                            PairNewDeviceButtonImage = "pairNewDevice.png";
+                            PairNewDeviceButtonImage = "pair_new_device_small.png";
                         });
-
-                        IsAnimationPlaying = false;
-                        _isClicked = false;
                     }
                     catch (OperationCanceledException)
                     {
@@ -112,6 +105,10 @@ namespace ColorController.ViewModels
                     catch (Exception ex)
                     {
 
+                    }
+                    finally
+                    {
+                        IsAnimationPlaying = false;
                     }
                 });
             }
@@ -122,6 +119,10 @@ namespace ColorController.ViewModels
             catch (Exception ex)
             {
                  
+            }
+            finally
+            { 
+
             }
         }
 

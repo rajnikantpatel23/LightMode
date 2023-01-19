@@ -24,16 +24,32 @@
             <ScrollView Grid.Row="1">
                 <StackLayout>
 
-                    <Image
+                    <Grid>
+                        <Image
                              HorizontalOptions="Center"
                              VerticalOptions="Center"
-                             Source="{Binding PairNewDeviceButtonImage}" Margin="0,30,0,10"
-                             IsAnimationPlaying="{Binding IsAnimationPlaying}"
+                             Source="pair_new_device_small" 
+                             Margin="0,30,0,10"
                              WidthRequest="{OnIdiom Phone=250, Tablet=450}">
-                        <Image.GestureRecognizers>
-                            <TapGestureRecognizer Command="{Binding PairNewDeviceCommand}"/>
-                        </Image.GestureRecognizers>
-                    </Image>
+                            <Image.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding PairNewDeviceCommand}"/>
+                            </Image.GestureRecognizers>
+                        </Image>
+
+                        <Image
+                             HorizontalOptions="Center"
+                             VerticalOptions="Center"
+                             IsVisible="{Binding IsAnimationPlaying}"
+                             Source="searchingGIF2.gif" 
+                             Margin="0,30,0,10"
+                             IsAnimationPlaying="True"
+                             WidthRequest="{OnIdiom Phone=250, Tablet=450}">
+                            <Image.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding PairNewDeviceCommand}"/>
+                            </Image.GestureRecognizers>
+                        </Image>
+
+                    </Grid>
 
                     <Label Text="You only need to do this once per device."      
                            HorizontalTextAlignment="Center"

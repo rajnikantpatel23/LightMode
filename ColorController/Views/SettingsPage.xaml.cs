@@ -37,29 +37,11 @@ namespace ColorController.Views
         /// </summary>
         /// <param name="sender">Sender of event</param>
         /// <param name="e">Event argument</param>
-        private async void AutoConnectTapped(object sender, System.EventArgs e)
+        private void AutoConnectTapped(object sender, System.EventArgs e)
         {
             switchControl.SetSwitchStatus(!switchControl.SwitchStatus);
             _viewModel.SwitchStatus = switchControl.SwitchStatus;
             Preferences.Set("search_in_background", _viewModel.SwitchStatus);
-            await StopAutoScanSearching();
-        }
-
-        /// <summary>
-        /// Below method will be called to stop Auto Scanning process if user turn off the Auto-Connect toggle button
-        /// </summary>
-        /// <returns>Task</returns>
-        private async Task StopAutoScanSearching()
-        {
-            if (!_viewModel.SwitchStatus && App.IsAutoScanningGoingOn)
-            {
-                App.IsAutoScanningGoingOn = false;
-
-                //var bleHelper = new BLEHelper(false);
-                //await bleHelper.StopScanning();
-                //bleHelper.SendMessageToDisplayConnectButton();
-                _viewModel.BlueToothService.SendMessageToDisplayConnectButton();
-            }
         }
     }
 }

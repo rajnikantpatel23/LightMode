@@ -118,7 +118,7 @@ namespace ColorController.ViewModels
         /// </summary>
         internal void DisplayBottomMessage()
         {
-            if (App.ConnectionState == ConnectionButtonState.ShowDisconnect && (Animations == null || Animations.Count == 0))
+            if (BlueToothService.IsAppConnectedWithDevice && (Animations == null || Animations.Count == 0))
             {
                 IsBottomMessageVisible = true;
             }
@@ -184,7 +184,7 @@ namespace ColorController.ViewModels
         private void StartTimerToRunBackgroundTask()
         {
             try
-            {
+            {               
                 Device.StartTimer(TimeSpan.FromSeconds(10), () =>
                 {
                     try

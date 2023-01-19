@@ -12,55 +12,25 @@ using Microsoft.AppCenter.Analytics;
 using Microsoft.AppCenter.Crashes;
 using ColorController.Abstractions;
 using FFImageLoading;
-using Plugin.BLE.Abstractions.Contracts;
-using Plugin.BLE;
-using Plugin.BLE.Abstractions.EventArgs;
-using ColorController.Helpers;
+using System.Threading;
 
 namespace ColorController
 {
     public partial class App : Application
     {
-        //private static IAdapter _adapter;
-        //public static IAdapter Adapter
-        //{
-        //    get
-        //    {
-        //        if (_adapter == null)
-        //        {
-        //            _adapter = CrossBluetoothLE.Current.Adapter;
-        //            Adapter.DeviceDiscovered += Adapter_DeviceDiscovered;
-        //            Adapter.DeviceConnected += Adapter_DeviceConnected;
-        //            Adapter.DeviceDisconnected += Adapter_DeviceDisconnected;
-        //            Adapter.DeviceConnectionLost += Adapter_DeviceConnectionLost;
-        //        }
-
-        //        return _adapter;
-        //    }
-        //}
-
-        private static void Adapter_DeviceConnectionLost(object sender, DeviceErrorEventArgs e)
-        {
-            CommonUtils.WriteLog("Adapter_DeviceConnectionLost");
-        }
-
-        private static void Adapter_DeviceDisconnected(object sender, DeviceEventArgs e)
-        {
-            CommonUtils.WriteLog("Adapter_DeviceDisconnected");
-        }
-
-        private static void Adapter_DeviceConnected(object sender, DeviceEventArgs e)
-        {
-            CommonUtils.WriteLog("Device Connected!");
-        }
-
-        private static void Adapter_DeviceDiscovered(object sender, DeviceEventArgs e)
-        {
-            CommonUtils.WriteLog("Adapter_DeviceDiscovered");
-        }
-
         //Don't update until not confirm by Thomas
         public static Version LatestFirmwareVersion = new Version("3.1.14");
+
+        public static CancellationTokenSource CancellationTokenSource { get; set; }
+        
+        public static void ResetCancellationToken()
+        {
+            if (App.CancellationTokenSource != null)
+            {
+                App.CancellationTokenSource.Cancel();
+            }
+            App.CancellationTokenSource = new CancellationTokenSource();
+        }
 
         // Create the database connection as a singleton.
         static Database.LightModeDatabase _animationDatabase;
@@ -82,11 +52,9 @@ namespace ColorController
         public static int CurrentIndex { get; internal set; }
         public static bool ContinueFetchingBatteryDetail { get; internal set; }
         public static string BatterPercentages { get; internal set; }
-        public static ConnectionButtonState ConnectionState { get; internal set; }
         public static bool IsScanningAlreadyGoingOn { get; internal set; }
         //public static bool ConnectButtonClicked { get; internal set; }
         public static Color CurrentSelectedColor { get; internal set; }
-        public static bool IsAutoScanningGoingOn { get; internal set; }
         //public static bool ConnectingButtonTapped { get; internal set; }
        
         /// <summary>
@@ -103,6 +71,7 @@ namespace ColorController
         public static bool LMDSentSuccessfully { get; internal set; }
         public static string StoredAnimationId { get; internal set; }
         public static bool IsBackgroundTaskRunning { get; set; }
+        public static AppState AppState { get; set; }
 
         public static int SIZE = 240;
        
@@ -121,6 +90,7 @@ namespace ColorController
         {
             InitializeAppCenter();
             await PreloadButtonPressGif();
+            AppState = AppState.Foreground;
         }
 
         private void InitializeAppCenter()
@@ -179,12 +149,12 @@ namespace ColorController
 
         protected override void OnSleep()
         {
-
+            AppState = AppState.Background;
         }
 
         protected override void OnResume()
         {
-            
+            AppState = AppState.Foreground;
         }
     }
 }

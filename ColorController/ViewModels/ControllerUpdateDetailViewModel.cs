@@ -89,13 +89,13 @@ namespace ColorController.ViewModels
         
         private async Task DisplayTextBasedOnStatus()
         {
-            switch (App.ConnectionState)
+            switch (BlueToothService.IsAppConnectedWithDevice)
             {
-                case ConnectionButtonState.ShowConnect:
+                case false:
                     DisplayTextToPairAppWitController();
                     break;
 
-                case ConnectionButtonState.ShowDisconnect:
+                case true:
                     await DisplayTextBasedOnAppAndFirmwareVersion();
                     break;
                 default:

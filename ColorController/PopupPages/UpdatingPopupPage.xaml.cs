@@ -115,7 +115,7 @@ namespace ColorController.PopupPages
                 await SendCommand("DFUU");
                 UserDialogs.Instance.HideLoading();
                 await Task.Delay(delay);
-                BlueToothService.SendMessageToDisplayConnectButton();
+                //BlueToothService.SendMessageToDisplayConnectButton();
 
                 StartAutoConnectingInBackground();
             }
@@ -333,16 +333,14 @@ namespace ColorController.PopupPages
                     Preferences.Set("defaultControllerName", App.ConnectedController.Name);
 
                     App.IsScanningAlreadyGoingOn = true;
-                    App.IsAutoScanningGoingOn = true;
 
                     var isConnected = await BlueToothService.ConnectToKnownDeviceInBackground(App.ConnectedController);
-                    if (!isConnected && App.ConnectionState != ConnectionButtonState.ShowDisconnect)
+                    if (!isConnected && BlueToothService.IsAppConnectedWithDevice)
                     {
                         StartAutoConnectingInBackground();
                     }
 
                     App.IsScanningAlreadyGoingOn = false;
-                    App.IsAutoScanningGoingOn = false;
                 }
             }).ConfigureAwait(false);
         }

@@ -5,5 +5,6 @@
         StartLongRunningTaskMessage,
         StopLongRunningTaskMessage,
         DisplaySearchingForDevicesText,
+        NaviBarConnectionButton
     }
 }

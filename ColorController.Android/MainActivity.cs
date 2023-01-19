@@ -40,6 +40,7 @@ namespace ColorController.Droid
             LoadApplication(new App()); 
             SetStatusBarColor();
             WireupLongRunningTask();
+            WireupLongRunningTask_ToDisplayConnectionButton();
         }
 
         private void TaskSchedulerOnUnobservedTaskException(object sender, UnobservedTaskExceptionEventArgs e)
@@ -101,7 +102,6 @@ namespace ColorController.Droid
 
                 CommonUtils.WriteLog("MainActivity: WireupLongRunningTask() StartLongRunningTaskMessage");
 
-                MessagingCenter.Send<object, bool>(this, nameof(MessageType.DisplaySearchingForDevicesText), true);
                 //StartService(new Android.Content.Intent(this, typeof(LongRunningTaskService)));
 
                 // Sample usage - creates a JobBuilder for a DownloadJob and sets the Job ID to 1.
@@ -134,6 +134,17 @@ namespace ColorController.Droid
                     _jobScheduler?.Cancel(item.Id);
                 }
             });
+        }
+        
+        void WireupLongRunningTask_ToDisplayConnectionButton()
+        {
+            // Sample usage - creates a JobBuilder for a DownloadJob and sets the Job ID to 1.
+            var jobBuilder = this.CreateJobBuilderUsingJobId<BackgroundJob_ToDisplayConnectionButton>(1);
+
+            var jobInfo = jobBuilder.Build();  // creates a JobInfo object.
+
+            var jobScheduler = (JobScheduler)GetSystemService(JobSchedulerService);
+            var scheduleResult = jobScheduler.Schedule(jobInfo);
         }
     }
 }

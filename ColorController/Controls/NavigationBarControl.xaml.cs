@@ -9,6 +9,7 @@ using Plugin.BLE.Abstractions.EventArgs;
 using Rg.Plugins.Popup.Services;
 using System;
 using System.Diagnostics;
+using System.Threading;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -123,9 +124,17 @@ namespace ColorController.Controls
             ShowBluetoothColor(CrossBluetoothLE.Current.State);
             DisplayBatteryStatus(App.BatterPercentages);
             SubscribeToReceiveBatteryNotifications();
-            DisplayConnectionButton();
+            //DisplayConnectionButton();
             SubscribeToReceiveConnectionStatusNotifications();
             SubscribeToReceiveSearchingDottedTextMessage();
+            MessagingCenter.Subscribe<object, string>(this, nameof(MessageType.NaviBarConnectionButton), (sender, args) => 
+            {
+                if (App.IsScanningAlreadyGoingOn)
+                {
+                    return;
+                }
+                ImageBtnConnectSource = args; 
+            });
         }
 
         private async void DisplayConnectionButton()
@@ -308,6 +317,15 @@ namespace ColorController.Controls
         {
             try
             {
+                if (_isClicked)
+                {
+                    App.CancellationTokenSource.Cancel();
+                    App.CancellationTokenSource = new CancellationTokenSource();
+                    return;
+                }
+
+                _isClicked = true;
+
                 var imageSource = (FFImageLoading.Forms.CachedImage)sender;
                 if (imageSource.Source != null)
                 {
@@ -318,24 +336,40 @@ namespace ColorController.Controls
                         await PopupNavigation.Instance.PushAsync(new AlertPopupPage(StringResource.PleaseTurnONBT));
                         return;
                     }
-                    else if (selectedImage.File == "navBtnConnect.png")
+                    else if (selectedImage.File == "navBtnConnect.png" || selectedImage.File == "pair_new_device_small.png")
                     {
-                        await BlueToothService.ScanAndConnectDevice();
+                        try
+                        {
+                            App.ResetCancellationToken();
+
+                            Device.BeginInvokeOnMainThread(() =>
+                            {
+                                ImageBtnConnectSource = "searchingGIF2.png";
+                            });
+                            App.IsScanningAlreadyGoingOn= true;
+                            await BlueToothService.ScanAndConnectDevice2(App.CancellationTokenSource.Token);
+                            App.IsScanningAlreadyGoingOn = false;
+
+                            Device.BeginInvokeOnMainThread(() =>
+                            {
+                                ImageBtnConnectSource = "pair_new_device_small.png";
+                            });
+                        }
+                        catch (OperationCanceledException)
+                        {
+
+                        }
+                        catch (Exception ex)
+                        {
+
+                        }
                     }
                     else if (selectedImage.File == "navSearchingGIF2.gif")
                     {
                         UserDialogs.Instance.ShowLoading(StringResource.PleaseWait);
                         await Task.Delay(2000);
                         await BlueToothService.StopScanning();
-                        if (App.ConnectionState == ConnectionButtonState.ShowDisconnect)
-                        {
-                            Debug.WriteLine("Already Connected....");
-                        }
-                        else
-                        {
-                            Debug.WriteLine("SendMessageToDisplayConnectButton()");
-                            BlueToothService.SendMessageToDisplayConnectButton();
-                        }
+                        Debug.WriteLine("SendMessageToDisplayConnectButton()");
                         UserDialogs.Instance.HideLoading();
                     }
                     else if (selectedImage.File == "btnDisconnectOn.png")
@@ -345,16 +379,25 @@ namespace ColorController.Controls
                     }
                 }
             }
-            catch (Exception)
+            catch (OperationCanceledException)
             {
-                 
+
+            }
+            catch (Exception ex)
+            {
+
+            }
+            finally
+            {
+                _isClicked = false;
+                App.IsScanningAlreadyGoingOn = false;
             }
         }
 
         private void ShowPairNewDeviceButton()
         { 
             //ImageBatteryVisible = true;
-            ImageBtnConnectSource = "pairNewDevice.png";
+            ImageBtnConnectSource = "pair_new_device_small.png";
             //DottedText = string.Empty;
         }
 

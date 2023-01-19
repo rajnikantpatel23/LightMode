@@ -1,6 +1,4 @@
 ﻿using ColorController.Controls;
-using ColorController.Enums;
-using ColorController.Helpers;
 using ColorController.Services;
 using ColorController.ViewModels;
 using ColorController.Views;
@@ -9,6 +7,7 @@ using Rg.Plugins.Popup.Services;
 using System;
 using System.Diagnostics;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -19,6 +18,8 @@ namespace ColorController.PopupPages
     public partial class DoubleClickPopupPage : BasePopupPage
     {
         public IBlueToothService BlueToothService => DependencyService.Get<IBlueToothService>();
+
+        private CancellationToken _cancellationToken;
         bool _runTimer = true;
         int _timeSpend = 0;
 
@@ -32,10 +33,11 @@ namespace ColorController.PopupPages
         /// <summary>
         /// Constructor
         /// </summary>
-        public DoubleClickPopupPage()
+        public DoubleClickPopupPage(CancellationToken cancellationToken)
         {
             InitializeComponent();
             BindingContext = this;
+            _cancellationToken = cancellationToken;
             _runTimer = true;
             StartSearchingTimer(); 
         }
@@ -75,9 +77,13 @@ namespace ColorController.PopupPages
         {
             _runTimer = false;
             await Navigation.PopPopupAsync();
-
-            BlueToothService.SendMessageToDisplayConnectButton();
             await BlueToothService.StopScanning();
+        }
+
+        protected override void OnDisappearing()
+        {
+            App.CancellationTokenSource.Cancel();
+            base.OnDisappearing();
         }
 
         public void StartSearchingTimer()
@@ -86,8 +92,8 @@ namespace ColorController.PopupPages
             {
                 Device.StartTimer(TimeSpan.FromSeconds(1), () =>
                 {
-                    //Stoptimer if any CONNECT button is visible
-                    if (App.ConnectionState == ConnectionButtonState.ShowConnect)
+                    //Stoptimer if token cancellation requested
+                    if (_cancellationToken.IsCancellationRequested)
                     {
                         return false;
                     }
@@ -107,13 +113,8 @@ namespace ColorController.PopupPages
                          
                         BlueToothService.StopScanning();
 
-                        if (App.ConnectionState != ConnectionButtonState.ShowDisconnect)
-                        {
-                            //Send Message to display 'Connect' button
-                            BlueToothService.SendMessageToDisplayConnectButton();
-                            //Open WatchVideoLinkPopupPage page
-                            PopupNavigation.Instance.PushAsync(new WatchVideoLinkPopupPage());
-                        }
+                        //Open WatchVideoLinkPopupPage page
+                        PopupNavigation.Instance.PushAsync(new WatchVideoLinkPopupPage());
                     }
 
                     Device.InvokeOnMainThreadAsync(() =>

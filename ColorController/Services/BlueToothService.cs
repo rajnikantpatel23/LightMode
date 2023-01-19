@@ -7,7 +7,6 @@ using ColorController.PopupPages;
 using ColorController.StringResources;
 using ColorController.ViewModels;
 using ColorController.Views;
-using Microsoft.AppCenter;
 using Plugin.BLE;
 using Plugin.BLE.Abstractions;
 using Plugin.BLE.Abstractions.Contracts;
@@ -16,7 +15,6 @@ using Plugin.Geolocator;
 using Rg.Plugins.Popup.Services;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -62,111 +60,6 @@ namespace ColorController.Services
             var connectedDevices = CrossBluetoothLE.Current.Adapter.ConnectedDevices.Where(x => x.State == DeviceState.Connected).Distinct();
             return connectedDevices.ToList();
         }
-
-
-        //Add New Device
-        public async Task ScanAndConnectDevice(CancellationToken cancellationToken = default)
-        {
-            try
-            {
-                //Check Bluetooth ON/OFF status
-                //iOS: If Bluetooth ON then Start Scanning
-                //Android: Check Location Permission
-                //Android: If Location Permission disabled then ask for permission
-                //Android: If Location permission is denied then display confirmation alert and navigate to Settings 
-                //Android: Check GPS ON/OFF status
-                //Android: If GPS is OFF then display alert to turn ON GPS.
-                //Android: If GPS is ON then start scanning.
-
-                if (!CrossBluetoothLE.Current.IsOn)
-                {
-                    await PopupNavigation.Instance.PushAsync(new AlertPopupPage(StringResource.PleaseTurnONBT));
-                    return;
-                }
-
-                if (Xamarin.Forms.Device.RuntimePlatform == Xamarin.Forms.Device.Android)
-                {
-                    var locationAlwaysPermissionStatus = await Permissions.CheckStatusAsync<Permissions.LocationWhenInUse>();
-
-                    if (CrossGeolocator.IsSupported)
-                    {
-                        if (locationAlwaysPermissionStatus != PermissionStatus.Granted)
-                        {
-                            locationAlwaysPermissionStatus = await Permissions.RequestAsync<Permissions.LocationWhenInUse>();
-                        }
-                        if (locationAlwaysPermissionStatus == PermissionStatus.Disabled)
-                        {
-                            await PopupNavigation.Instance.PushAsync(new LocationAlertPopupPage());
-                        }
-                        if (locationAlwaysPermissionStatus == PermissionStatus.Denied)
-                        {
-                            await PopupNavigation.Instance.PushAsync(new AlertPopupPageWithOkCancel("You must grant this App permission to access your location in order to pair.", (response) =>
-                            {
-                                if (response)
-                                {
-                                    var locSettings = DependencyService.Get<ILocSettings>();
-                                    locSettings.OpenSettings();
-                                }
-                            }));
-                            return;
-                        }
-
-                        if (!CrossGeolocator.Current.IsGeolocationEnabled)
-                        {
-                            await PopupNavigation.Instance.PushAsync(new LocationAlertPopupPage());
-                            return;
-                        }
-                    }
-
-                    if (locationAlwaysPermissionStatus != PermissionStatus.Granted)
-                    {
-                        return;
-                    }
-                }
-
-                //Search for devices 
-                //Find Light Mode Controller & Connect
-                //If Controller is connected first time then Display Name Popup
-                await StopScanning();
-
-                //var devices1 = await new BLEHelper().ScanDevices(10 * 1000, true);
-                var devices = await ScanDevices(10 * 1000, true, cancellationToken: cancellationToken);
-
-                //If Device is already connected then do notihing
-                if (App.ConnectionState == ConnectionButtonState.ShowDisconnect)
-                {
-                    CommonUtils.WriteLog("FavoriteViewModel: Already Connected....");
-                    return;
-                }
-
-                if (devices != null && devices.Count == 0)
-                {
-                    //await ScanAndConnectDevice();
-                    CommonUtils.WriteLog("FavoriteViewModel: Devices not found");
-                }
-                else
-                {
-                    var isConnected = await ConnectController(devices, cancellationToken);
-                    if (!isConnected)
-                    {
-                        CommonUtils.WriteLog("FavoriteViewModel: Not Connected....");
-                    }
-                    else
-                    {
-                        CommonUtils.WriteLog("FavoriteViewModel: Connected....");
-                    }
-                }
-            }
-            catch (OperationCanceledException oce)
-            {
-                CommonUtils.WriteLog("ScanAndConnectDevice: OperationCanceledException" + oce.Message);
-            }
-            catch (Exception ex)
-            {
-                CommonUtils.WriteLog("ScanAndConnectDevice: Exception" + ex.Message);
-            }
-        }
-               
 
         public async Task<List<ICharacteristic>> GetCharacteristics()
         {
@@ -426,13 +319,15 @@ namespace ColorController.Services
             bool connected = true;
             var savedDevices = await App.Database.GetControllers();
             var connectedDeviceIds = GetConnectedDevices().Select(x => x.Id);
-
-            //if (savedDevices.Count != connectedDeviceIds.Count())
-            //    return false;
-
+            var connectedDeviceIdList = new List<string>();
+            foreach (var item in connectedDeviceIds)
+            {
+                connectedDeviceIdList.Add(item.ToString());
+            }
+             
             foreach ( var device in savedDevices) 
             {
-                var contains = connectedDeviceIds.Any(x => x.ToString() == device.Id);
+                var contains = connectedDeviceIdList.Any(x => x == device.Id);
                 if (!contains)
                 {
                     connected = false;
@@ -515,17 +410,16 @@ namespace ColorController.Services
             return true;
         }
 
-       
-        
-        
-        
-        
-        
-        
-        
-        
+
+
+
+
+
+        ConnectParameters _parameters = new ConnectParameters(autoConnect: Xamarin.Forms.Device.RuntimePlatform == Xamarin.Forms.Device.Android,
+                                                              forceBleTransport: Xamarin.Forms.Device.RuntimePlatform == Xamarin.Forms.Device.Android);
+
         //BLEHElpe Methods
-        
+
         private IAdapter _adapter;
         public IAdapter Adapter
         {
@@ -564,16 +458,13 @@ namespace ColorController.Services
 
             try
             {
-                var parameters = new ConnectParameters(autoConnect: Xamarin.Forms.Device.RuntimePlatform == Xamarin.Forms.Device.Android,
-                                                       forceBleTransport: Xamarin.Forms.Device.RuntimePlatform == Xamarin.Forms.Device.Android);
-
                 var cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(5));
 
                 var isAlreadyConnected = GetConnectedDevices().Any(x => x.Id == new Guid(controller.Id));
                 if (isAlreadyConnected)
                     return false;
 
-                var device = await Adapter.ConnectToKnownDeviceAsync(new Guid(controller.Id), parameters, cancellationTokenSource.Token);
+                var device = await Adapter.ConnectToKnownDeviceAsync(new Guid(controller.Id), _parameters, cancellationTokenSource.Token);
 
                 isConneted = true;
             }
@@ -603,6 +494,8 @@ namespace ColorController.Services
         {
             CommonUtils.WriteLog("Device Connected!");
 
+            CloseButtonPressPopupPage();
+
             var device = e.Device;
 
             //Request to increates MTU
@@ -617,13 +510,17 @@ namespace ColorController.Services
             characteristic.ValueUpdated -= Characteristic_ValueUpdated;
             characteristic.ValueUpdated += Characteristic_ValueUpdated;
 
-            SendMessageToDisplayDisconnectButton();
-
             var savedDevices = await App.Database.GetControllers();
             var savedDevice = savedDevices.FirstOrDefault(x => x.Id == e.Device.Id.ToString());
             if (savedDevice != null)
             {
-                await DisplayConnectedToDeviceNamePopupFor1Second(savedDevice.Name);
+                DisplayConnectedToDeviceNamePopupFor1Second(savedDevice.Name);
+            }
+            else
+            {
+                if (PopupNavigation.Instance.PopupStack.Any(x => x != null && x.GetType() == typeof(EnterDeviceNamePopupPage)))
+                    await PopupNavigation.Instance.PopAsync();
+                PopupNavigation.PushAsync(new EnterDeviceNamePopupPage(device));
             }
 
             await ExecuteCommandsAfterConnection(characteristic);
@@ -720,7 +617,6 @@ namespace ColorController.Services
             }
             finally
             {
-                App.ConnectionState = ConnectionButtonState.ShowConnect;
                 MessagingCenter.Send<object, string>(this, StringResource.Connection, "QUIT");
                 App.BatterPercentages = null;
                 UserDialogs.Instance.HideLoading();
@@ -729,22 +625,25 @@ namespace ColorController.Services
             }
         }
 
-        private async Task DisplayConnectedToDeviceNamePopupFor1Second(string controllerName = null)
+        private void DisplayConnectedToDeviceNamePopupFor1Second(string controllerName)
         {
-            CloseUpdatingFirmwarePopupPage();
-            UserDialogs.Instance.Toast(new ToastConfig($"Connected to {controllerName}!") { Position = ToastPosition.Top, Duration = TimeSpan.FromSeconds(1) });
             //await Xamarin.Essentials.MainThread.InvokeOnMainThreadAsync(async () =>
             //{
             //    if (PopupNavigation.Instance.PopupStack.Any(x => x != null && x.GetType() == typeof(ConnectedPopupPage)))
             //    {
             //        await PopupNavigation.Instance.PopAsync();
             //    }
-
             //    await PopupNavigation.Instance.PushAsync(new ConnectedPopupPage(controllerName));
             //});
+
+            CloseUpdatingFirmwarePopupPage();
+            if (App.AppState == AppState.Foreground)
+            {
+                UserDialogs.Instance.Toast(new ToastConfig($"Connected to {controllerName}!") { Position = ToastPosition.Top, Duration = TimeSpan.FromSeconds(1) }); 
+            }
         }
 
-        private async void Characteristic_ValueUpdated(object o, CharacteristicUpdatedEventArgs args)
+        private void Characteristic_ValueUpdated(object o, CharacteristicUpdatedEventArgs args)
         {
             try
             {
@@ -811,7 +710,7 @@ namespace ColorController.Services
             }
         }
 
-         private void GetVersionOfController(string response)
+        private void GetVersionOfController(string response)
         {
             try
             {
@@ -1013,28 +912,288 @@ namespace ColorController.Services
 
             }
         }
-        #region Send Messages
-        public void SendMessageToDisplayConnectButton()
+             
+
+        private void StartTimerToFetchBatteryStatus()
         {
-            App.ConnectionState = ConnectionButtonState.ShowConnect;
-            App.IsScanningAlreadyGoingOn = false;
-            MessagingCenter.Send<object, string>(this, StringResource.Connection, StringResource.ShowConnect);
+            Xamarin.Forms.Device.StartTimer(TimeSpan.FromMinutes(2), () =>
+            {
+                try
+                {
+                    if (!App.ContinueFetchingBatteryDetail)
+                    {
+                        return false;
+                    }
+
+                    MainThread.InvokeOnMainThreadAsync(async () =>
+                    {
+                        await SendCommandToController(StringResource.POWR);
+                    });
+                }
+                catch (Exception)
+                {
+
+                }
+
+                return App.ContinueFetchingBatteryDetail;
+            });
+        }
+       
+        public void CloseButtonPressPopupPage()
+        {
+            try
+            {
+                if (PopupNavigation.Instance.PopupStack.Any(x => x.GetType() == typeof(DoubleClickPopupPage)))
+                {
+                    var doubleClickPopupPage = PopupNavigation.Instance.PopupStack.FirstOrDefault(x => x.GetType() == typeof(DoubleClickPopupPage));
+                    PopupNavigation.Instance.RemovePageAsync(doubleClickPopupPage);
+                    //PopupNavigation.Instance.PopAsync();
+                }
+            }
+            catch (Exception)
+            {
+
+            }
         }
 
-        public void SendMessageToDisplayDisconnectButton()
+        int timer = 0;
+        public async Task<List<IDevice>> ScanDevices2(int timeOut = 1000, bool loop = false, bool isExecuted = false, int endTime = 5, CancellationToken cancellationToken = default)
         {
-            App.ConnectionState = ConnectionButtonState.ShowDisconnect;
-            App.IsScanningAlreadyGoingOn = false;
-            MessagingCenter.Send<object, string>(this, StringResource.Connection, StringResource.ShowDisconnect);
+            _devices = new List<IDevice>();
+            try
+            {
+                if (!isExecuted)
+                {
+                    try
+                    {
+                        Xamarin.Forms.Device.StartTimer(TimeSpan.FromSeconds(1), () =>
+                        {
+                            try
+                            {
+                                cancellationToken.ThrowIfCancellationRequested();
+
+                                // Do something
+                                timer++;
+
+                                //To-Do: Need to work here...
+                                //if (App.Characteristic != null || App.ConnectionState == ConnectionButtonState.ShowDisconnect || App.ConnectionState == ConnectionButtonState.ShowConnect)
+                                //{
+                                //    loop = false;
+                                //    timer = 0;
+                                //    CloseButtonPressPopupPage();
+                                //}
+
+                                if (timer == endTime)
+                                {
+                                    cancellationToken.ThrowIfCancellationRequested();
+
+                                    loop = false;
+                                    timer = 0;
+
+                                    if (CrossBluetoothLE.Current.IsOn)
+                                    {
+                                        //SendMessageToDisplayConnectButton();
+                                        if (!PopupNavigation.Instance.PopupStack.Any(x => x.GetType() == typeof(DoubleClickPopupPage)))
+                                        {
+                                            Xamarin.Forms.Device.BeginInvokeOnMainThread(() =>
+                                            {
+                                                //PopupNavigation.Instance.PushAsync(new DoubleClickPopupPage());
+                                            });
+                                        }
+                                        MessagingCenter.Send<object, string>(this, StringResource.Connection, "RestartScanning");
+                                    }
+                                }
+                            }
+                            catch (OperationCanceledException oce)
+                            {
+                                loop = false;
+                                CommonUtils.WriteLog($"BLEHelper: ScanDevices => Xamarin.Forms.Device.StartTimer(TimeSpan.FromSeconds(1) {oce.Message}");
+                            }
+                            catch (Exception ex)
+                            {
+                                loop = false;
+                                CommonUtils.WriteLog($"BLEHelper: ScanDevices => Xamarin.Forms.Device.StartTimer(TimeSpan.FromSeconds(1) {ex.Message}");
+                            }
+
+                            return loop;
+                        });
+                    }
+                    catch (OperationCanceledException oce)
+                    {
+                        CommonUtils.WriteLog($"BLEHelper: ScanDevices {oce.Message}");
+                    }
+                    catch (Exception ex)
+                    {
+                        CommonUtils.WriteLog($"BLEHelper: ScanDevices {ex.Message}");
+                    }
+
+                    MessagingCenter.Send<object, string>(this, StringResource.Connection, "STOP");
+
+                    //SendMessageToDisplayConnectButton();
+                    await StopScanning();
+                }
+
+                if (!Adapter.IsScanning)
+                {
+                    Adapter.ScanMode = ScanMode.LowLatency;
+                    Adapter.ScanTimeout = timeOut;
+                    await Adapter.StartScanningForDevicesAsync(cancellationToken: cancellationToken);
+                }
+                //await StopScanning(); 
+            }
+            catch (Exception ex)
+            {
+                CommonUtils.WriteLog($"BLEHelper: {ex.Message}");
+                MessagingCenter.Send<object, string>(this, StringResource.Connection, StringResource.ShowConnect);
+            }
+
+            return _devices;
         }
 
-        public void SendMessageToDisplayConnectingButton()
+
+
+
+
+
+
+
+
+
+
+
+        public async Task<bool> CheckPermissions2()
         {
-            App.ConnectionState = ConnectionButtonState.ShowSearchingButton;
-            App.IsScanningAlreadyGoingOn = true;
-            MessagingCenter.Send<object, string>(this, StringResource.Connection, "ShowSearchingButton");
+            //Check Bluetooth ON/OFF status
+            //iOS: If Bluetooth ON then Start Scanning
+            //Android: Check Location Permission
+            //Android: If Location Permission disabled then ask for permission
+            //Android: If Location permission is denied then display confirmation alert and navigate to Settings 
+            //Android: Check GPS ON/OFF status
+            //Android: If GPS is OFF then display alert to turn ON GPS.
+            //Android: If GPS is ON then start scanning.
+
+            if (!CrossBluetoothLE.Current.IsOn)
+            {
+                await PopupNavigation.Instance.PushAsync(new AlertPopupPage(StringResource.PleaseTurnONBT));
+                return false;
+            }
+
+            if (Xamarin.Forms.Device.RuntimePlatform == Xamarin.Forms.Device.Android)
+            {
+                await MainThread.InvokeOnMainThreadAsync(async () => 
+                {
+                    var locationAlwaysPermissionStatus = await Permissions.CheckStatusAsync<Permissions.LocationWhenInUse>();
+
+                    if (CrossGeolocator.IsSupported)
+                    {
+                        if (locationAlwaysPermissionStatus != PermissionStatus.Granted)
+                        {
+                            locationAlwaysPermissionStatus = await Permissions.RequestAsync<Permissions.LocationWhenInUse>();
+                        }
+                        if (locationAlwaysPermissionStatus == PermissionStatus.Disabled)
+                        {
+                            await PopupNavigation.Instance.PushAsync(new LocationAlertPopupPage());
+                        }
+                        if (locationAlwaysPermissionStatus == PermissionStatus.Denied)
+                        {
+                            await PopupNavigation.Instance.PushAsync(new AlertPopupPageWithOkCancel("You must grant this App permission to access your location in order to pair.", (response) =>
+                            {
+                                if (response)
+                                {
+                                    var locSettings = DependencyService.Get<ILocSettings>();
+                                    locSettings.OpenSettings();
+                                }
+                            }));
+                            return false;
+                        }
+
+                        if (!CrossGeolocator.Current.IsGeolocationEnabled)
+                        {
+                            await PopupNavigation.Instance.PushAsync(new LocationAlertPopupPage());
+                            return false;
+                        }
+                    }
+
+                    if (locationAlwaysPermissionStatus != PermissionStatus.Granted)
+                    {
+                        return false;
+                    }
+
+                    return true;
+                });
+
+            }
+
+            return true;
         }
-        #endregion
+
+
+        private async Task ScanDevice2(CancellationToken cancellationToken = default, DateTime startTime = default)
+        {
+            cancellationToken.ThrowIfCancellationRequested();
+            
+            if ((DateTime.Now - startTime).Seconds == 5)
+            {
+                await PopupNavigation.Instance.PushAsync(new DoubleClickPopupPage(cancellationToken));
+            }
+
+            await Adapter.StopScanningForDevicesAsync();
+
+            if (!Adapter.IsScanning)
+            {
+                Adapter.ScanMode = ScanMode.LowLatency;
+                Adapter.ScanTimeout = 5 * 1000;
+                await Adapter.StartScanningForDevicesAsync(cancellationToken: cancellationToken);
+            }
+
+            if (_devices == null || !_devices.Any())
+            {
+                await ScanDevice2(cancellationToken: cancellationToken, startTime);
+                CommonUtils.WriteLog("ScanAndConnectDevice_2: No Device Found.");
+                return;
+            }
+        }
+         
+
+        public async Task ScanAndConnectDevice2(CancellationToken cancellationToken = default)
+        {
+            try
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+
+                _devices = new List<IDevice>();
+
+                var isValid = await CheckPermissions2();
+                if (!isValid)
+                {
+                    CommonUtils.WriteLog("CheckPermissions: Permission not granted/Bluetooth is not ON/GPS Not enabled....");
+                    return;
+                }
+
+                await ScanDevice2(cancellationToken: cancellationToken, startTime: DateTime.Now);
+
+                if (_devices == null || !_devices.Any())
+                {
+                    await ScanDevice2(cancellationToken: cancellationToken);
+                    CommonUtils.WriteLog("ScanAndConnectDevice_2: No Device Found.");
+                    return;
+                }
+
+                var isConnected = await ConnectController(_devices, cancellationToken);
+                if (!isConnected)
+                    CommonUtils.WriteLog("FavoriteViewModel: Not Connected....");
+                else
+                    CommonUtils.WriteLog("FavoriteViewModel: Connected....");
+            }
+            catch (OperationCanceledException oce)
+            {
+                CommonUtils.WriteLog("ScanAndConnectDevice: OperationCanceledException" + oce.Message);
+            }
+            catch (Exception ex)
+            {
+                CommonUtils.WriteLog("ScanAndConnectDevice: Exception" + ex.Message);
+            }
+        }
 
         public async Task<bool> ConnectController(List<IDevice> deviceList, CancellationToken cancellationToken)
         {
@@ -1042,9 +1201,6 @@ namespace ColorController.Services
             {
                 return false;
             }
-
-            App.ConnectionState = ConnectionButtonState.ShowSearchingButton;
-            MessagingCenter.Send<object, string>(this, StringResource.Connection, StringResource.ShowConnecting);
 
             bool isConneted = false;
             IDevice device = null;
@@ -1101,21 +1257,21 @@ namespace ColorController.Services
                 }
                 else
                 {
-                    if (App.IsAutoScanningGoingOn)
-                    {
-                        //Don't connect any device
-                    }
-                    else
-                    {
-                        //If default controller not available then connect to first controller
-                        device = lightModeControllers.FirstOrDefault();
-                    }
+                    //if (App.IsAutoScanningGoingOn)
+                    //{
+                    //    //Don't connect any device
+                    //}
+                    //else
+                    //{
+                    //    //If default controller not available then connect to first controller
+                    device = lightModeControllers.FirstOrDefault();
+                    //}
                 }
 
                 if (device != null)
                 {
                     //Find whether connected controller exist in local DB or not.
-                    var isNewConnection = await FindWhetherControllerExistOnNotInLocalDB(device);
+                    //var isNewConnection = await FindWhetherControllerExistOnNotInLocalDB(device);
 
                     //Get device which contains 'LightMode Controller' AdvertisementRecord
                     //foreach (var item in deviceList)
@@ -1129,26 +1285,15 @@ namespace ColorController.Services
                     //    }
                     //}
 
-                    ConnectParameters parameters;
-                    if (Xamarin.Forms.Device.RuntimePlatform == Xamarin.Forms.Device.Android)
-                    {
-                        parameters = new ConnectParameters(forceBleTransport: true);
-                    }
-                    else
-                    {
-                        parameters = new ConnectParameters(true, false);
-                    }
-
                     //var cancellationTokenSource = new CancellationTokenSource();
                     //cancellationTokenSource.CancelAfter(15000);
-                    await Adapter.ConnectToDeviceAsync(device, parameters, cancellationToken: cancellationToken);
+                    //await Adapter.ConnectToDeviceAsync(device, parameters, cancellationToken);
+                    await Adapter.ConnectToKnownDeviceAsync(device.Id, _parameters, cancellationToken);
 
                     //Request to increates MTU
                     await device.RequestMtuAsync(App.SIZE);
 
-                    SendMessageToDisplayDisconnectButton();
-
-                    CloseButtonPressPopupPage();
+                    //CloseButtonPressPopupPage();
 
                     //Get service
                     var service = await device.GetServiceAsync(ServiceId);
@@ -1172,19 +1317,14 @@ namespace ColorController.Services
                         isConneted = true;
                         //SendMessageToDisplayDisconnectButton();
 
-                        if (isNewConnection)
-                        {
-                            PopupNavigation.PushAsync(new EnterDeviceNamePopupPage(device));
-                        }
-                        else
-                        {
-                            await DisplayConnectedToDeviceNamePopupFor1Second();
-                        }
+                        //if (isNewConnection)
+                        //{
+                        //    //PopupNavigation.PushAsync(new EnterDeviceNamePopupPage(device));
+                        //}
                     }
                     else
                     {
                         isConneted = false;
-                        SendMessageToDisplayConnectButton();
                     }
 
                     if (isConneted)
@@ -1195,332 +1335,20 @@ namespace ColorController.Services
                 else
                 {
                     isConneted = false;
-                    SendMessageToDisplayConnectButton();
                 }
             }
             catch (OperationCanceledException ex2)
             {
                 CommonUtils.WriteLog($"BLEHelper OperationCanceledException: {ex2.Message}");
                 isConneted = false;
-                SendMessageToDisplayConnectButton();
             }
             catch (Exception ex)
             {
                 CommonUtils.WriteLog($"BLEHelper: {ex.Message}");
                 isConneted = false;
-                SendMessageToDisplayConnectButton();
             }
 
             return isConneted;
-        }
-
-        private void StartTimerToFetchBatteryStatus()
-        {
-            Xamarin.Forms.Device.StartTimer(TimeSpan.FromMinutes(2), () =>
-            {
-                try
-                {
-                    if (!App.ContinueFetchingBatteryDetail)
-                    {
-                        return false;
-                    }
-
-                    MainThread.InvokeOnMainThreadAsync(async () =>
-                    {
-                        await SendCommandToController(StringResource.POWR);
-                    });
-                }
-                catch (Exception)
-                {
-
-                }
-
-                return App.ContinueFetchingBatteryDetail;
-            });
-        }
-
-        /// <summary>
-        /// Find whether connected controller exist in local DB or not.
-        /// </summary>
-        /// <param name="device">Connected device</param>
-        /// <returns>Device exists or not</returns>
-        private async Task<bool> FindWhetherControllerExistOnNotInLocalDB(IDevice device)
-        {
-            Controller existingController = null;
-            //if (Device.RuntimePlatform == Device.iOS)
-            //{
-            //    var deviceUDID = device.Id.ToString();
-            //    existingController = await App.Database.GetController(deviceUDID);
-            //}
-            //else
-            //{
-            //    var deviceBase = device as DeviceBase;
-            //    var deviceMacAddress = deviceBase.NativeDevice.ToString();
-            //    existingController = await App.Database.GetController(deviceMacAddress);
-            //}
-            var deviceUDID = device.Id.ToString();
-            existingController = await App.Database.GetController(deviceUDID);
-
-            //If existingController not found it means connected controller is connecting firsttime
-            var isNewConnection = existingController == null;
-            if (!isNewConnection)
-            {
-                Preferences.Set("defaultControllerName", existingController.Name);
-
-                App.ConnectedController = existingController;
-            }
-            return isNewConnection;
-        }
-        public void CloseButtonPressPopupPage()
-        {
-            try
-            {
-                if (PopupNavigation.Instance.PopupStack.Any(x => x.GetType() == typeof(DoubleClickPopupPage)))
-                {
-                    var doubleClickPopupPage = PopupNavigation.Instance.PopupStack.FirstOrDefault(x => x.GetType() == typeof(DoubleClickPopupPage));
-                    PopupNavigation.Instance.RemovePageAsync(doubleClickPopupPage);
-                    //PopupNavigation.Instance.PopAsync();
-                }
-            }
-            catch (Exception)
-            {
-
-            }
-        }
-
-        int timer = 0;
-        public async Task<List<IDevice>> ScanDevices(int timeOut = 1000, bool loop = false, bool isExecuted = false, int endTime = 5, CancellationToken cancellationToken = default)
-        {
-            _devices = new List<IDevice>();
-            try
-            {
-                if (!isExecuted)
-                {
-                    try
-                    {
-                        Xamarin.Forms.Device.StartTimer(TimeSpan.FromSeconds(1), () =>
-                        {
-                            try
-                            {
-                                cancellationToken.ThrowIfCancellationRequested();
-
-                                // Do something
-                                timer++;
-
-                                //To-Do: Need to work here...
-                                //if (App.Characteristic != null || App.ConnectionState == ConnectionButtonState.ShowDisconnect || App.ConnectionState == ConnectionButtonState.ShowConnect)
-                                //{
-                                //    loop = false;
-                                //    timer = 0;
-                                //    CloseButtonPressPopupPage();
-                                //}
-
-                                if (timer == endTime)
-                                {
-                                    cancellationToken.ThrowIfCancellationRequested();
-
-                                    loop = false;
-                                    timer = 0;
-
-                                    if (CrossBluetoothLE.Current.IsOn && App.ConnectionState != ConnectionButtonState.ShowDisconnect)
-                                    {
-                                        //SendMessageToDisplayConnectButton();
-                                        if (!PopupNavigation.Instance.PopupStack.Any(x => x.GetType() == typeof(DoubleClickPopupPage)))
-                                        {
-                                            Xamarin.Forms.Device.BeginInvokeOnMainThread(() =>
-                                            {
-                                                //PopupNavigation.Instance.PushAsync(new DoubleClickPopupPage());
-                                            });
-                                        }
-                                        MessagingCenter.Send<object, string>(this, StringResource.Connection, "RestartScanning");
-                                    }
-                                }
-                            }
-                            catch (OperationCanceledException oce)
-                            {
-                                loop = false;
-                                CommonUtils.WriteLog($"BLEHelper: ScanDevices => Xamarin.Forms.Device.StartTimer(TimeSpan.FromSeconds(1) {oce.Message}");
-                            }
-                            catch (Exception ex)
-                            {
-                                loop = false;
-                                CommonUtils.WriteLog($"BLEHelper: ScanDevices => Xamarin.Forms.Device.StartTimer(TimeSpan.FromSeconds(1) {ex.Message}");
-                            }
-
-                            return loop;
-                        });
-                    }
-                    catch (OperationCanceledException oce)
-                    {
-                        CommonUtils.WriteLog($"BLEHelper: ScanDevices {oce.Message}");
-                    }
-                    catch (Exception ex)
-                    {
-                        CommonUtils.WriteLog($"BLEHelper: ScanDevices {ex.Message}");
-                    }
-
-                    MessagingCenter.Send<object, string>(this, StringResource.Connection, "STOP");
-
-                    //SendMessageToDisplayConnectButton();
-                    await StopScanning();
-                    SendMessageToDisplayConnectingButton();
-                }
-
-                if (!Adapter.IsScanning)
-                {
-                    Adapter.ScanMode = ScanMode.LowLatency;
-                    Adapter.ScanTimeout = timeOut;
-                    await Adapter.StartScanningForDevicesAsync(cancellationToken: cancellationToken);
-                }
-                //await StopScanning(); 
-            }
-            catch (Exception ex)
-            {
-                CommonUtils.WriteLog($"BLEHelper: {ex.Message}");
-                App.ConnectionState = ConnectionButtonState.ShowConnect;
-                MessagingCenter.Send<object, string>(this, StringResource.Connection, StringResource.ShowConnect);
-            }
-
-            return _devices;
-        }
-
-
-
-
-
-
-
-
-
-
-
-
-        public async Task<bool> CheckPermissions()
-        {
-            //Check Bluetooth ON/OFF status
-            //iOS: If Bluetooth ON then Start Scanning
-            //Android: Check Location Permission
-            //Android: If Location Permission disabled then ask for permission
-            //Android: If Location permission is denied then display confirmation alert and navigate to Settings 
-            //Android: Check GPS ON/OFF status
-            //Android: If GPS is OFF then display alert to turn ON GPS.
-            //Android: If GPS is ON then start scanning.
-
-            if (!CrossBluetoothLE.Current.IsOn)
-            {
-                await PopupNavigation.Instance.PushAsync(new AlertPopupPage(StringResource.PleaseTurnONBT));
-                return false;
-            }
-
-            if (Xamarin.Forms.Device.RuntimePlatform == Xamarin.Forms.Device.Android)
-            {
-                var locationAlwaysPermissionStatus = await Permissions.CheckStatusAsync<Permissions.LocationWhenInUse>();
-
-                if (CrossGeolocator.IsSupported)
-                {
-                    if (locationAlwaysPermissionStatus != PermissionStatus.Granted)
-                    {
-                        locationAlwaysPermissionStatus = await Permissions.RequestAsync<Permissions.LocationWhenInUse>();
-                    }
-                    if (locationAlwaysPermissionStatus == PermissionStatus.Disabled)
-                    {
-                        await PopupNavigation.Instance.PushAsync(new LocationAlertPopupPage());
-                    }
-                    if (locationAlwaysPermissionStatus == PermissionStatus.Denied)
-                    {
-                        await PopupNavigation.Instance.PushAsync(new AlertPopupPageWithOkCancel("You must grant this App permission to access your location in order to pair.", (response) =>
-                        {
-                            if (response)
-                            {
-                                var locSettings = DependencyService.Get<ILocSettings>();
-                                locSettings.OpenSettings();
-                            }
-                        }));
-                        return false;
-                    }
-
-                    if (!CrossGeolocator.Current.IsGeolocationEnabled)
-                    {
-                        await PopupNavigation.Instance.PushAsync(new LocationAlertPopupPage());
-                        return false;
-                    }
-                }
-
-                if (locationAlwaysPermissionStatus != PermissionStatus.Granted)
-                {
-                    return false;
-                }
-            }
-
-            return true;
-        }
-
-
-        private async Task ScanDevice(CancellationToken cancellationToken = default, DateTime startTime = default)
-        {
-            cancellationToken.ThrowIfCancellationRequested();
-            
-            if ((DateTime.Now - startTime).Seconds == 5)
-            {
-                await PopupNavigation.Instance.PushAsync(new DoubleClickPopupPage());
-            }
-
-            await Adapter.StopScanningForDevicesAsync();
-
-            if (!Adapter.IsScanning)
-            {
-                Adapter.ScanMode = ScanMode.LowLatency;
-                Adapter.ScanTimeout = 5 * 1000;
-                await Adapter.StartScanningForDevicesAsync(cancellationToken: cancellationToken);
-            }
-
-            if (_devices == null || !_devices.Any())
-            {
-                await ScanDevice(cancellationToken: cancellationToken, startTime);
-                CommonUtils.WriteLog("ScanAndConnectDevice_2: No Device Found.");
-                return;
-            }
-        }
-         
-
-        public async Task ScanAndConnectDevice_2(CancellationToken cancellationToken = default)
-        {
-            try
-            {
-                cancellationToken.ThrowIfCancellationRequested();
-
-                _devices = new List<IDevice>();
-
-                var isValid = await CheckPermissions();
-                if (!isValid)
-                {
-                    CommonUtils.WriteLog("CheckPermissions: Permission not granted/Bluetooth is not ON/GPS Not enabled....");
-                    return;
-                }
-
-                await ScanDevice(cancellationToken: cancellationToken, startTime: DateTime.Now);
-
-                if (_devices == null || !_devices.Any())
-                {
-                    await ScanDevice(cancellationToken: cancellationToken);
-                    CommonUtils.WriteLog("ScanAndConnectDevice_2: No Device Found.");
-                    return;
-                }
-
-                var isConnected = await ConnectController(_devices, cancellationToken);
-                if (!isConnected)
-                    CommonUtils.WriteLog("FavoriteViewModel: Not Connected....");
-                else
-                    CommonUtils.WriteLog("FavoriteViewModel: Connected....");
-            }
-            catch (OperationCanceledException oce)
-            {
-                CommonUtils.WriteLog("ScanAndConnectDevice: OperationCanceledException" + oce.Message);
-            }
-            catch (Exception ex)
-            {
-                CommonUtils.WriteLog("ScanAndConnectDevice: Exception" + ex.Message);
-            }
         }
     }
 }

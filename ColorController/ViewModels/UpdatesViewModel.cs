@@ -101,7 +101,7 @@ namespace ColorController.ViewModels
         public override Task LoadData()
         {
             var versionName = string.Empty;
-            if (App.ConnectedControllerVersion != null && App.ConnectionState == ConnectionButtonState.ShowDisconnect)
+            if (App.ConnectedControllerVersion != null && BlueToothService.IsAppConnectedWithDevice)
             {
                 versionName = $"Version {App.ConnectedControllerVersion}";
             }
