@@ -344,9 +344,9 @@ namespace ColorController.Controls
 
                             Device.BeginInvokeOnMainThread(() =>
                             {
-                                ImageBtnConnectSource = "searchingGIF2.png";
+                                ImageBtnConnectSource = "searchingGIF2.gif";
                             });
-                            App.IsScanningAlreadyGoingOn= true;
+                            App.IsScanningAlreadyGoingOn = true;
                             await BlueToothService.ScanAndConnectDevice2(App.CancellationTokenSource.Token);
                             App.IsScanningAlreadyGoingOn = false;
 
