@@ -62,7 +62,7 @@ namespace ColorController.iOS
 
         private iOSLongRunningTask _longRunningTask;
 
-        void WireupLongRunningTask()
+        async void WireupLongRunningTask()
         {
             MessagingCenter.Unsubscribe<object>(this, nameof(MessageType.StartLongRunningTaskMessage));
             MessagingCenter.Subscribe<object>(this, nameof(MessageType.StartLongRunningTaskMessage), async message =>
@@ -82,6 +82,9 @@ namespace ColorController.iOS
                 _longRunningTask = new iOSLongRunningTask();
                 _longRunningTask.Stop();
             });
+
+            var longRunningTask = new iOSLongRunningTask_ForConnectionButton();
+            await longRunningTask.Start();
         }
     }
 }
