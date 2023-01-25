@@ -69,69 +69,19 @@
                     <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
 
-                <Grid ColumnDefinitions="*,20"  
-                      HorizontalOptions="Center"
-                      RowDefinitions="Auto"   
-                      WidthRequest="100"  
-                      ColumnSpacing="0" >
-                    <Label Text="Searching"   
-                           HorizontalTextAlignment="End" >
-                        <Label.Style>
-                            <OnIdiom x:TypeArguments="Style">
-                                <OnIdiom.Phone>
-                                    <OnPlatform x:TypeArguments="Style" 
-                                                iOS="{StaticResource Label14Style}" 
-                                                Android="{StaticResource Label14Style}" />
-                                </OnIdiom.Phone>
-                                <OnIdiom.Tablet>
-                                    <OnPlatform x:TypeArguments="Style" 
-                                                iOS="{StaticResource Label14Style}"
-                                                Android="{StaticResource Label14Style}" />
-                                </OnIdiom.Tablet>
-                            </OnIdiom>
-                        </Label.Style>
-                    </Label>
-                    <Label Grid.Column="1"
-                           Text="{Binding DottedText, Mode=TwoWay}"   
-                           HorizontalTextAlignment="Start" >
-                        <Label.Style>
-                            <OnIdiom x:TypeArguments="Style">
-                                <OnIdiom.Phone>
-                                    <OnPlatform x:TypeArguments="Style" 
-                                                iOS="{StaticResource Label14Style}" 
-                                                Android="{StaticResource Label14Style}" />
-                                </OnIdiom.Phone>
-                                <OnIdiom.Tablet>
-                                    <OnPlatform x:TypeArguments="Style" 
-                                                iOS="{StaticResource Label14Style}"
-                                                Android="{StaticResource Label14Style}" />
-                                </OnIdiom.Tablet>
-                            </OnIdiom>
-                        </Label.Style>
-                    </Label>
-                </Grid>
+                <ffimageloading:CachedImage  
+                                            HorizontalOptions="Center" 
+                                            VerticalOptions="Center"
+                                            HeightRequest="{OnIdiom Phone=22, Tablet=30}"
+			                                Source = "searchingLoop.gif"/>
 
                 <ffimageloading:CachedImage Grid.Row="1"
                                             HorizontalOptions="Center" 
-                                            VerticalOptions="Center"
+                                            VerticalOptions="Center" 
+                                            HeightRequest="{OnIdiom Phone=180, Tablet=270}"
                                             Success="CachedImage_Success"
-			                                Source = "ButtonPressGifV7.gif">
-                    <ffimageloading:CachedImage.HeightRequest>
-                        <OnIdiom x:TypeArguments="x:Double">
-                            <OnIdiom.Phone>
-                                <OnPlatform x:TypeArguments="x:Double"
-                                        iOS="180" 
-                                        Android="180" />
-                            </OnIdiom.Phone>
-                            <OnIdiom.Tablet>
-                                <OnPlatform x:TypeArguments="x:Double" 
-                                        iOS="270"
-                                        Android="270" />
-                            </OnIdiom.Tablet>
-                        </OnIdiom>
-                    </ffimageloading:CachedImage.HeightRequest>
-                </ffimageloading:CachedImage>
-                
+			                                Source = "ButtonPressGifV7.gif"/>
+
                 <Grid Grid.Row="2"
                       RowDefinitions="Auto,Auto,Auto"
                       ColumnDefinitions="Auto,*"

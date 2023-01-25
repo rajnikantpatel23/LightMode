@@ -54,8 +54,7 @@
     <CodesignEntitlements>Entitlements.plist</CodesignEntitlements>
     <MtouchLink>None</MtouchLink>
     <MtouchInterpreter>-all</MtouchInterpreter>
-    <CodesignProvision>
-    </CodesignProvision>
+    <CodesignProvision>LightMode_Dev</CodesignProvision>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|iPhone' ">
     <DebugType>none</DebugType>
@@ -610,6 +609,9 @@
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="Resources\pair_new_device_small.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\searchingLoop.gif" />
   </ItemGroup>
   <ProjectExtensions>
     <VisualStudio>

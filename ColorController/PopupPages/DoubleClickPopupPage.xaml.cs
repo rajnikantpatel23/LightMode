@@ -23,13 +23,6 @@ namespace ColorController.PopupPages
         bool _runTimer = true;
         int _timeSpend = 0;
 
-        private string _dottedText;
-        public string DottedText
-        {
-            get { return _dottedText; }
-            set { _dottedText = value; OnPropertyChanged(nameof(DottedText)); }
-        }
-
         /// <summary>
         /// Constructor
         /// </summary>
@@ -39,7 +32,7 @@ namespace ColorController.PopupPages
             BindingContext = this;
             _cancellationToken = cancellationToken;
             _runTimer = true;
-            StartSearchingTimer(); 
+            StartSearchingTimer();
         }
 
         /// <summary>
@@ -110,38 +103,12 @@ namespace ColorController.PopupPages
                         {
                             Navigation.PopPopupAsync();
                         }
-                         
+
                         BlueToothService.StopScanning();
 
                         //Open WatchVideoLinkPopupPage page
                         PopupNavigation.Instance.PushAsync(new WatchVideoLinkPopupPage());
                     }
-
-                    Device.InvokeOnMainThreadAsync(() =>
-                    {
-                        switch (DottedText)
-                        {
-                            case "":
-                                DottedText = ".";
-                                break;
-
-                            case ".":
-                                DottedText = "..";
-                                break;
-
-                            case "..":
-                                DottedText = "...";
-                                break;
-
-                            case "...":
-                                DottedText = "";
-                                break;
-
-                            default:
-                                DottedText = "";
-                                break;
-                        }
-                    });
 
                     return _runTimer;
                 });
