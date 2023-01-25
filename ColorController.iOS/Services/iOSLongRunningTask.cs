@@ -3,6 +3,7 @@ using ColorController.Helpers;
 using ColorController.Services;
 using Plugin.BLE;
 using System;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using UIKit;
@@ -23,8 +24,36 @@ namespace ColorController.iOS.Services
 
             try
             {
-                //Connect saved devices
+                //If there is no saved devices then don't start scanning
                 var savedDevices = await App.Database.GetControllers();
+                if (!savedDevices.Any())
+                {
+                    //Send Message to display 'Searching for devices...' Text at Top Bar 
+                    MessagingCenter.Send<object, bool>(this, MessageType.DisplaySearchingForDevicesText.ToString(), false);
+                    CommonUtils.WriteLog("BackgroundJob: OnStartJob() : If there are no saved devices.");
+                    return;
+                }
+
+                //If Bluetooth is Off then Stop Searching
+                var isBluetoothOn = await BlueToothService.IsBluetoothON();
+
+                //Android: Check Location Permission
+                var isLocationPermissionAllowed = await BlueToothService.IsLocationPermissionAllowed();
+
+                //If all saved devices are connected then Stop Searching
+                var areAllSavedDeviceConnected = await BlueToothService.AreAllSavedDevicesConnected();
+
+                if (!isBluetoothOn || areAllSavedDeviceConnected || !isLocationPermissionAllowed)
+                {
+                    //Send Message to display 'Searching for devices...' Text at Top Bar 
+                    MessagingCenter.Send<object, bool>(this, MessageType.DisplaySearchingForDevicesText.ToString(), false);
+                    CommonUtils.WriteLog("BackgroundJob: OnStartJob() : !isBluetoothOn || areAllSavedDeviceConnected || !isLocationPermissionAllowed");
+                    return;
+                }
+
+                MessagingCenter.Send<object, bool>(this, nameof(MessageType.DisplaySearchingForDevicesText), true);
+
+                //If all is fine then start connecting saved devices
                 foreach (var controller in savedDevices)
                 {
                     await BlueToothService.ConnectToKnownDeviceInBackground(controller);
@@ -37,13 +66,12 @@ namespace ColorController.iOS.Services
             {
 
             }
+            catch (Exception ex)
+            {
+
+            }
             finally
             {
-                if (_cts.IsCancellationRequested)
-                {
-
-                }
-
                 App.IsBackgroundTaskRunning = false;
             }
 
@@ -70,7 +98,7 @@ namespace ColorController.iOS.Services
         public async Task Start()
         {
             _cts = new CancellationTokenSource();
-            _taskId = UIApplication.SharedApplication.BeginBackgroundTask("LongRunningTask", OnExpiration);
+            _taskId = UIApplication.SharedApplication.BeginBackgroundTask("iOSLongRunningTask_ForConnectionButton", OnExpiration);
 
             try
             {
@@ -109,6 +137,16 @@ namespace ColorController.iOS.Services
             }
 
             UIApplication.SharedApplication.EndBackgroundTask(_taskId);
+        }       
+
+        public void Stop()
+        {
+            _cts?.Cancel();
+        }
+
+        private void OnExpiration()
+        {
+            _cts?.Cancel();
         }
 
         private async Task DisplayConnectionButton()
@@ -133,16 +171,6 @@ namespace ColorController.iOS.Services
                 //DISCONNECT
                 MessagingCenter.Send<object, string>(this, nameof(MessageType.NaviBarConnectionButton), "btnDisconnectOn.png");
             }
-        }
-
-        public void Stop()
-        {
-            _cts?.Cancel();
-        }
-
-        private void OnExpiration()
-        {
-            _cts?.Cancel();
         }
     }
 }
